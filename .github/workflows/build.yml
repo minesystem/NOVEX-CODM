@@ -16,6 +16,12 @@ jobs:
         with:
           node-version: 22
 
+      - name: Create web folder
+        run: |
+          mkdir www
+          cp *.html www/
+          cp firebase-config.js www/
+
       - name: Create package
         run: |
           npm init -y
@@ -27,24 +33,21 @@ jobs:
           {
             "appId": "com.novex.codm",
             "appName": "NOVEX CODM",
-            "webDir": ".",
-            "server": {
-              "androidScheme": "https"
-            }
+            "webDir": "www"
           }
           EOF
 
-      - name: Add Android platform
+      - name: Add Android
         run: npx cap add android
 
-      - name: Copy NOVEX files
+      - name: Copy web files
         run: npx cap copy android
 
-      - name: Build Debug APK
+      - name: Build APK
         working-directory: android
         run: ./gradlew assembleDebug --no-daemon
 
-      - name: Upload NOVEX APK
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: NOVEX-CODM-APK
