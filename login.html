@@ -2,120 +2,150 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0,
+               maximum-scale=1.0, user-scalable=no">
 
 <title>NØV3X — Login</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
+html {
+  background:#07000d !important;
 }
 
 body {
-  background: #08060d;
-  color: white;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+  margin:0 !important;
+  padding:20px !important;
+  min-height:100vh;
+  background:#07000d !important;
+  color:#fff !important;
+  font-family:Arial,sans-serif;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+* {
+  box-sizing:border-box;
 }
 
 .box {
-  width: 100%;
-  max-width: 400px;
-  background: #100b18;
-  border: 1px solid #3b1757;
-  border-radius: 20px;
-  padding: 28px;
-  box-shadow: 0 0 30px rgba(130, 40, 220, .15);
+  width:100%;
+  max-width:400px;
+  padding:28px;
+  background:#100019 !important;
+  border:1px solid #542677;
+  border-radius:20px;
+  box-shadow:0 0 30px rgba(130,40,220,.15);
 }
 
 .logo {
-  text-align: center;
-  font-size: 32px;
-  font-weight: bold;
-  letter-spacing: 4px;
-  color: #c46cff;
+  text-align:center;
+  color:#c77dff;
+  font-size:32px;
+  font-weight:900;
+  letter-spacing:4px;
 }
 
 .subtitle {
-  text-align: center;
-  color: #81768c;
-  font-size: 12px;
-  margin-top: 7px;
-  margin-bottom: 25px;
+  text-align:center;
+  color:#81768c;
+  font-size:12px;
+  margin-top:7px;
+  margin-bottom:25px;
 }
 
 .tabs {
-  display: flex;
-  margin-bottom: 20px;
-  background: #08060d;
-  border-radius: 10px;
-  padding: 4px;
+  display:flex;
+  margin-bottom:20px;
+  padding:4px;
+  background:#08000f !important;
+  border-radius:10px;
 }
 
 .tabs button {
-  flex: 1;
-  border: none;
-  padding: 11px;
-  border-radius: 8px;
-  background: transparent;
-  color: #81768c;
-  font-weight: bold;
+  flex:1;
+  border:0;
+  padding:11px;
+  border-radius:8px;
+  background:transparent !important;
+  color:#81768c;
+  font-weight:bold;
 }
 
 .tabs button.active {
-  background: #7c2cff;
-  color: white;
+  background:#7c2cff !important;
+  color:#fff;
 }
 
 .input {
-  width: 100%;
-  padding: 13px;
-  margin-bottom: 10px;
-  background: #08060d;
-  color: white;
-  border: 1px solid #321650;
-  border-radius: 10px;
-  outline: none;
+  width:100%;
+  padding:14px;
+  margin-bottom:10px;
+  background:#08000f !important;
+  color:#fff !important;
+  border:1px solid #321650;
+  border-radius:10px;
+  outline:none;
+  font-size:14px;
+}
+
+.input::placeholder {
+  color:#75617e;
 }
 
 .input:focus {
-  border-color: #a448ff;
+  border-color:#a448ff;
 }
 
 .main-btn {
-  width: 100%;
-  padding: 14px;
-  margin-top: 7px;
-  border: none;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #7628c8, #a448ff);
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
+  width:100%;
+  padding:14px;
+  margin-top:7px;
+  border:0;
+  border-radius:10px;
+  background:linear-gradient(135deg,#7628c8,#a448ff) !important;
+  color:#fff !important;
+  font-weight:bold;
+  font-size:14px;
+}
+
+.main-btn:active {
+  transform:scale(.98);
 }
 
 .message {
-  text-align: center;
-  margin-top: 15px;
-  font-size: 12px;
-  color: #ff7777;
-  min-height: 18px;
+  min-height:18px;
+  margin-top:15px;
+  text-align:center;
+  color:#ff7777;
+  font-size:12px;
+}
+
+.success {
+  color:#b86cff;
 }
 
 .guest {
-  width: 100%;
-  margin-top: 10px;
-  padding: 12px;
-  background: transparent;
-  color: #b44cff;
-  border: 1px solid #321650;
-  border-radius: 10px;
+  width:100%;
+  margin-top:10px;
+  padding:12px;
+  background:transparent !important;
+  color:#b44cff !important;
+  border:1px solid #321650;
+  border-radius:10px;
+  font-weight:bold;
+}
+
+.guest:active {
+  background:#180025 !important;
+}
+
+.loading {
+  text-align:center;
+  color:#806b8d;
+  font-size:12px;
+  margin-top:12px;
 }
 </style>
 </head>
@@ -130,75 +160,63 @@ body {
     CODM COMMUNITY
   </div>
 
-
   <div class="tabs">
 
-    <button
-      id="loginTab"
-      class="active"
-      onclick="showLogin()">
+    <button id="loginTab"
+            class="active"
+            onclick="showLogin()">
       LOGIN
     </button>
 
-    <button
-      id="registerTab"
-      onclick="showRegister()">
+    <button id="registerTab"
+            onclick="showRegister()">
       REGISTER
     </button>
 
   </div>
 
-
   <div id="formArea">
 
-    <input
-      id="email"
-      class="input"
-      type="email"
-      placeholder="Email"
-      autocomplete="email"
-    >
+    <input id="email"
+           class="input"
+           type="email"
+           placeholder="Email"
+           autocomplete="email">
 
-    <input
-      id="password"
-      class="input"
-      type="password"
-      placeholder="Password"
-      autocomplete="current-password"
-    >
+    <input id="password"
+           class="input"
+           type="password"
+           placeholder="Password"
+           autocomplete="current-password">
 
-    <button
-      class="main-btn"
-      onclick="login()">
+    <button id="submitBtn"
+            class="main-btn"
+            onclick="login()">
       LOGIN
     </button>
 
   </div>
 
+  <div id="message"
+       class="message"></div>
 
-  <div
-    id="message"
-    class="message">
-  </div>
-
-
-  <button
-    class="guest"
-    onclick="guestMode()">
+  <button class="guest"
+          onclick="guestMode()">
     CONTINUE AS GUEST
   </button>
 
+  <div class="loading"
+       id="loadingText"
+       style="display:none;">
+    Please wait...
+  </div>
+
 </div>
 
-
-<!-- FIREBASE -->
-
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="firebase-config.js"></script>
-
 
 <script>
 
@@ -207,8 +225,9 @@ let registerMode = false;
 const message =
   document.getElementById("message");
 
+const loadingText =
+  document.getElementById("loadingText");
 
-// LOGIN TAB
 
 function showLogin() {
 
@@ -222,38 +241,34 @@ function showLogin() {
     .getElementById("registerTab")
     .classList.remove("active");
 
+  document.getElementById("formArea").innerHTML = `
 
-  document.getElementById("formArea")
-    .innerHTML = `
+    <input
+      id="email"
+      class="input"
+      type="email"
+      placeholder="Email"
+      autocomplete="email">
 
-      <input
-        id="email"
-        class="input"
-        type="email"
-        placeholder="Email"
-      >
+    <input
+      id="password"
+      class="input"
+      type="password"
+      placeholder="Password"
+      autocomplete="current-password">
 
-      <input
-        id="password"
-        class="input"
-        type="password"
-        placeholder="Password"
-      >
+    <button
+      id="submitBtn"
+      class="main-btn"
+      onclick="login()">
+      LOGIN
+    </button>
 
-      <button
-        class="main-btn"
-        onclick="login()">
-        LOGIN
-      </button>
+  `;
 
-    `;
-
-  message.textContent = "";
-
+  clearMessage();
 }
 
-
-// REGISTER TAB
 
 function showRegister() {
 
@@ -267,46 +282,42 @@ function showRegister() {
     .getElementById("registerTab")
     .classList.add("active");
 
+  document.getElementById("formArea").innerHTML = `
 
-  document.getElementById("formArea")
-    .innerHTML = `
+    <input
+      id="username"
+      class="input"
+      type="text"
+      placeholder="Username"
+      maxlength="20"
+      autocomplete="nickname">
 
-      <input
-        id="username"
-        class="input"
-        type="text"
-        placeholder="Username"
-        maxlength="20"
-      >
+    <input
+      id="email"
+      class="input"
+      type="email"
+      placeholder="Email"
+      autocomplete="email">
 
-      <input
-        id="email"
-        class="input"
-        type="email"
-        placeholder="Email"
-      >
+    <input
+      id="password"
+      class="input"
+      type="password"
+      placeholder="Password"
+      autocomplete="new-password">
 
-      <input
-        id="password"
-        class="input"
-        type="password"
-        placeholder="Password"
-      >
+    <button
+      id="submitBtn"
+      class="main-btn"
+      onclick="register()">
+      CREATE ACCOUNT
+    </button>
 
-      <button
-        class="main-btn"
-        onclick="register()">
-        CREATE ACCOUNT
-      </button>
+  `;
 
-    `;
-
-  message.textContent = "";
-
+  clearMessage();
 }
 
-
-// REGISTER
 
 async function register() {
 
@@ -322,30 +333,27 @@ async function register() {
     document.getElementById("password")
       .value;
 
-
   if (!username ||
       !email ||
       !password) {
 
-    showError(
-      "Fill in all fields."
-    );
-
+    showError("Fill in all fields.");
     return;
-
   }
 
+  if (username.length < 2) {
+
+    showError("Username must be at least 2 characters.");
+    return;
+  }
 
   if (password.length < 6) {
 
-    showError(
-      "Password must be at least 6 characters."
-    );
-
+    showError("Password must be at least 6 characters.");
     return;
-
   }
 
+  setLoading(true);
 
   try {
 
@@ -355,46 +363,49 @@ async function register() {
         password
       );
 
-
     await db
       .collection("users")
       .doc(result.user.uid)
       .set({
 
-        username: username,
+        username:username,
 
-        email: email,
+        email:email,
+
+        role:"player",
 
         createdAt:
+          firebase.firestore.FieldValue
+            .serverTimestamp(),
+
+        updatedAt:
           firebase.firestore.FieldValue
             .serverTimestamp()
 
       });
-
 
     localStorage.setItem(
       "novexName",
       username
     );
 
+    localStorage.removeItem("novexGuest");
 
     window.location.href =
       "index.html";
 
-  }
+  } catch(error) {
 
-  catch(error) {
+    console.error(error);
 
-    showError(
-      firebaseError(error)
-    );
+    setLoading(false);
+
+    showError(firebaseError(error));
 
   }
 
 }
 
-
-// LOGIN
 
 async function login() {
 
@@ -406,7 +417,6 @@ async function login() {
     document.getElementById("password")
       .value;
 
-
   if (!email || !password) {
 
     showError(
@@ -414,9 +424,9 @@ async function login() {
     );
 
     return;
-
   }
 
+  setLoading(true);
 
   try {
 
@@ -426,48 +436,85 @@ async function login() {
         password
       );
 
+    localStorage.removeItem("novexGuest");
 
     window.location.href =
       "index.html";
 
-  }
+  } catch(error) {
 
-  catch(error) {
+    console.error(error);
 
-    showError(
-      firebaseError(error)
-    );
+    setLoading(false);
+
+    showError(firebaseError(error));
 
   }
 
 }
 
-
-// GUEST
 
 function guestMode() {
 
-  localStorage.setItem(
-    "novexGuest",
-    "true"
-  );
+  /*
+    Guest mode is kept as a button,
+    but Firebase-protected pages require
+    an authenticated account.
+  */
 
-  window.location.href =
-    "index.html";
+  showError(
+    "Please login or create an account to continue."
+  );
 
 }
 
 
-// ERROR
-
 function showError(text) {
+
+  message.className = "message";
+  message.textContent = text;
+
+}
+
+
+function showSuccess(text) {
+
+  message.className =
+    "message success";
 
   message.textContent = text;
 
 }
 
 
-// FIREBASE ERROR TEXT
+function clearMessage() {
+
+  message.className =
+    "message";
+
+  message.textContent = "";
+
+}
+
+
+function setLoading(state) {
+
+  loadingText.style.display =
+    state ? "block" : "none";
+
+  const buttons =
+    document.querySelectorAll(
+      ".main-btn,.guest,.tabs button"
+    );
+
+  buttons.forEach(button => {
+    button.disabled = state;
+    button.style.opacity =
+      state ? ".6" : "1";
+  });
+
+}
+
 
 function firebaseError(error) {
 
@@ -482,28 +529,35 @@ function firebaseError(error) {
     case "auth/wrong-password":
       return "Incorrect password.";
 
+    case "auth/invalid-credential":
+      return "Incorrect email or password.";
+
     case "auth/email-already-in-use":
       return "Email is already registered.";
 
     case "auth/weak-password":
-      return "Password is too weak.";
+      return "Password must be at least 6 characters.";
+
+    case "auth/too-many-requests":
+      return "Too many attempts. Try again later.";
+
+    case "auth/network-request-failed":
+      return "Network error. Check your connection.";
 
     default:
-      return "Something went wrong.";
+      return "Something went wrong. Try again.";
 
   }
 
 }
 
 
-// CHECK LOGIN
-
 auth.onAuthStateChanged(user => {
 
   if (user) {
 
     console.log(
-      "Logged in:",
+      "NØV3X logged in:",
       user.email
     );
 
