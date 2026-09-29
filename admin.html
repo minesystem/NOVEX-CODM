@@ -158,7 +158,7 @@ body{
   line-height:1.4;
 }
 
-input,textarea,select{
+input,textarea{
   width:100%;
   background:#09000f!important;
   border:1px solid #4a146d;
@@ -180,8 +180,7 @@ textarea{
 }
 
 input:focus,
-textarea:focus,
-select:focus{
+textarea:focus{
   border-color:#a13cff;
 }
 
@@ -213,7 +212,7 @@ button{
 
 .danger{
   background:#22000d!important;
-  border:1px solid #71304b;
+  border-color:#71304b;
   color:#ff8da8;
 }
 
@@ -276,7 +275,7 @@ button{
 }
 
 .slot{
-  min-height:48px;
+  min-height:52px;
   padding:5px;
   border-radius:8px;
   border:1px solid #321044;
@@ -286,6 +285,11 @@ button{
   display:flex;
   flex-direction:column;
   justify-content:center;
+}
+
+.slot.claimed{
+  border-color:#7520c0;
+  background:#170020!important;
 }
 
 .slot-number{
@@ -346,6 +350,7 @@ button{
 }
 
 @media(max-width:430px){
+
   .grid{
     grid-template-columns:1fr 1fr;
   }
@@ -420,8 +425,8 @@ button{
         </div>
 
         <div class="stat">
-          <div class="stat-number" id="slotCount">0</div>
-          <div class="stat-label">SLOTS</div>
+          <div class="stat-number" id="slotCount">0/25</div>
+          <div class="stat-label">CLAIMED</div>
         </div>
 
       </div>
@@ -440,7 +445,9 @@ button{
 
         <a href="leaderboard.html" class="card">
           <div class="icon">🏆</div>
-          <div class="card-title">Leaderboard</div>
+          <div class="card-title">
+            Leaderboard
+          </div>
           <div class="card-text">
             Manage team scores.
           </div>
@@ -448,7 +455,9 @@ button{
 
         <a href="scrimmage.html" class="card">
           <div class="icon">🎮</div>
-          <div class="card-title">Scrimmage</div>
+          <div class="card-title">
+            Scrimmage
+          </div>
           <div class="card-text">
             View live scrimmage slots.
           </div>
@@ -456,7 +465,9 @@ button{
 
         <a href="teams.html" class="card">
           <div class="icon">👥</div>
-          <div class="card-title">Teams</div>
+          <div class="card-title">
+            Teams
+          </div>
           <div class="card-text">
             View registered teams.
           </div>
@@ -464,7 +475,9 @@ button{
 
         <a href="chat.html" class="card">
           <div class="icon">💬</div>
-          <div class="card-title">Chat</div>
+          <div class="card-title">
+            Chat
+          </div>
           <div class="card-text">
             Open community chat.
           </div>
@@ -558,9 +571,11 @@ button{
       </button>
 
       <div id="slotGrid" class="slot-grid">
+
         <div class="empty">
           Loading slots...
         </div>
+
       </div>
 
       <div
@@ -592,30 +607,35 @@ button{
 <script>
 
 let adminUser = null;
+let listenersStarted = false;
 
 
-/* AUTH + ADMIN CHECK */
+/* =========================
+   AUTH + ADMIN CHECK
+========================= */
 
 auth.onAuthStateChanged(async user => {
 
-  if (!user) {
+  if(!user){
+
     location.href = "login.html";
     return;
+
   }
 
   adminUser = user;
 
-  try {
+  try{
 
     const profile =
       await db.collection("users")
         .doc(user.uid)
         .get();
 
-    if (
+    if(
       !profile.exists ||
       profile.data().role !== "admin"
-    ) {
+    ){
 
       document.getElementById(
         "loading"
@@ -626,6 +646,7 @@ auth.onAuthStateChanged(async user => {
       ).style.display = "block";
 
       return;
+
     }
 
     const data =
@@ -644,9 +665,14 @@ auth.onAuthStateChanged(async user => {
       "adminContent"
     ).style.display = "block";
 
-    startAdminListeners();
+    if(!listenersStarted){
 
-  } catch(error) {
+      listenersStarted = true;
+      startAdminListeners();
+
+    }
+
+  }catch(error){
 
     console.error(error);
 
@@ -660,7 +686,9 @@ auth.onAuthStateChanged(async user => {
 });
 
 
-/* ADMIN LISTENERS */
+/* =========================
+   ADMIN LISTENERS
+========================= */
 
 function startAdminListeners(){
 
@@ -671,7 +699,9 @@ function startAdminListeners(){
 }
 
 
-/* USERS */
+/* =========================
+   USERS
+========================= */
 
 function loadUsers(){
 
@@ -697,40 +727,30 @@ function loadUsers(){
           '<div class="empty">No users found.</div>';
 
         return;
+
       }
 
       snapshot.forEach(doc => {
 
-        const data =
-          doc.data();
+        const data = doc.data();
 
         const item =
-          document.createElement(
-            "div"
-          );
+          document.createElement("div");
 
-        item.className =
-          "item";
+        item.className = "item";
 
         const title =
-          document.createElement(
-            "div"
-          );
+          document.createElement("div");
 
-        title.className =
-          "item-title";
+        title.className = "item-title";
 
         title.textContent =
-          data.username ||
-          "Player";
+          data.username || "Player";
 
         const sub =
-          document.createElement(
-            "div"
-          );
+          document.createElement("div");
 
-        sub.className =
-          "item-sub";
+        sub.className = "item-sub";
 
         sub.textContent =
           (data.email || "No email") +
@@ -741,9 +761,7 @@ function loadUsers(){
         item.appendChild(sub);
 
         const actions =
-          document.createElement(
-            "div"
-          );
+          document.createElement("div");
 
         actions.className =
           "item-actions";
@@ -751,9 +769,7 @@ function loadUsers(){
         if(doc.id !== adminUser.uid){
 
           const roleBtn =
-            document.createElement(
-              "button"
-            );
+            document.createElement("button");
 
           roleBtn.className =
             "small-btn";
@@ -769,14 +785,10 @@ function loadUsers(){
               data.role
             );
 
-          actions.appendChild(
-            roleBtn
-          );
+          actions.appendChild(roleBtn);
 
           const deleteBtn =
-            document.createElement(
-              "button"
-            );
+            document.createElement("button");
 
           deleteBtn.className =
             "small-btn delete";
@@ -787,13 +799,10 @@ function loadUsers(){
           deleteBtn.onclick = () =>
             deleteUserProfile(
               doc.id,
-              data.username ||
-              "this user"
+              data.username || "this user"
             );
 
-          actions.appendChild(
-            deleteBtn
-          );
+          actions.appendChild(deleteBtn);
 
         }
 
@@ -805,14 +814,19 @@ function loadUsers(){
 
     },error => {
 
-      console.error(error);
+      console.error(
+        "Users error:",
+        error
+      );
 
     });
 
 }
 
 
-/* CHANGE USER ROLE */
+/* =========================
+   CHANGE ROLE
+========================= */
 
 async function changeRole(
   uid,
@@ -862,7 +876,9 @@ async function changeRole(
 }
 
 
-/* DELETE PROFILE */
+/* =========================
+   DELETE USER PROFILE
+========================= */
 
 async function deleteUserProfile(
   uid,
@@ -898,7 +914,9 @@ async function deleteUserProfile(
 }
 
 
-/* TEAMS */
+/* =========================
+   TEAMS
+========================= */
 
 function loadTeams(){
 
@@ -929,57 +947,43 @@ function loadTeams(){
 
       snapshot.forEach(doc => {
 
-        const data =
-          doc.data();
+        const data = doc.data();
 
         const item =
-          document.createElement(
-            "div"
-          );
+          document.createElement("div");
 
-        item.className =
-          "item";
+        item.className = "item";
 
         const title =
-          document.createElement(
-            "div"
-          );
+          document.createElement("div");
 
         title.className =
           "item-title";
 
         title.textContent =
-          data.name ||
-          "Unnamed Team";
+          data.name || "Unnamed Team";
 
         const sub =
-          document.createElement(
-            "div"
-          );
+          document.createElement("div");
 
         sub.className =
           "item-sub";
 
         sub.textContent =
           "Owner: " +
-          (data.ownerName ||
-           "Player");
+          (data.ownerName || "Player");
 
         item.appendChild(title);
         item.appendChild(sub);
 
         const actions =
-          document.createElement(
-            "div"
-          );
+          document.createElement("div");
 
         actions.className =
           "item-actions";
 
         const deleteBtn =
-          document.createElement(
-            "button"
-          );
+          document.createElement("button");
 
         deleteBtn.className =
           "small-btn delete";
@@ -990,13 +994,10 @@ function loadTeams(){
         deleteBtn.onclick = () =>
           adminDeleteTeam(
             doc.id,
-            data.name ||
-            "this team"
+            data.name || "this team"
           );
 
-        actions.appendChild(
-          deleteBtn
-        );
+        actions.appendChild(deleteBtn);
 
         item.appendChild(actions);
 
@@ -1006,14 +1007,19 @@ function loadTeams(){
 
     },error => {
 
-      console.error(error);
+      console.error(
+        "Teams error:",
+        error
+      );
 
     });
 
 }
 
 
-/* ADMIN DELETE TEAM */
+/* =========================
+   ADMIN DELETE TEAM
+========================= */
 
 async function adminDeleteTeam(
   id,
@@ -1022,9 +1028,7 @@ async function adminDeleteTeam(
 
   if(
     !confirm(
-      "Delete " +
-      name +
-      "?"
+      "Delete " + name + "?"
     )
   ){
     return;
@@ -1049,7 +1053,9 @@ async function adminDeleteTeam(
 }
 
 
-/* ANNOUNCEMENT */
+/* =========================
+   ANNOUNCEMENT
+========================= */
 
 async function postAnnouncement(){
 
@@ -1079,11 +1085,6 @@ async function postAnnouncement(){
 
   try{
 
-    const now =
-      firebase.firestore
-        .FieldValue
-        .serverTimestamp();
-
     await db.collection(
       "announcements"
     ).add({
@@ -1092,7 +1093,10 @@ async function postAnnouncement(){
 
       text:text,
 
-      createdAt:now,
+      createdAt:
+        firebase.firestore
+          .FieldValue
+          .serverTimestamp(),
 
       createdBy:
         adminUser.uid,
@@ -1136,7 +1140,9 @@ async function postAnnouncement(){
       "Announcement posted!";
 
     setTimeout(() => {
+
       status.textContent = "";
+
     },3000);
 
   }catch(error){
@@ -1151,7 +1157,9 @@ async function postAnnouncement(){
 }
 
 
-/* SCRIMMAGE SLOTS */
+/* =========================
+   SCRIMMAGE SLOTS
+========================= */
 
 function loadSlots(){
 
@@ -1164,14 +1172,20 @@ function loadSlots(){
 
       snapshot.forEach(doc => {
 
-        const data =
-          doc.data();
+        const data = doc.data();
+
+        /*
+          IMPORTANT:
+          Scrimmage page uses "number"
+        */
 
         const number =
           Number(
-            data.slot ||
-            doc.id
-              .replace("slot-","")
+            data.number ||
+            doc.id.replace(
+              "slot-",
+              ""
+            )
           );
 
         slots[number] = {
@@ -1182,7 +1196,9 @@ function loadSlots(){
         if(
           data.claimed === true
         ){
+
           claimed++;
+
         }
 
       });
@@ -1206,17 +1222,12 @@ function loadSlots(){
       ){
 
         const slot =
-          document.createElement(
-            "div"
-          );
+          document.createElement("div");
 
-        slot.className =
-          "slot";
+        slot.className = "slot";
 
         const number =
-          document.createElement(
-            "div"
-          );
+          document.createElement("div");
 
         number.className =
           "slot-number";
@@ -1225,9 +1236,7 @@ function loadSlots(){
           "#" + i;
 
         const name =
-          document.createElement(
-            "div"
-          );
+          document.createElement("div");
 
         name.className =
           "slot-name";
@@ -1238,8 +1247,10 @@ function loadSlots(){
         if(
           slotInfo &&
           slotInfo.data &&
-          slotInfo.data.claimed
+          slotInfo.data.claimed === true
         ){
+
+          slot.classList.add("claimed");
 
           name.textContent =
             slotInfo.data.teamName ||
@@ -1262,14 +1273,19 @@ function loadSlots(){
 
     },error => {
 
-      console.error(error);
+      console.error(
+        "Slots error:",
+        error
+      );
 
     });
 
 }
 
 
-/* INITIALIZE 25 SLOTS */
+/* =========================
+   INITIALIZE / RESET 25 SLOTS
+========================= */
 
 async function initializeSlots(){
 
@@ -1278,7 +1294,9 @@ async function initializeSlots(){
       "Initialize/reset all 25 scrimmage slots?"
     )
   ){
+
     return;
+
   }
 
   const status =
@@ -1308,7 +1326,12 @@ async function initializeSlots(){
         ref,
         {
 
-          slot:i,
+          /*
+            IMPORTANT:
+            Use "number", not "slot".
+          */
+
+          number:i,
 
           claimed:false,
 
@@ -1316,7 +1339,9 @@ async function initializeSlots(){
 
           teamName:"",
 
-          ownerName:"",
+          username:"",
+
+          claimedAt:null,
 
           updatedAt:
             firebase.firestore
@@ -1345,7 +1370,9 @@ async function initializeSlots(){
 }
 
 
-/* CLEAR ALL SLOTS */
+/* =========================
+   CLEAR ALL SLOTS
+========================= */
 
 async function clearSlots(){
 
@@ -1354,7 +1381,9 @@ async function clearSlots(){
       "Clear all 25 scrimmage slots?"
     )
   ){
+
     return;
+
   }
 
   const status =
@@ -1384,7 +1413,12 @@ async function clearSlots(){
         ref,
         {
 
-          slot:i,
+          /*
+            Keep the same schema
+            as scrimmage.html
+          */
+
+          number:i,
 
           claimed:false,
 
@@ -1392,7 +1426,9 @@ async function clearSlots(){
 
           teamName:"",
 
-          ownerName:"",
+          username:"",
+
+          claimedAt:null,
 
           updatedAt:
             firebase.firestore
@@ -1407,7 +1443,7 @@ async function clearSlots(){
     await batch.commit();
 
     status.textContent =
-      "All slots cleared.";
+      "All 25 slots cleared.";
 
   }catch(error){
 
@@ -1421,7 +1457,9 @@ async function clearSlots(){
 }
 
 
-/* LOGOUT */
+/* =========================
+   LOGOUT
+========================= */
 
 async function logout(){
 
