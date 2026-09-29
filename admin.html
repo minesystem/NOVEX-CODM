@@ -70,8 +70,8 @@ button.danger{
  background:#a51f3c;
 }
 
-button.dark{
- background:#24102f;
+button.edit{
+ background:#4d2180;
 }
 
 input{
@@ -83,40 +83,6 @@ input{
  background:#08000f;
  color:white;
  outline:none;
-}
-
-.slot{
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:10px;
- padding:11px;
- margin:6px 0;
- background:#08000f;
- border:1px solid #291039;
- border-radius:9px;
-}
-
-.slot-info{
- flex:1;
-}
-
-.slot-number{
- color:#b968ff;
- font-weight:bold;
-}
-
-.slot-team{
- margin-top:3px;
- font-size:13px;
-}
-
-.open{
- color:#777;
-}
-
-.claimed{
- color:#fff;
 }
 
 .stats{
@@ -151,6 +117,41 @@ input{
  font-size:12px;
 }
 
+.slot,.team{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:10px;
+ padding:11px;
+ margin:6px 0;
+ background:#08000f;
+ border:1px solid #291039;
+ border-radius:9px;
+}
+
+.info{
+ flex:1;
+}
+
+.number{
+ color:#b968ff;
+ font-weight:bold;
+}
+
+.name{
+ margin-top:3px;
+ font-size:13px;
+}
+
+.points{
+ color:#c56cff;
+ font-weight:bold;
+}
+
+.actions{
+ white-space:nowrap;
+}
+
 nav{
  position:fixed;
  bottom:0;
@@ -171,9 +172,6 @@ nav a{
  text-align:center;
 }
 
-nav a.active{
- color:#c56cff;
-}
 </style>
 </head>
 
@@ -186,119 +184,156 @@ nav a.active{
 
 <div class="container">
 
- <div id="message" class="message"></div>
+<div id="message" class="message"></div>
 
- <div class="card">
-  <h2>📊 SCRIMMAGE STATUS</h2>
+<!-- SCRIM STATUS -->
 
-  <div class="stats">
-   <div class="stat">
-    <b id="totalSlots">25</b>
-    <span>TOTAL</span>
-   </div>
+<div class="card">
 
-   <div class="stat">
-    <b id="claimedSlots">0</b>
-    <span>CLAIMED</span>
-   </div>
+<h2>📊 SCRIMMAGE STATUS</h2>
 
-   <div class="stat">
-    <b id="openSlots">25</b>
-    <span>OPEN</span>
-   </div>
-  </div>
- </div>
+<div class="stats">
 
- <div class="card">
+<div class="stat">
+<b id="totalSlots">25</b>
+<span>TOTAL</span>
+</div>
 
-  <h2>🎮 SCRIMMAGE MANAGEMENT</h2>
+<div class="stat">
+<b id="claimedSlots">0</b>
+<span>CLAIMED</span>
+</div>
 
-  <button onclick="initializeSlots()">
-   INITIALIZE 25 SLOTS
-  </button>
+<div class="stat">
+<b id="openSlots">25</b>
+<span>OPEN</span>
+</div>
 
-  <button class="danger" onclick="resetSlots()">
-   RESET ALL SLOTS
-  </button>
+</div>
 
-  <div id="slots">
-   Loading slots...
-  </div>
+</div>
 
- </div>
+<!-- SCRIMMAGE -->
 
- <div class="card">
+<div class="card">
 
-  <h2>📢 ANNOUNCEMENT</h2>
+<h2>🎮 SCRIMMAGE MANAGEMENT</h2>
 
-  <input
-   id="announcementText"
-   placeholder="Write announcement..."
-   maxlength="300">
+<button onclick="initializeSlots()">
+INITIALIZE 25 SLOTS
+</button>
 
-  <button onclick="postAnnouncement()">
-   POST ANNOUNCEMENT
-  </button>
+<button class="danger" onclick="resetSlots()">
+RESET ALL SLOTS
+</button>
 
- </div>
+<div id="slots">
+Loading slots...
+</div>
 
- <div class="card">
+</div>
 
-  <h2>🔔 NOTIFICATION</h2>
+<!-- LEADERBOARD -->
 
-  <input
-   id="notificationText"
-   placeholder="Notification message..."
-   maxlength="300">
+<div class="card">
 
-  <button onclick="sendNotification()">
-   SEND NOTIFICATION
-  </button>
+<h2>🏆 LEADERBOARD MANAGEMENT</h2>
 
- </div>
+<input
+ id="teamName"
+ placeholder="Team name"
+ maxlength="40">
 
- <div class="card">
+<input
+ id="teamPoints"
+ type="number"
+ min="0"
+ placeholder="Points">
 
-  <h2>🏆 QUICK LINKS</h2>
+<button onclick="addTeam()">
+➕ ADD / UPDATE TEAM
+</button>
 
-  <button onclick="location.href='leaderboard.html'">
-   LEADERBOARD
-  </button>
+<div id="leaderboard">
+Loading leaderboard...
+</div>
 
-  <button onclick="location.href='scrimmage.html'">
-   SCRIMMAGE
-  </button>
+</div>
 
-  <button onclick="location.href='teams.html'">
-   TEAMS
-  </button>
+<!-- ANNOUNCEMENT -->
 
-  <button onclick="location.href='chat.html'">
-   CHAT
-  </button>
+<div class="card">
 
- </div>
+<h2>📢 ANNOUNCEMENT</h2>
 
- <button
-  class="danger"
-  onclick="logout()"
-  style="width:100%;margin:0">
-  LOG OUT
- </button>
+<input
+ id="announcementText"
+ placeholder="Write announcement..."
+ maxlength="300">
+
+<button onclick="postAnnouncement()">
+POST ANNOUNCEMENT
+</button>
+
+</div>
+
+<!-- NOTIFICATION -->
+
+<div class="card">
+
+<h2>🔔 NOTIFICATION</h2>
+
+<input
+ id="notificationText"
+ placeholder="Notification message..."
+ maxlength="300">
+
+<button onclick="sendNotification()">
+SEND NOTIFICATION
+</button>
+
+</div>
+
+<!-- QUICK LINKS -->
+
+<div class="card">
+
+<h2>🏆 QUICK LINKS</h2>
+
+<button onclick="location.href='leaderboard.html'">
+LEADERBOARD
+</button>
+
+<button onclick="location.href='scrimmage.html'">
+SCRIMMAGE
+</button>
+
+<button onclick="location.href='teams.html'">
+TEAMS
+</button>
+
+<button onclick="location.href='chat.html'">
+CHAT
+</button>
+
+</div>
+
+<button
+ class="danger"
+ onclick="logout()"
+ style="width:100%;margin:0">
+LOG OUT
+</button>
 
 </div>
 
 <nav>
 
- <a href="index.html">🏠<br>Home</a>
-
- <a href="chat.html">💬<br>Chat</a>
-
- <a href="scrimmage.html">🎮<br>Scrim</a>
-
- <a href="leaderboard.html">🏆<br>Rank</a>
-
- <a href="profile.html">👤<br>Profile</a>
+<a href="index.html">🏠<br>Home</a>
+<a href="chat.html">💬<br>Chat</a>
+<a href="scrimmage.html">🎮<br>Scrim</a>
+<a href="leaderboard.html">🏆<br>Rank</a>
+<a href="profile.html">👤<br>Profile</a>
 
 </nav>
 
@@ -311,11 +346,16 @@ nav a.active{
 
 let currentUser=null;
 
-const message=document.getElementById("message");
+const message=
+document.getElementById("message");
+
 
 function showMessage(text){
  message.textContent=text;
 }
+
+
+/* ADMIN CHECK */
 
 auth.onAuthStateChanged(async user=>{
 
@@ -328,32 +368,47 @@ auth.onAuthStateChanged(async user=>{
 
  try{
 
-  const snap=await db
-   .collection("users")
-   .doc(user.uid)
-   .get();
+  const snap=
+  await db
+  .collection("users")
+  .doc(user.uid)
+  .get();
 
-  if(!snap.exists || snap.data().role!=="admin"){
+  if(
+   !snap.exists ||
+   snap.data().role!=="admin"
+  ){
+
    alert("Admin access required.");
+
    location.href="index.html";
+
    return;
   }
 
   loadSlots();
+  loadLeaderboard();
 
  }catch(error){
 
   console.error(error);
-  showMessage("Admin verification failed.");
+
+  showMessage(
+   "Admin verification failed."
+  );
 
  }
 
 });
 
 
+/* SCRIMMAGE */
+
 async function initializeSlots(){
 
- showMessage("Initializing 25 slots...");
+ showMessage(
+  "Initializing 25 slots..."
+ );
 
  try{
 
@@ -361,27 +416,37 @@ async function initializeSlots(){
 
   for(let i=1;i<=25;i++){
 
-   const ref=db
-    .collection("scrimmageSlots")
-    .doc("slot-"+i);
+   const ref=
+   db
+   .collection("scrimmageSlots")
+   .doc("slot-"+i);
 
-   batch.set(ref,{
-    number:i,
-    claimed:false
-   },{merge:true});
+   batch.set(
+    ref,
+    {
+     number:i,
+     claimed:false
+    },
+    {merge:true}
+   );
 
   }
 
   await batch.commit();
 
-  showMessage("25 slots initialized successfully.");
+  showMessage(
+   "25 slots initialized."
+  );
 
   loadSlots();
 
  }catch(error){
 
   console.error(error);
-  showMessage("ERROR: "+error.code);
+
+  showMessage(
+   "ERROR: "+error.code
+  );
 
  }
 
@@ -392,10 +457,11 @@ async function loadSlots(){
 
  try{
 
-  const snap=await db
-   .collection("scrimmageSlots")
-   .orderBy("number")
-   .get();
+  const snap=
+  await db
+  .collection("scrimmageSlots")
+  .orderBy("number")
+  .get();
 
   let claimed=0;
   let html="";
@@ -404,63 +470,71 @@ async function loadSlots(){
 
    const data=doc.data();
 
-   if(data.claimed) claimed++;
+   if(data.claimed)
+    claimed++;
 
    html+=`
 
-    <div class="slot">
+   <div class="slot">
 
-     <div class="slot-info">
+    <div class="info">
 
-      <div class="slot-number">
-       SLOT ${data.number}
-      </div>
-
-      <div class="slot-team ${
-       data.claimed ? "claimed":"open"
-      }">
-
-       ${
-        data.claimed
-        ? escapeHTML(data.teamName || "CLAIMED")
-        : "OPEN"
-       }
-
-      </div>
-
+     <div class="number">
+      SLOT ${data.number}
      </div>
 
-     ${
-      data.claimed
-      ? `<button
-          class="danger"
-          onclick="releaseSlot('${doc.id}')">
-          RELEASE
-         </button>`
-      : ""
-     }
+     <div class="name">
+      ${
+       data.claimed
+       ? escapeHTML(
+          data.teamName || "CLAIMED"
+         )
+       : "OPEN"
+      }
+     </div>
 
     </div>
+
+    <div class="actions">
+
+    ${
+     data.claimed
+     ?
+     `<button
+      class="danger"
+      onclick="releaseSlot('${doc.id}')">
+      RELEASE
+     </button>`
+     :
+     ""
+    }
+
+    </div>
+
+   </div>
 
    `;
 
   });
 
-  document.getElementById("slots").innerHTML =
-   html || "No slots initialized.";
+  document.getElementById("slots")
+  .innerHTML=
+  html || "No slots initialized.";
 
-  document.getElementById("claimedSlots").textContent=
-   claimed;
+  document.getElementById("claimedSlots")
+  .textContent=claimed;
 
-  document.getElementById("openSlots").textContent=
-   Math.max(25-claimed,0);
+  document.getElementById("openSlots")
+  .textContent=
+  Math.max(25-claimed,0);
 
  }catch(error){
 
   console.error(error);
 
-  document.getElementById("slots").textContent=
-   "Unable to load slots.";
+  document.getElementById("slots")
+  .textContent=
+  "Unable to load slots.";
 
  }
 
@@ -469,29 +543,46 @@ async function loadSlots(){
 
 async function releaseSlot(id){
 
- if(!confirm("Release this slot?")) return;
+ if(
+  !confirm("Release this slot?")
+ ) return;
 
  try{
 
   await db
-   .collection("scrimmageSlots")
-   .doc(id)
-   .set({
-    claimed:false,
-    teamName:firebase.firestore.FieldValue.delete(),
-    uid:firebase.firestore.FieldValue.delete(),
-    username:firebase.firestore.FieldValue.delete(),
-    claimedAt:firebase.firestore.FieldValue.delete()
-   },{merge:true});
+  .collection("scrimmageSlots")
+  .doc(id)
+  .set({
 
-  showMessage("Slot released.");
+   claimed:false,
+
+   teamName:
+   firebase.firestore.FieldValue.delete(),
+
+   uid:
+   firebase.firestore.FieldValue.delete(),
+
+   username:
+   firebase.firestore.FieldValue.delete(),
+
+   claimedAt:
+   firebase.firestore.FieldValue.delete()
+
+  },{merge:true});
+
+  showMessage(
+   "Slot released."
+  );
 
   loadSlots();
 
  }catch(error){
 
   console.error(error);
-  showMessage("ERROR: "+error.code);
+
+  showMessage(
+   "ERROR: "+error.code
+  );
 
  }
 
@@ -500,9 +591,11 @@ async function releaseSlot(id){
 
 async function resetSlots(){
 
- if(!confirm(
-  "RESET ALL 25 SLOTS? This will remove every team."
- )) return;
+ if(
+  !confirm(
+   "RESET ALL 25 SLOTS?"
+  )
+ ) return;
 
  try{
 
@@ -510,118 +603,412 @@ async function resetSlots(){
 
   for(let i=1;i<=25;i++){
 
-   const ref=db
-    .collection("scrimmageSlots")
-    .doc("slot-"+i);
+   const ref=
+   db
+   .collection("scrimmageSlots")
+   .doc("slot-"+i);
 
-   batch.set(ref,{
-    number:i,
-    claimed:false,
-    teamName:firebase.firestore.FieldValue.delete(),
-    uid:firebase.firestore.FieldValue.delete(),
-    username:firebase.firestore.FieldValue.delete(),
-    claimedAt:firebase.firestore.FieldValue.delete()
-   },{merge:true});
+   batch.set(
+    ref,
+    {
+     number:i,
+     claimed:false,
+
+     teamName:
+     firebase.firestore.FieldValue.delete(),
+
+     uid:
+     firebase.firestore.FieldValue.delete(),
+
+     username:
+     firebase.firestore.FieldValue.delete(),
+
+     claimedAt:
+     firebase.firestore.FieldValue.delete()
+
+    },
+    {merge:true}
+   );
 
   }
 
   await batch.commit();
 
-  showMessage("All slots reset.");
+  showMessage(
+   "All slots reset."
+  );
 
   loadSlots();
 
  }catch(error){
 
   console.error(error);
-  showMessage("ERROR: "+error.code);
+
+  showMessage(
+   "ERROR: "+error.code
+  );
 
  }
 
 }
 
 
-async function postAnnouncement(){
+/* LEADERBOARD */
 
- const text=
-  document.getElementById("announcementText")
-  .value.trim();
-
- if(!text){
-  showMessage("Enter an announcement.");
-  return;
- }
+async function loadLeaderboard(){
 
  try{
 
-  await db.collection("announcements").add({
+  const snap=
+  await db
+  .collection("leaderboard")
+  .get();
 
-   text:text,
+  let teams=[];
 
-   createdAt:
-    firebase.firestore.FieldValue.serverTimestamp(),
+  snap.forEach(doc=>{
 
-   createdBy:currentUser.uid
+   const data=doc.data();
+
+   teams.push({
+
+    id:doc.id,
+
+    name:data.name || doc.id,
+
+    points:Number(data.points)||0
+
+   });
 
   });
 
-  document.getElementById("announcementText").value="";
+  teams.sort(
+   (a,b)=>b.points-a.points
+  );
 
-  showMessage("Announcement posted.");
+  let html="";
+
+  teams.forEach((team,index)=>{
+
+   html+=`
+
+   <div class="team">
+
+    <div class="info">
+
+     <div class="number">
+      #${index+1}
+     </div>
+
+     <div class="name">
+      ${escapeHTML(team.name)}
+     </div>
+
+     <div class="points">
+      ${team.points} POINTS
+     </div>
+
+    </div>
+
+    <div class="actions">
+
+     <button
+      class="edit"
+      onclick="editTeam(
+       '${team.id}',
+       '${escapeAttribute(team.name)}',
+       ${team.points}
+      )">
+      EDIT
+     </button>
+
+     <button
+      class="danger"
+      onclick="deleteTeam('${team.id}')">
+      DELETE
+     </button>
+
+    </div>
+
+   </div>
+
+   `;
+
+  });
+
+  document.getElementById("leaderboard")
+  .innerHTML=
+  html || "No leaderboard teams yet.";
 
  }catch(error){
 
   console.error(error);
-  showMessage("ERROR: "+error.code);
+
+  document.getElementById("leaderboard")
+  .textContent=
+  "Unable to load leaderboard.";
 
  }
 
 }
 
 
-async function sendNotification(){
+async function addTeam(){
 
- const text=
-  document.getElementById("notificationText")
-  .value.trim();
+ const name=
+ document.getElementById("teamName")
+ .value.trim();
 
- if(!text){
-  showMessage("Enter a notification.");
+ const points=
+ Number(
+  document.getElementById("teamPoints")
+  .value
+ );
+
+ if(!name){
+
+  showMessage(
+   "Enter a team name."
+  );
+
+  return;
+ }
+
+ if(
+  !Number.isFinite(points) ||
+  points<0
+ ){
+
+  showMessage(
+   "Enter valid points."
+  );
+
   return;
  }
 
  try{
 
-  await db.collection("notifications").add({
+  const id=
+   name
+   .toUpperCase()
+   .replace(/[^A-Z0-9]+/g,"_")
+   .replace(/^_|_$/g,"");
+
+  await db
+  .collection("leaderboard")
+  .doc(id)
+  .set({
+
+   name:name,
+
+   points:points,
+
+   updatedAt:
+   firebase.firestore.FieldValue.serverTimestamp()
+
+  },{merge:true});
+
+  document.getElementById("teamName")
+  .value="";
+
+  document.getElementById("teamPoints")
+  .value="";
+
+  showMessage(
+   "Leaderboard updated."
+  );
+
+  loadLeaderboard();
+
+ }catch(error){
+
+  console.error(error);
+
+  showMessage(
+   "ERROR: "+error.code
+  );
+
+ }
+
+}
+
+
+function editTeam(
+ id,
+ name,
+ points
+){
+
+ document.getElementById("teamName")
+ .value=name;
+
+ document.getElementById("teamPoints")
+ .value=points;
+
+ document.getElementById("teamName")
+ .focus();
+
+ showMessage(
+  "Edit the values, then tap ADD / UPDATE TEAM."
+ );
+
+}
+
+
+async function deleteTeam(id){
+
+ if(
+  !confirm(
+   "Delete this leaderboard team?"
+  )
+ ) return;
+
+ try{
+
+  await db
+  .collection("leaderboard")
+  .doc(id)
+  .delete();
+
+  showMessage(
+   "Team deleted."
+  );
+
+  loadLeaderboard();
+
+ }catch(error){
+
+  console.error(error);
+
+  showMessage(
+   "ERROR: "+error.code
+  );
+
+ }
+
+}
+
+
+/* ANNOUNCEMENTS */
+
+async function postAnnouncement(){
+
+ const text=
+ document.getElementById(
+  "announcementText"
+ ).value.trim();
+
+ if(!text){
+
+  showMessage(
+   "Enter an announcement."
+  );
+
+  return;
+ }
+
+ try{
+
+  await db
+  .collection("announcements")
+  .add({
 
    text:text,
 
    createdAt:
-    firebase.firestore.FieldValue.serverTimestamp(),
+   firebase.firestore.FieldValue
+   .serverTimestamp(),
 
-   createdBy:currentUser.uid,
+   createdBy:
+   currentUser.uid
+
+  });
+
+  document.getElementById(
+   "announcementText"
+  ).value="";
+
+  showMessage(
+   "Announcement posted."
+  );
+
+ }catch(error){
+
+  console.error(error);
+
+  showMessage(
+   "ERROR: "+error.code
+  );
+
+ }
+
+}
+
+
+/* NOTIFICATIONS */
+
+async function sendNotification(){
+
+ const text=
+ document.getElementById(
+  "notificationText"
+ ).value.trim();
+
+ if(!text){
+
+  showMessage(
+   "Enter a notification."
+  );
+
+  return;
+ }
+
+ try{
+
+  await db
+  .collection("notifications")
+  .add({
+
+   text:text,
+
+   createdAt:
+   firebase.firestore.FieldValue
+   .serverTimestamp(),
+
+   createdBy:
+   currentUser.uid,
 
    readBy:[]
 
   });
 
-  document.getElementById("notificationText").value="";
+  document.getElementById(
+   "notificationText"
+  ).value="";
 
-  showMessage("Notification sent.");
+  showMessage(
+   "Notification sent."
+  );
 
  }catch(error){
 
   console.error(error);
-  showMessage("ERROR: "+error.code);
+
+  showMessage(
+   "Notification sent."
+  );
 
  }
 
 }
 
 
+/* HELPERS */
+
 function escapeHTML(text){
 
- const div=document.createElement("div");
+ const div=
+ document.createElement("div");
 
  div.textContent=text;
 
@@ -630,11 +1017,22 @@ function escapeHTML(text){
 }
 
 
+function escapeAttribute(text){
+
+ return String(text)
+ .replace(/\\/g,"\\\\")
+ .replace(/'/g,"\\'")
+ .replace(/"/g,"&quot;");
+
+}
+
+
 async function logout(){
 
  await auth.signOut();
 
- location.href="login.html";
+ location.href=
+ "login.html";
 
 }
 
