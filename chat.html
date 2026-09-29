@@ -307,22 +307,44 @@ textarea:focus {
 <body>
 
 <header>
-  <div class="logo">NØV3X</div>
+
+  <div class="logo">
+    NØV3X
+  </div>
 
   <div class="header-right">
-    <button class="bell" onclick="openNotifications()">🔔</button>
+
+    <button class="bell"
+            onclick="openNotifications()">
+      🔔
+    </button>
+
     <span id="notificationBadge"
-          class="notification-badge">0</span>
+          class="notification-badge">
+      0
+    </span>
+
   </div>
+
 </header>
 
 <main class="container">
 
-  <div class="title">NØV3X CHAT</div>
-  <div class="subtitle">ONE SQUAD, ONE FATE</div>
+  <div class="title">
+    NØV3X CHAT
+  </div>
 
-  <div id="chatBox" class="chat-box">
-    <div class="empty">Loading chat...</div>
+  <div class="subtitle">
+    ONE SQUAD, ONE FATE
+  </div>
+
+  <div id="chatBox"
+       class="chat-box">
+
+    <div class="empty">
+      Loading chat...
+    </div>
+
   </div>
 
   <div class="input-area">
@@ -330,10 +352,10 @@ textarea:focus {
     <textarea
       id="messageInput"
       maxlength="500"
-      placeholder="Type a message..."
-    ></textarea>
+      placeholder="Type a message..."></textarea>
 
-    <button class="send" onclick="sendMessage()">
+    <button class="send"
+            onclick="sendMessage()">
       SEND
     </button>
 
@@ -347,10 +369,16 @@ textarea:focus {
   <div class="notification-modal">
 
     <div class="notification-header">
-      <h2>🔔 Notifications</h2>
+
+      <h2>
+        🔔 Notifications
+      </h2>
 
       <button class="close-btn"
-              onclick="closeNotifications()">×</button>
+              onclick="closeNotifications()">
+        ×
+      </button>
+
     </div>
 
     <button class="mark-all"
@@ -360,39 +388,74 @@ textarea:focus {
 
     <div id="notificationList"
          class="notification-list">
+
       <div class="empty">
         Loading notifications...
       </div>
+
     </div>
 
   </div>
+
 </div>
+
+<!-- FINAL 5-TAB NAVIGATION -->
 
 <nav class="bottom-nav">
 
-  <a class="nav-item" href="index.html">
-    <span class="nav-icon">⌂</span>
+  <a class="nav-item"
+     href="index.html">
+
+    <span class="nav-icon">
+      🏠
+    </span>
+
     Home
+
   </a>
 
-  <a class="nav-item active" href="chat.html">
-    <span class="nav-icon">💬</span>
+  <a class="nav-item active"
+     href="chat.html">
+
+    <span class="nav-icon">
+      💬
+    </span>
+
     Chat
+
   </a>
 
-  <a class="nav-item" href="scrimmage.html">
-    <span class="nav-icon">🎮</span>
+  <a class="nav-item"
+     href="scrimmage.html">
+
+    <span class="nav-icon">
+      🎮
+    </span>
+
     Scrim
+
   </a>
 
-  <a class="nav-item" href="leaderboard.html">
-    <span class="nav-icon">🏆</span>
+  <a class="nav-item"
+     href="leaderboard.html">
+
+    <span class="nav-icon">
+      🏆
+    </span>
+
     Rank
+
   </a>
 
-  <a class="nav-item" href="teams.html">
-    <span class="nav-icon">👥</span>
-    Teams
+  <a class="nav-item"
+     href="profile.html">
+
+    <span class="nav-icon">
+      👤
+    </span>
+
+    Profile
+
   </a>
 
 </nav>
@@ -408,12 +471,17 @@ let currentUser = null;
 let currentUsername = "Player";
 let notificationCache = [];
 
-/* AUTH */
+
+/* =========================
+   AUTH
+========================= */
 
 auth.onAuthStateChanged(async user => {
 
   if (!user) {
+
     location.href = "login.html";
+
     return;
   }
 
@@ -421,14 +489,17 @@ auth.onAuthStateChanged(async user => {
 
   try {
 
-    const profile = await db
-      .collection("users")
-      .doc(user.uid)
-      .get();
+    const profile =
+      await db
+        .collection("users")
+        .doc(user.uid)
+        .get();
 
     if (profile.exists) {
+
       currentUsername =
         profile.data().username || "Player";
+
     }
 
     loadMessages();
@@ -446,7 +517,9 @@ auth.onAuthStateChanged(async user => {
 });
 
 
-/* CHAT */
+/* =========================
+   CHAT
+========================= */
 
 function loadMessages() {
 
@@ -478,22 +551,28 @@ function loadMessages() {
         message.className = "message";
 
         if (data.uid === currentUser.uid) {
+
           message.classList.add("mine");
+
         }
 
         const name =
           document.createElement("div");
 
         name.className = "name";
+
         name.textContent =
           data.username || "Player";
+
 
         const text =
           document.createElement("div");
 
         text.className = "text";
+
         text.textContent =
           data.text || "";
+
 
         const time =
           document.createElement("div");
@@ -501,33 +580,45 @@ function loadMessages() {
         time.className = "time";
 
         if (data.createdAt) {
+
           time.textContent =
-            formatTime(data.createdAt.toDate());
+            formatTime(
+              data.createdAt.toDate()
+            );
+
         }
+
 
         message.appendChild(name);
         message.appendChild(text);
         message.appendChild(time);
+
 
         if (data.uid === currentUser.uid) {
 
           const del =
             document.createElement("button");
 
-          del.className = "delete-btn";
-          del.textContent = "Delete";
+          del.className =
+            "delete-btn";
+
+          del.textContent =
+            "Delete";
 
           del.onclick = () =>
             deleteMessage(doc.id);
 
           message.appendChild(del);
+
         }
+
 
         box.appendChild(message);
 
       });
 
-      box.scrollTop = box.scrollHeight;
+      box.scrollTop =
+        box.scrollHeight;
 
     }, error => {
 
@@ -553,24 +644,46 @@ async function sendMessage() {
 
   if (!text) return;
 
+
+  if (text.length > 500) {
+
+    alert("Message is too long.");
+
+    return;
+  }
+
+
   try {
 
-    await db.collection("messages").add({
+    await db
+      .collection("messages")
+      .add({
 
-      uid: currentUser.uid,
-      username: currentUsername,
-      text: text,
-      createdAt:
-        firebase.firestore.FieldValue.serverTimestamp()
+        uid:
+          currentUser.uid,
 
-    });
+        username:
+          currentUsername,
+
+        text:
+          text,
+
+        createdAt:
+          firebase.firestore
+            .FieldValue
+            .serverTimestamp()
+
+      });
 
     input.value = "";
 
   } catch(error) {
 
     console.error(error);
-    alert("Failed to send message.");
+
+    alert(
+      "Failed to send message."
+    );
 
   }
 
@@ -581,14 +694,18 @@ async function deleteMessage(id) {
 
   try {
 
-    await db.collection("messages")
+    await db
+      .collection("messages")
       .doc(id)
       .delete();
 
   } catch(error) {
 
     console.error(error);
-    alert("Failed to delete message.");
+
+    alert(
+      "Failed to delete message."
+    );
 
   }
 
@@ -598,31 +715,48 @@ async function deleteMessage(id) {
 function formatTime(date) {
 
   return date.toLocaleString([], {
+
     month:"short",
+
     day:"numeric",
+
     hour:"numeric",
+
     minute:"2-digit"
+
   });
 
 }
 
 
-/* ENTER */
+/* =========================
+   ENTER TO SEND
+========================= */
 
-document.getElementById("messageInput")
-  .addEventListener("keydown", event => {
+document
+  .getElementById("messageInput")
+  .addEventListener(
+    "keydown",
+    event => {
 
-    if (event.key === "Enter" && !event.shiftKey) {
+      if (
+        event.key === "Enter" &&
+        !event.shiftKey
+      ) {
 
-      event.preventDefault();
-      sendMessage();
+        event.preventDefault();
+
+        sendMessage();
+
+      }
 
     }
+  );
 
-  });
 
-
-/* NOTIFICATIONS */
+/* =========================
+   NOTIFICATIONS
+========================= */
 
 function startNotifications() {
 
@@ -631,40 +765,63 @@ function startNotifications() {
     .limit(50)
     .onSnapshot(snapshot => {
 
-      notificationCache = snapshot.docs;
+      notificationCache =
+        snapshot.docs;
 
       let unread = 0;
 
+
       snapshot.forEach(doc => {
 
-        const data = doc.data();
-        const readBy = data.readBy || [];
+        const data =
+          doc.data();
 
-        if (!readBy.includes(currentUser.uid)) {
+        const readBy =
+          data.readBy || [];
+
+
+        if (
+          !readBy.includes(
+            currentUser.uid
+          )
+        ) {
+
           unread++;
+
         }
 
       });
 
+
       const badge =
-        document.getElementById("notificationBadge");
+        document.getElementById(
+          "notificationBadge"
+        );
+
 
       if (unread > 0) {
 
         badge.textContent =
-          unread > 99 ? "99+" : unread;
+          unread > 99
+            ? "99+"
+            : unread;
 
-        badge.style.display = "flex";
+        badge.style.display =
+          "flex";
 
       } else {
 
-        badge.style.display = "none";
+        badge.style.display =
+          "none";
 
       }
 
     }, error => {
 
-      console.error("Notification error:", error);
+      console.error(
+        "Notification error:",
+        error
+      );
 
     });
 
@@ -675,7 +832,8 @@ function openNotifications() {
 
   document.getElementById(
     "notificationOverlay"
-  ).style.display = "block";
+  ).style.display =
+    "block";
 
   loadNotifications();
 
@@ -686,7 +844,8 @@ function closeNotifications() {
 
   document.getElementById(
     "notificationOverlay"
-  ).style.display = "none";
+  ).style.display =
+    "none";
 
 }
 
@@ -694,11 +853,16 @@ function closeNotifications() {
 function loadNotifications() {
 
   const list =
-    document.getElementById("notificationList");
+    document.getElementById(
+      "notificationList"
+    );
 
   list.innerHTML = "";
 
-  if (notificationCache.length === 0) {
+
+  if (
+    notificationCache.length === 0
+  ) {
 
     list.innerHTML =
       '<div class="empty">No notifications.</div>';
@@ -707,40 +871,65 @@ function loadNotifications() {
 
   }
 
+
   notificationCache.forEach(doc => {
 
-    const data = doc.data();
+    const data =
+      doc.data();
 
     const item =
       document.createElement("div");
 
-    item.className = "notification-item";
+    item.className =
+      "notification-item";
 
-    const readBy = data.readBy || [];
 
-    if (!readBy.includes(currentUser.uid)) {
-      item.classList.add("unread");
+    const readBy =
+      data.readBy || [];
+
+
+    if (
+      !readBy.includes(
+        currentUser.uid
+      )
+    ) {
+
+      item.classList.add(
+        "unread"
+      );
+
     }
+
 
     const title =
       document.createElement("div");
 
-    title.className = "notification-title";
+    title.className =
+      "notification-title";
+
     title.textContent =
       data.title || "NØV3X";
+
 
     const text =
       document.createElement("div");
 
-    text.className = "notification-text";
+    text.className =
+      "notification-text";
+
     text.textContent =
       data.text || "";
+
 
     item.appendChild(title);
     item.appendChild(text);
 
+
     item.onclick = () =>
-      markNotificationRead(doc.id);
+      markNotificationRead(
+        doc.id
+      );
+
 
     list.appendChild(item);
 
@@ -753,13 +942,17 @@ async function markNotificationRead(id) {
 
   try {
 
-    await db.collection("notifications")
+    await db
+      .collection("notifications")
       .doc(id)
       .update({
 
         readBy:
-          firebase.firestore.FieldValue
-            .arrayUnion(currentUser.uid)
+          firebase.firestore
+            .FieldValue
+            .arrayUnion(
+              currentUser.uid
+            )
 
       });
 
@@ -774,30 +967,48 @@ async function markNotificationRead(id) {
 
 async function markAllRead() {
 
-  const batch = db.batch();
+  const batch =
+    db.batch();
+
 
   notificationCache.forEach(doc => {
 
-    const data = doc.data();
-    const readBy = data.readBy || [];
+    const data =
+      doc.data();
 
-    if (!readBy.includes(currentUser.uid)) {
+    const readBy =
+      data.readBy || [];
 
-      batch.update(doc.ref, {
 
-        readBy:
-          firebase.firestore.FieldValue
-            .arrayUnion(currentUser.uid)
+    if (
+      !readBy.includes(
+        currentUser.uid
+      )
+    ) {
 
-      });
+      batch.update(
+        doc.ref,
+        {
+
+          readBy:
+            firebase.firestore
+              .FieldValue
+              .arrayUnion(
+                currentUser.uid
+              )
+
+        }
+      );
 
     }
 
   });
 
+
   try {
 
     await batch.commit();
+
     loadNotifications();
 
   } catch(error) {
@@ -809,14 +1020,25 @@ async function markAllRead() {
 }
 
 
-document.getElementById("notificationOverlay")
-  .addEventListener("click", event => {
+document
+  .getElementById(
+    "notificationOverlay"
+  )
+  .addEventListener(
+    "click",
+    event => {
 
-    if (event.target.id === "notificationOverlay") {
-      closeNotifications();
+      if (
+        event.target.id ===
+        "notificationOverlay"
+      ) {
+
+        closeNotifications();
+
+      }
+
     }
-
-  });
+  );
 
 </script>
 
