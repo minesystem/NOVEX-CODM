@@ -1,363 +1,773 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0,
+               maximum-scale=1.0, user-scalable=no">
 
-  <title>NØV3X CODM</title>
+<title>NØV3X CODM</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
+<style>
+html {
+  background:#07000d !important;
+}
 
-    body {
-      background: #08060d;
-      color: white;
-      min-height: 100vh;
-      padding-bottom: 90px;
-    }
+body {
+  margin:0 !important;
+  padding:0 0 90px 0 !important;
+  min-height:100vh;
+  background:#07000d !important;
+  color:#fff !important;
+  font-family:Arial,sans-serif;
+}
 
-    /* TOP BAR */
-    .topbar {
-      height: 65px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
+* {
+  box-sizing:border-box;
+}
 
-      background: #0d0914;
-      border-bottom: 1px solid #291637;
-    }
+.topbar {
+  height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 18px;
+  background:#0d0018 !important;
+  border-bottom:1px solid #7520c0;
+  position:sticky;
+  top:0;
+  z-index:20;
+}
 
-    .logo {
-      font-size: 24px;
-      font-weight: 900;
-      letter-spacing: 4px;
-    }
+.logo {
+  color:#c77dff;
+  font-size:24px;
+  font-weight:900;
+  letter-spacing:3px;
+}
 
-    .online {
-      color: #b45cff;
-      font-size: 10px;
-      letter-spacing: 1px;
-    }
+.header-right {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  position:relative;
+}
 
-    /* HERO */
-    .hero {
-      margin: 20px;
-      padding: 35px 20px;
+.online {
+  color:#b45cff;
+  font-size:10px;
+  letter-spacing:1px;
+}
 
-      border: 1px solid #542677;
-      border-radius: 18px;
+.bell {
+  width:43px;
+  height:43px;
+  border:0;
+  border-radius:50%;
+  background:#1a0029 !important;
+  color:white;
+  font-size:20px;
+}
 
-      background:
-        linear-gradient(
-          135deg,
-          #1a0d26,
-          #0b0710
-        );
+.notification-badge {
+  position:absolute;
+  top:-2px;
+  right:44px;
+  min-width:18px;
+  height:18px;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:#ff1744;
+  color:white;
+  border:2px solid #0d0018;
+  border-radius:20px;
+  font-size:10px;
+  font-weight:bold;
+}
 
-      box-shadow: 0 0 30px rgba(150, 60, 255, 0.12);
-    }
+.hero {
+  margin:20px;
+  padding:35px 20px;
+  border:1px solid #542677;
+  border-radius:18px;
+  background:linear-gradient(135deg,#1a0d26,#0b0710) !important;
+  box-shadow:0 0 30px rgba(150,60,255,.12);
+}
 
-    .welcome {
-      color: #a650df;
-      font-size: 11px;
-      font-weight: bold;
-      letter-spacing: 3px;
-    }
+.welcome {
+  color:#a650df;
+  font-size:11px;
+  font-weight:bold;
+  letter-spacing:3px;
+}
 
-    .hero h1 {
-      font-size: 34px;
-      margin: 8px 0;
-      letter-spacing: 2px;
-    }
+.hero h1 {
+  font-size:34px;
+  margin:8px 0;
+  letter-spacing:2px;
+}
 
-    .hero p:last-child {
-      color: #888;
-      font-size: 12px;
-    }
+.hero p:last-child {
+  color:#888;
+  font-size:12px;
+}
 
-    /* MENU */
-    .menu {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin: 20px;
-    }
+.username {
+  color:#c77dff;
+}
 
-    .card {
-      padding: 20px 15px;
-      min-height: 145px;
+.section-title {
+  margin:22px 20px 10px;
+  color:#c77dff;
+  font-size:12px;
+  font-weight:bold;
+  letter-spacing:2px;
+}
 
-      border-radius: 16px;
-      border: 1px solid #291637;
+.menu {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin:20px;
+}
 
-      background: #100b17;
+.card {
+  padding:20px 15px;
+  min-height:145px;
+  border-radius:16px;
+  border:1px solid #291637;
+  background:#100b17 !important;
+  text-decoration:none;
+  color:white;
+}
 
-      text-decoration: none;
-      color: white;
+.card:active {
+  transform:scale(.96);
+}
 
-      transition: 0.2s;
-    }
+.icon {
+  font-size:28px;
+}
 
-    .card:active {
-      transform: scale(0.96);
-    }
+.card h2 {
+  font-size:15px;
+  margin-top:12px;
+}
 
-    .icon {
-      font-size: 28px;
-    }
+.card p {
+  color:#777;
+  font-size:10px;
+  margin-top:6px;
+  line-height:1.4;
+}
 
-    .card h2 {
-      font-size: 15px;
-      margin-top: 12px;
-    }
+.announcement {
+  margin:20px;
+  padding:20px;
+  background:#100b17 !important;
+  border-left:3px solid #9b42e8;
+  border-radius:10px;
+}
 
-    .card p {
-      color: #777;
-      font-size: 10px;
-      margin-top: 6px;
-      line-height: 1.4;
-    }
+.announcement-label {
+  color:#a650df;
+  font-size:9px;
+  font-weight:bold;
+  letter-spacing:2px;
+  margin-bottom:8px;
+}
 
-    /* ANNOUNCEMENT */
-    .announcement {
-      margin: 20px;
-      padding: 20px;
+.announcement h2 {
+  font-size:17px;
+  margin-bottom:8px;
+}
 
-      background: #100b17;
-      border-left: 3px solid #9b42e8;
+.announcement p {
+  color:#888;
+  font-size:11px;
+  line-height:1.5;
+}
 
-      border-radius: 10px;
-    }
+.no-announcement {
+  color:#777;
+  font-size:12px;
+}
 
-    .announcement-label {
-      color: #a650df;
-      font-size: 9px;
-      font-weight: bold;
-      letter-spacing: 2px;
-      margin-bottom: 8px;
-    }
+.profile-link {
+  display:block;
+  margin:20px;
+  padding:16px;
+  border:1px solid #3d1558;
+  border-radius:13px;
+  background:#100b17 !important;
+  color:#c77dff;
+  text-decoration:none;
+  font-weight:bold;
+  text-align:center;
+}
 
-    .announcement h2 {
-      font-size: 17px;
-      margin-bottom: 8px;
-    }
+.bottom-nav {
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:70px;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  background:#0c0811 !important;
+  border-top:1px solid #291637;
+  z-index:50;
+}
 
-    .announcement p {
-      color: #888;
-      font-size: 11px;
-      line-height: 1.5;
-    }
+.bottom-nav a {
+  color:#777;
+  text-decoration:none;
+  text-align:center;
+  font-size:20px;
+}
 
-    /* BOTTOM NAV */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
+.bottom-nav a.active {
+  color:#b85cff;
+}
 
-      height: 70px;
+.bottom-nav span {
+  display:block;
+  font-size:9px;
+  margin-top:3px;
+}
 
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
+.notification-overlay {
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.8);
+  z-index:100;
+  padding:20px;
+}
 
-      background: #0c0811;
-      border-top: 1px solid #291637;
+.notification-modal {
+  max-width:500px;
+  max-height:75vh;
+  margin:50px auto;
+  overflow:hidden;
+  background:#100019 !important;
+  border:1px solid #7020a8;
+  border-radius:18px;
+}
 
-      z-index: 100;
-    }
+.notification-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:17px;
+  border-bottom:1px solid #351047;
+}
 
-    .bottom-nav a {
-      color: #777;
-      text-decoration: none;
-      text-align: center;
-      font-size: 20px;
-    }
+.notification-header h2 {
+  margin:0;
+  font-size:18px;
+}
 
-    .bottom-nav a.active {
-      color: #b85cff;
-    }
+.close-btn,
+.mark-all {
+  border:0;
+  background:none;
+  color:#c77dff;
+}
 
-    .bottom-nav span {
-      display: block;
-      font-size: 9px;
-      margin-top: 3px;
-    }
+.close-btn {
+  color:white;
+  font-size:22px;
+}
 
-    /* SMALL PHONES */
-    @media (max-width: 350px) {
-      .hero h1 {
-        font-size: 28px;
-      }
+.mark-all {
+  padding:10px 17px;
+  font-size:11px;
+}
 
-      .menu {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+.notification-list {
+  max-height:58vh;
+  overflow-y:auto;
+}
+
+.notification-item {
+  padding:15px 17px;
+  border-top:1px solid #291034;
+}
+
+.notification-item.unread {
+  background:#190025 !important;
+}
+
+.notification-title {
+  color:#d59aff;
+  font-weight:bold;
+}
+
+.notification-text {
+  color:#eee0f5;
+  font-size:13px;
+  margin-top:5px;
+}
+
+.notification-time {
+  color:#75617e;
+  font-size:10px;
+  margin-top:6px;
+}
+
+.empty {
+  padding:25px 10px;
+  text-align:center;
+  color:#806b8d;
+}
+
+@media (max-width:350px) {
+  .hero h1 {
+    font-size:28px;
+  }
+
+  .menu {
+    grid-template-columns:1fr;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <!-- TOP BAR -->
-  <header class="topbar">
+<header class="topbar">
 
-    <div class="logo">
-      NØV3X
+  <div class="logo">NØV3X</div>
+
+  <div class="header-right">
+
+    <div class="online">● ONLINE</div>
+
+    <button class="bell"
+            onclick="openNotifications()">🔔</button>
+
+    <span id="notificationBadge"
+          class="notification-badge">0</span>
+
+  </div>
+
+</header>
+
+<section class="hero">
+
+  <p class="welcome">WELCOME</p>
+
+  <h1>
+    NØV3X <span id="username" class="username">PLAYER</span>
+  </h1>
+
+  <p>ONE SQUAD. ONE FATE.</p>
+
+</section>
+
+<div class="section-title">
+  NØV3X HUB
+</div>
+
+<section class="menu">
+
+  <a href="chat.html" class="card">
+    <div class="icon">💬</div>
+    <h2>CHAT</h2>
+    <p>Talk with NØV3X members</p>
+  </a>
+
+  <a href="scrimmage.html" class="card">
+    <div class="icon">🎮</div>
+    <h2>SCRIMMAGE</h2>
+    <p>View scrims and claim slots</p>
+  </a>
+
+  <a href="leaderboard.html" class="card">
+    <div class="icon">🏆</div>
+    <h2>LEADERBOARD</h2>
+    <p>Check team rankings and points</p>
+  </a>
+
+  <a href="teams.html" class="card">
+    <div class="icon">👥</div>
+    <h2>TEAMS</h2>
+    <p>View registered teams</p>
+  </a>
+
+</section>
+
+<section class="announcement">
+
+  <p class="announcement-label">
+    LATEST ANNOUNCEMENT
+  </p>
+
+  <div id="announcementContent">
+    <div class="empty">Loading...</div>
+  </div>
+
+</section>
+
+<a href="profile.html" class="profile-link">
+  👤 OPEN PROFILE
+</a>
+
+<div id="notificationOverlay"
+     class="notification-overlay">
+
+  <div class="notification-modal">
+
+    <div class="notification-header">
+      <h2>🔔 Notifications</h2>
+
+      <button class="close-btn"
+              onclick="closeNotifications()">×</button>
     </div>
 
-    <div class="online">
-      ● ONLINE
+    <button class="mark-all"
+            onclick="markAllRead()">
+      Mark all as read
+    </button>
+
+    <div id="notificationList"
+         class="notification-list">
+
+      <div class="empty">
+        Loading notifications...
+      </div>
+
     </div>
 
-  </header>
+  </div>
+
+</div>
+
+<nav class="bottom-nav">
+
+  <a href="index.html" class="active">
+    🏠
+    <span>Home</span>
+  </a>
+
+  <a href="chat.html">
+    💬
+    <span>Chat</span>
+  </a>
+
+  <a href="scrimmage.html">
+    🎮
+    <span>Scrim</span>
+  </a>
+
+  <a href="leaderboard.html">
+    🏆
+    <span>Ranks</span>
+  </a>
+
+  <a href="teams.html">
+    👥
+    <span>Teams</span>
+  </a>
+
+</nav>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+
+<script>
+
+let currentUser = null;
+let notificationCache = [];
+
+auth.onAuthStateChanged(async user => {
+
+  if (!user) {
+    location.href = "login.html";
+    return;
+  }
+
+  currentUser = user;
+
+  try {
+
+    const profile = await db
+      .collection("users")
+      .doc(user.uid)
+      .get();
+
+    if (profile.exists) {
+
+      const data = profile.data();
+
+      document.getElementById("username").textContent =
+        data.username || "PLAYER";
+
+    }
+
+    loadAnnouncements();
+    startNotifications();
+
+  } catch(error) {
+
+    console.error(error);
+
+  }
+
+});
 
 
-  <!-- HERO -->
-  <section class="hero">
+function loadAnnouncements() {
 
-    <p class="welcome">
-      WELCOME TO
-    </p>
+  db.collection("announcements")
+    .orderBy("createdAt", "desc")
+    .limit(1)
+    .onSnapshot(snapshot => {
 
-    <h1>
-      NOVEX CODM
-    </h1>
+      const box =
+        document.getElementById("announcementContent");
 
-    <p>
-      ONE SQUAD. ONE FATE.
-    </p>
+      box.innerHTML = "";
 
-  </section>
+      if (snapshot.empty) {
 
+        box.innerHTML =
+          '<div class="no-announcement">No announcements yet.</div>';
 
-  <!-- MAIN MENU -->
-  <section class="menu">
+        return;
+      }
 
-    <a href="chat.html" class="card">
+      const data = snapshot.docs[0].data();
 
-      <div class="icon">
-        💬
-      </div>
+      const title =
+        document.createElement("h2");
 
-      <h2>
-        CHAT
-      </h2>
+      title.textContent =
+        data.title || "🔥 NØV3X ANNOUNCEMENT";
 
-      <p>
-        Talk with NOVEX members
-      </p>
+      const text =
+        document.createElement("p");
 
-    </a>
+      text.textContent =
+        data.text || "";
 
+      box.appendChild(title);
+      box.appendChild(text);
 
-    <a href="scrimmage.html" class="card">
+    }, error => {
 
-      <div class="icon">
-        🎮
-      </div>
+      console.error(error);
 
-      <h2>
-        SCRIMMAGE
-      </h2>
+      document.getElementById("announcementContent").innerHTML =
+        '<div class="no-announcement">Unable to load announcements.</div>';
 
-      <p>
-        View scrims and tryout slots
-      </p>
+    });
 
-    </a>
+}
 
 
-    <a href="leaderboard.html" class="card">
+function startNotifications() {
 
-      <div class="icon">
-        🏆
-      </div>
+  db.collection("notifications")
+    .orderBy("createdAt", "desc")
+    .limit(50)
+    .onSnapshot(snapshot => {
 
-      <h2>
-        LEADERBOARD
-      </h2>
+      notificationCache = snapshot.docs;
 
-      <p>
-        Check team rankings and points
-      </p>
+      let unread = 0;
 
-    </a>
+      snapshot.forEach(doc => {
 
+        const data = doc.data();
+        const readBy = data.readBy || [];
 
-    <a href="teams.html" class="card">
+        if (!readBy.includes(currentUser.uid)) {
+          unread++;
+        }
 
-      <div class="icon">
-        👥
-      </div>
+      });
 
-      <h2>
-        TEAMS
-      </h2>
+      const badge =
+        document.getElementById("notificationBadge");
 
-      <p>
-        View registered teams
-      </p>
+      if (unread > 0) {
 
-    </a>
+        badge.textContent =
+          unread > 99 ? "99+" : unread;
 
-  </section>
+        badge.style.display = "flex";
 
+      } else {
 
-  <!-- ANNOUNCEMENT -->
-  <section class="announcement">
+        badge.style.display = "none";
 
-    <p class="announcement-label">
-      LATEST ANNOUNCEMENT
-    </p>
+      }
 
-    <h2>
-      🔥 NOVEX SCRIMMAGE
-    </h2>
+    }, error => {
 
-    <p>
-      Check the scrimmage section for the latest
-      slots, schedules, and announcements.
-    </p>
+      console.error(error);
 
-  </section>
+    });
+
+}
 
 
-  <!-- BOTTOM NAVIGATION -->
-  <nav class="bottom-nav">
+function openNotifications() {
 
-    <a href="index.html" class="active">
-      🏠
-      <span>Home</span>
-    </a>
+  document.getElementById(
+    "notificationOverlay"
+  ).style.display = "block";
 
-    <a href="chat.html">
-      💬
-      <span>Chat</span>
-    </a>
+  loadNotifications();
 
-    <a href="scrimmage.html">
-      🎮
-      <span>Scrim</span>
-    </a>
+}
 
-    <a href="leaderboard.html">
-      🏆
-      <span>Ranks</span>
-    </a>
 
-    <a href="teams.html">
-      👥
-      <span>Teams</span>
-    </a>
+function closeNotifications() {
 
-  </nav>
+  document.getElementById(
+    "notificationOverlay"
+  ).style.display = "none";
+
+}
+
+
+function loadNotifications() {
+
+  const list =
+    document.getElementById("notificationList");
+
+  list.innerHTML = "";
+
+  if (notificationCache.length === 0) {
+
+    list.innerHTML =
+      '<div class="empty">No notifications.</div>';
+
+    return;
+
+  }
+
+  notificationCache.forEach(doc => {
+
+    const data = doc.data();
+
+    const item =
+      document.createElement("div");
+
+    item.className = "notification-item";
+
+    const readBy = data.readBy || [];
+
+    if (!readBy.includes(currentUser.uid)) {
+      item.classList.add("unread");
+    }
+
+    const title =
+      document.createElement("div");
+
+    title.className = "notification-title";
+
+    title.textContent =
+      data.title || "NØV3X";
+
+    const text =
+      document.createElement("div");
+
+    text.className = "notification-text";
+
+    text.textContent =
+      data.text || "";
+
+    item.appendChild(title);
+    item.appendChild(text);
+
+    item.onclick = () =>
+      markNotificationRead(doc.id);
+
+    list.appendChild(item);
+
+  });
+
+}
+
+
+async function markNotificationRead(id) {
+
+  try {
+
+    await db.collection("notifications")
+      .doc(id)
+      .update({
+
+        readBy:
+          firebase.firestore.FieldValue
+            .arrayUnion(currentUser.uid)
+
+      });
+
+  } catch(error) {
+
+    console.error(error);
+
+  }
+
+}
+
+
+async function markAllRead() {
+
+  const batch = db.batch();
+
+  notificationCache.forEach(doc => {
+
+    const data = doc.data();
+    const readBy = data.readBy || [];
+
+    if (!readBy.includes(currentUser.uid)) {
+
+      batch.update(doc.ref, {
+
+        readBy:
+          firebase.firestore.FieldValue
+            .arrayUnion(currentUser.uid)
+
+      });
+
+    }
+
+  });
+
+  try {
+
+    await batch.commit();
+    loadNotifications();
+
+  } catch(error) {
+
+    console.error(error);
+
+  }
+
+}
+
+
+document.getElementById("notificationOverlay")
+  .addEventListener("click", event => {
+
+    if (event.target.id === "notificationOverlay") {
+      closeNotifications();
+    }
+
+  });
+
+</script>
 
 </body>
 </html>
