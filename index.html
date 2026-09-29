@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>NØV3X CODM</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #08060d;
+      color: white;
+      min-height: 100vh;
+      padding-bottom: 90px;
+    }
+
+    /* TOP BAR */
+    .topbar {
+      height: 65px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+
+      background: #0d0914;
+      border-bottom: 1px solid #291637;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: 4px;
+    }
+
+    .online {
+      color: #b45cff;
+      font-size: 10px;
+      letter-spacing: 1px;
+    }
+
+    /* HERO */
+    .hero {
+      margin: 20px;
+      padding: 35px 20px;
+
+      border: 1px solid #542677;
+      border-radius: 18px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #1a0d26,
+          #0b0710
+        );
+
+      box-shadow: 0 0 30px rgba(150, 60, 255, 0.12);
+    }
+
+    .welcome {
+      color: #a650df;
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 3px;
+    }
+
+    .hero h1 {
+      font-size: 34px;
+      margin: 8px 0;
+      letter-spacing: 2px;
+    }
+
+    .hero p:last-child {
+      color: #888;
+      font-size: 12px;
+    }
+
+    /* MENU */
+    .menu {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 20px;
+    }
+
+    .card {
+      padding: 20px 15px;
+      min-height: 145px;
+
+      border-radius: 16px;
+      border: 1px solid #291637;
+
+      background: #100b17;
+
+      text-decoration: none;
+      color: white;
+
+      transition: 0.2s;
+    }
+
+    .card:active {
+      transform: scale(0.96);
+    }
+
+    .icon {
+      font-size: 28px;
+    }
+
+    .card h2 {
+      font-size: 15px;
+      margin-top: 12px;
+    }
+
+    .card p {
+      color: #777;
+      font-size: 10px;
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    /* ANNOUNCEMENT */
+    .announcement {
+      margin: 20px;
+      padding: 20px;
+
+      background: #100b17;
+      border-left: 3px solid #9b42e8;
+
+      border-radius: 10px;
+    }
+
+    .announcement-label {
+      color: #a650df;
+      font-size: 9px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .announcement h2 {
+      font-size: 17px;
+      margin-bottom: 8px;
+    }
+
+    .announcement p {
+      color: #888;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    /* BOTTOM NAV */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+
+      height: 70px;
+
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+
+      background: #0c0811;
+      border-top: 1px solid #291637;
+
+      z-index: 100;
+    }
+
+    .bottom-nav a {
+      color: #777;
+      text-decoration: none;
+      text-align: center;
+      font-size: 20px;
+    }
+
+    .bottom-nav a.active {
+      color: #b85cff;
+    }
+
+    .bottom-nav span {
+      display: block;
+      font-size: 9px;
+      margin-top: 3px;
+    }
+
+    /* SMALL PHONES */
+    @media (max-width: 350px) {
+      .hero h1 {
+        font-size: 28px;
+      }
+
+      .menu {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+
+    <div class="logo">
+      NØV3X
+    </div>
+
+    <div class="online">
+      ● ONLINE
+    </div>
+
+  </header>
+
+
+  <!-- HERO -->
+  <section class="hero">
+
+    <p class="welcome">
+      WELCOME TO
+    </p>
+
+    <h1>
+      NOVEX CODM
+    </h1>
+
+    <p>
+      ONE SQUAD. ONE FATE.
+    </p>
+
+  </section>
+
+
+  <!-- MAIN MENU -->
+  <section class="menu">
+
+    <a href="chat.html" class="card">
+
+      <div class="icon">
+        💬
+      </div>
+
+      <h2>
+        CHAT
+      </h2>
+
+      <p>
+        Talk with NOVEX members
+      </p>
+
+    </a>
+
+
+    <a href="scrimmage.html" class="card">
+
+      <div class="icon">
+        🎮
+      </div>
+
+      <h2>
+        SCRIMMAGE
+      </h2>
+
+      <p>
+        View scrims and tryout slots
+      </p>
+
+    </a>
+
+
+    <a href="leaderboard.html" class="card">
+
+      <div class="icon">
+        🏆
+      </div>
+
+      <h2>
+        LEADERBOARD
+      </h2>
+
+      <p>
+        Check team rankings and points
+      </p>
+
+    </a>
+
+
+    <a href="teams.html" class="card">
+
+      <div class="icon">
+        👥
+      </div>
+
+      <h2>
+        TEAMS
+      </h2>
+
+      <p>
+        View registered teams
+      </p>
+
+    </a>
+
+  </section>
+
+
+  <!-- ANNOUNCEMENT -->
+  <section class="announcement">
+
+    <p class="announcement-label">
+      LATEST ANNOUNCEMENT
+    </p>
+
+    <h2>
+      🔥 NOVEX SCRIMMAGE
+    </h2>
+
+    <p>
+      Check the scrimmage section for the latest
+      slots, schedules, and announcements.
+    </p>
+
+  </section>
+
+
+  <!-- BOTTOM NAVIGATION -->
+  <nav class="bottom-nav">
+
+    <a href="index.html" class="active">
+      🏠
+      <span>Home</span>
+    </a>
+
+    <a href="chat.html">
+      💬
+      <span>Chat</span>
+    </a>
+
+    <a href="scrimmage.html">
+      🎮
+      <span>Scrim</span>
+    </a>
+
+    <a href="leaderboard.html">
+      🏆
+      <span>Ranks</span>
+    </a>
+
+    <a href="teams.html">
+      👥
+      <span>Teams</span>
+    </a>
+
+  </nav>
+
+</body>
+</html>

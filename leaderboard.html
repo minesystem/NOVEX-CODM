@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>NØV3X Leaderboard</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #08060d;
+      color: white;
+      min-height: 100vh;
+      padding-bottom: 30px;
+    }
+
+    /* HEADER */
+
+    header {
+      height: 65px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 0 18px;
+
+      background: #0d0914;
+      border-bottom: 1px solid #291637;
+
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .back {
+      color: white;
+      text-decoration: none;
+      font-size: 26px;
+    }
+
+    header h1 {
+      font-size: 17px;
+      letter-spacing: 2px;
+    }
+
+    /* MAIN */
+
+    main {
+      padding: 20px;
+    }
+
+    /* TITLE */
+
+    .title {
+      margin-bottom: 20px;
+    }
+
+    .title p {
+      color: #a650df;
+      font-size: 10px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    .title h2 {
+      font-size: 25px;
+      margin-top: 5px;
+    }
+
+    /* TOP 3 */
+
+    .top-three {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr 1fr;
+      gap: 8px;
+      align-items: end;
+      margin-bottom: 25px;
+    }
+
+    .top-card {
+      text-align: center;
+      padding: 15px 8px;
+
+      background: #100b17;
+      border: 1px solid #291637;
+      border-radius: 14px;
+    }
+
+    .top-card.first {
+      padding-top: 25px;
+      border-color: #75409b;
+      background: linear-gradient(145deg, #21102d, #100b17);
+    }
+
+    .medal {
+      font-size: 27px;
+      margin-bottom: 8px;
+    }
+
+    .rank {
+      color: #9d50df;
+      font-size: 10px;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    .team-name {
+      font-size: 11px;
+      font-weight: bold;
+      word-break: break-word;
+    }
+
+    .points {
+      color: #b45cff;
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+
+    .pts-label {
+      color: #666;
+      font-size: 8px;
+    }
+
+    /* LEADERBOARD */
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      margin-bottom: 12px;
+    }
+
+    .section-title h2 {
+      font-size: 15px;
+      letter-spacing: 1px;
+    }
+
+    .section-title span {
+      color: #666;
+      font-size: 9px;
+    }
+
+    .team-row {
+      display: flex;
+      align-items: center;
+
+      padding: 16px;
+
+      margin-bottom: 8px;
+
+      border-radius: 11px;
+
+      background: #100b17;
+      border: 1px solid #291637;
+    }
+
+    .position {
+      width: 40px;
+      color: #9d50df;
+      font-weight: bold;
+      font-size: 12px;
+    }
+
+    .team-info {
+      flex: 1;
+    }
+
+    .team-info h3 {
+      font-size: 13px;
+    }
+
+    .team-info p {
+      color: #666;
+      font-size: 9px;
+      margin-top: 4px;
+    }
+
+    .score {
+      text-align: right;
+    }
+
+    .score strong {
+      display: block;
+      font-size: 14px;
+      color: #ddd;
+    }
+
+    .score span {
+      color: #666;
+      font-size: 8px;
+    }
+
+    /* POINT SYSTEM */
+
+    .point-system {
+      margin-top: 25px;
+
+      padding: 18px;
+
+      background: #100b17;
+
+      border: 1px solid #291637;
+
+      border-radius: 13px;
+    }
+
+    .point-system h2 {
+      color: #b45cff;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .point {
+      display: flex;
+      justify-content: space-between;
+
+      padding: 9px 0;
+
+      border-bottom: 1px solid #201329;
+
+      font-size: 11px;
+    }
+
+    .point:last-child {
+      border-bottom: none;
+    }
+
+    .point span {
+      color: #888;
+    }
+
+    .point strong {
+      color: #ddd;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 350px) {
+      .top-three {
+        grid-template-columns: 1fr;
+      }
+
+      .top-card.first {
+        order: -1;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+
+  <header>
+
+    <a href="index.html" class="back">
+      ←
+    </a>
+
+    <h1>
+      NØV3X LEADERBOARD
+    </h1>
+
+  </header>
+
+
+  <main>
+
+    <!-- TITLE -->
+
+    <section class="title">
+
+      <p>
+        CODM SCRIMMAGE
+      </p>
+
+      <h2>
+        TEAM RANKINGS
+      </h2>
+
+    </section>
+
+
+    <!-- TOP 3 -->
+
+    <section class="top-three">
+
+      <!-- TOP 2 -->
+
+      <div class="top-card">
+
+        <div class="medal">
+          🥈
+        </div>
+
+        <div class="rank">
+          #2
+        </div>
+
+        <div class="team-name">
+          TEAM BETA
+        </div>
+
+        <div class="points">
+          0
+        </div>
+
+        <div class="pts-label">
+          POINTS
+        </div>
+
+      </div>
+
+
+      <!-- TOP 1 -->
+
+      <div class="top-card first">
+
+        <div class="medal">
+          🥇
+        </div>
+
+        <div class="rank">
+          #1
+        </div>
+
+        <div class="team-name">
+          NOVEX MAIN
+        </div>
+
+        <div class="points">
+          0
+        </div>
+
+        <div class="pts-label">
+          POINTS
+        </div>
+
+      </div>
+
+
+      <!-- TOP 3 -->
+
+      <div class="top-card">
+
+        <div class="medal">
+          🥉
+        </div>
+
+        <div class="rank">
+          #3
+        </div>
+
+        <div class="team-name">
+          TEAM ALPHA
+        </div>
+
+        <div class="points">
+          0
+        </div>
+
+        <div class="pts-label">
+          POINTS
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- FULL RANKING -->
+
+    <section>
+
+      <div class="section-title">
+
+        <h2>
+          FULL RANKING
+        </h2>
+
+        <span>
+          LIVE
+        </span>
+
+      </div>
+
+
+      <div id="leaderboard">
+
+        <div class="team-row">
+
+          <div class="position">
+            #1
+          </div>
+
+          <div class="team-info">
+
+            <h3>
+              NOVEX MAIN
+            </h3>
+
+            <p>
+              NOVEX
+            </p>
+
+          </div>
+
+          <div class="score">
+
+            <strong>
+              0
+            </strong>
+
+            <span>
+              PTS
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="team-row">
+
+          <div class="position">
+            #2
+          </div>
+
+          <div class="team-info">
+
+            <h3>
+              TEAM BETA
+            </h3>
+
+            <p>
+              REGISTERED TEAM
+            </p>
+
+          </div>
+
+          <div class="score">
+
+            <strong>
+              0
+            </strong>
+
+            <span>
+              PTS
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="team-row">
+
+          <div class="position">
+            #3
+          </div>
+
+          <div class="team-info">
+
+            <h3>
+              TEAM ALPHA
+            </h3>
+
+            <p>
+              REGISTERED TEAM
+            </p>
+
+          </div>
+
+          <div class="score">
+
+            <strong>
+              0
+            </strong>
+
+            <span>
+              PTS
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="team-row">
+
+          <div class="position">
+            #4
+          </div>
+
+          <div class="team-info">
+
+            <h3>
+              TEAM GAMMA
+            </h3>
+
+            <p>
+              REGISTERED TEAM
+            </p>
+
+          </div>
+
+          <div class="score">
+
+            <strong>
+              0
+            </strong>
+
+            <span>
+              PTS
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="team-row">
+
+          <div class="position">
+            #5
+          </div>
+
+          <div class="team-info">
+
+            <h3>
+              TEAM DELTA
+            </h3>
+
+            <p>
+              REGISTERED TEAM
+            </p>
+
+          </div>
+
+          <div class="score">
+
+            <strong>
+              0
+            </strong>
+
+            <span>
+              PTS
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- POINT SYSTEM -->
+
+    <section class="point-system">
+
+      <h2>
+        🔥 POINT SYSTEM
+      </h2>
+
+
+      <div class="point">
+        <span>1 Kill</span>
+        <strong>5 PTS</strong>
+      </div>
+
+
+      <div class="point">
+        <span>Top 1</span>
+        <strong>+20 PTS</strong>
+      </div>
+
+
+      <div class="point">
+        <span>Top 2</span>
+        <strong>+15 PTS</strong>
+      </div>
+
+
+      <div class="point">
+        <span>Top 3</span>
+        <strong>+5 PTS</strong>
+      </div>
+
+
+      <div class="point">
+        <span>MVP / Winner</span>
+        <strong>BANNER</strong>
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <script>
+
+    console.log("NØV3X LEADERBOARD LOADED");
+
+  </script>
+
+</body>
+</html>

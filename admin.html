@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NØV3X • Admin</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #050509;
+      color: white;
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      padding-bottom: 40px;
+    }
+
+    .topbar {
+      padding: 18px;
+      background: #08060d;
+      border-bottom: 1px solid #2b1c38;
+    }
+
+    .logo {
+      color: #b56cff;
+      font-size: 23px;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .title {
+      margin-top: 30px;
+      font-size: 30px;
+      font-weight: 900;
+    }
+
+    .subtitle {
+      color: #777;
+      margin-top: 6px;
+    }
+
+    .admin-card {
+      margin-top: 22px;
+      padding: 20px;
+      background: #0d0a13;
+      border: 1px solid #6d28d9;
+      border-radius: 18px;
+    }
+
+    .admin-name {
+      color: #c084fc;
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .admin-role {
+      margin-top: 6px;
+      color: #888;
+      font-size: 13px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .card {
+      padding: 22px 15px;
+      background: #0d0a13;
+      border: 1px solid #24192e;
+      border-radius: 16px;
+      text-decoration: none;
+      color: white;
+    }
+
+    .icon {
+      font-size: 28px;
+    }
+
+    .card-title {
+      margin-top: 10px;
+      font-weight: 900;
+    }
+
+    .card-text {
+      margin-top: 5px;
+      color: #777;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .back {
+      display: block;
+      margin-top: 25px;
+      padding: 14px;
+      text-align: center;
+      background: #7c3aed;
+      color: white;
+      text-decoration: none;
+      border-radius: 11px;
+      font-weight: 900;
+    }
+
+    #loading {
+      text-align: center;
+      color: #777;
+      margin-top: 40px;
+    }
+
+    #denied {
+      display: none;
+      margin-top: 30px;
+      padding: 25px;
+      text-align: center;
+      background: #0d0a13;
+      border: 1px solid #3a2020;
+      border-radius: 16px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="topbar">
+    <div class="logo">NØV3X ADMIN</div>
+  </div>
+
+  <div class="container">
+
+    <div id="loading">
+      Checking admin access...
+    </div>
+
+    <div id="adminContent" style="display:none;">
+
+      <div class="title">ADMIN DASHBOARD</div>
+
+      <div class="subtitle">
+        Manage NØV3X CODM
+      </div>
+
+      <div class="admin-card">
+
+        <div class="admin-name" id="adminName">
+          ADMIN
+        </div>
+
+        <div class="admin-role">
+          👑 Administrator
+        </div>
+
+      </div>
+
+      <div class="grid">
+
+        <a href="leaderboard.html" class="card">
+          <div class="icon">🏆</div>
+          <div class="card-title">Leaderboard</div>
+          <div class="card-text">
+            Add and manage team scores.
+          </div>
+        </a>
+
+        <a href="scrimmage.html" class="card">
+          <div class="icon">🎮</div>
+          <div class="card-title">Scrimmage</div>
+          <div class="card-text">
+            View and manage scrimmage slots.
+          </div>
+        </a>
+
+        <a href="teams.html" class="card">
+          <div class="icon">👥</div>
+          <div class="card-title">Teams</div>
+          <div class="card-text">
+            View registered NØV3X teams.
+          </div>
+        </a>
+
+        <a href="chat.html" class="card">
+          <div class="icon">💬</div>
+          <div class="card-title">Chat</div>
+          <div class="card-text">
+            Open the NØV3X community chat.
+          </div>
+        </a>
+
+      </div>
+
+      <a href="index.html" class="back">
+        BACK TO NØV3X
+      </a>
+
+    </div>
+
+    <div id="denied">
+
+      <div style="font-size:40px;">🚫</div>
+
+      <h2 style="margin-top:10px;">
+        Access Denied
+      </h2>
+
+      <p style="color:#777;margin-top:8px;">
+        This page is only available to NØV3X administrators.
+      </p>
+
+      <a
+        href="index.html"
+        style="display:block;margin-top:18px;color:#b56cff;"
+      >
+        Return Home
+      </a>
+
+    </div>
+
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
+
+  <script>
+
+    auth.onAuthStateChanged(async (user) => {
+
+      if (!user) {
+        window.location.href = "login.html";
+        return;
+      }
+
+      try {
+
+        const doc = await db
+          .collection("users")
+          .doc(user.uid)
+          .get();
+
+        if (!doc.exists || doc.data().role !== "admin") {
+
+          document.getElementById("loading").style.display = "none";
+          document.getElementById("denied").style.display = "block";
+
+          return;
+        }
+
+        const data = doc.data();
+
+        document.getElementById("adminName").textContent =
+          data.username || "NØV3X ADMIN";
+
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("adminContent").style.display = "block";
+
+      } catch (error) {
+
+        console.error(error);
+
+        document.getElementById("loading").textContent =
+          "Unable to verify admin account.";
+
+      }
+
+    });
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NØV3X — Login</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #08060d;
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.box {
+  width: 100%;
+  max-width: 400px;
+  background: #100b18;
+  border: 1px solid #3b1757;
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 0 30px rgba(130, 40, 220, .15);
+}
+
+.logo {
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  letter-spacing: 4px;
+  color: #c46cff;
+}
+
+.subtitle {
+  text-align: center;
+  color: #81768c;
+  font-size: 12px;
+  margin-top: 7px;
+  margin-bottom: 25px;
+}
+
+.tabs {
+  display: flex;
+  margin-bottom: 20px;
+  background: #08060d;
+  border-radius: 10px;
+  padding: 4px;
+}
+
+.tabs button {
+  flex: 1;
+  border: none;
+  padding: 11px;
+  border-radius: 8px;
+  background: transparent;
+  color: #81768c;
+  font-weight: bold;
+}
+
+.tabs button.active {
+  background: #7c2cff;
+  color: white;
+}
+
+.input {
+  width: 100%;
+  padding: 13px;
+  margin-bottom: 10px;
+  background: #08060d;
+  color: white;
+  border: 1px solid #321650;
+  border-radius: 10px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: #a448ff;
+}
+
+.main-btn {
+  width: 100%;
+  padding: 14px;
+  margin-top: 7px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #7628c8, #a448ff);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.message {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 12px;
+  color: #ff7777;
+  min-height: 18px;
+}
+
+.guest {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  background: transparent;
+  color: #b44cff;
+  border: 1px solid #321650;
+  border-radius: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+  <div class="logo">NØV3X</div>
+
+  <div class="subtitle">
+    CODM COMMUNITY
+  </div>
+
+
+  <div class="tabs">
+
+    <button
+      id="loginTab"
+      class="active"
+      onclick="showLogin()">
+      LOGIN
+    </button>
+
+    <button
+      id="registerTab"
+      onclick="showRegister()">
+      REGISTER
+    </button>
+
+  </div>
+
+
+  <div id="formArea">
+
+    <input
+      id="email"
+      class="input"
+      type="email"
+      placeholder="Email"
+      autocomplete="email"
+    >
+
+    <input
+      id="password"
+      class="input"
+      type="password"
+      placeholder="Password"
+      autocomplete="current-password"
+    >
+
+    <button
+      class="main-btn"
+      onclick="login()">
+      LOGIN
+    </button>
+
+  </div>
+
+
+  <div
+    id="message"
+    class="message">
+  </div>
+
+
+  <button
+    class="guest"
+    onclick="guestMode()">
+    CONTINUE AS GUEST
+  </button>
+
+</div>
+
+
+<!-- FIREBASE -->
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+<script src="firebase-config.js"></script>
+
+
+<script>
+
+let registerMode = false;
+
+const message =
+  document.getElementById("message");
+
+
+// LOGIN TAB
+
+function showLogin() {
+
+  registerMode = false;
+
+  document
+    .getElementById("loginTab")
+    .classList.add("active");
+
+  document
+    .getElementById("registerTab")
+    .classList.remove("active");
+
+
+  document.getElementById("formArea")
+    .innerHTML = `
+
+      <input
+        id="email"
+        class="input"
+        type="email"
+        placeholder="Email"
+      >
+
+      <input
+        id="password"
+        class="input"
+        type="password"
+        placeholder="Password"
+      >
+
+      <button
+        class="main-btn"
+        onclick="login()">
+        LOGIN
+      </button>
+
+    `;
+
+  message.textContent = "";
+
+}
+
+
+// REGISTER TAB
+
+function showRegister() {
+
+  registerMode = true;
+
+  document
+    .getElementById("loginTab")
+    .classList.remove("active");
+
+  document
+    .getElementById("registerTab")
+    .classList.add("active");
+
+
+  document.getElementById("formArea")
+    .innerHTML = `
+
+      <input
+        id="username"
+        class="input"
+        type="text"
+        placeholder="Username"
+        maxlength="20"
+      >
+
+      <input
+        id="email"
+        class="input"
+        type="email"
+        placeholder="Email"
+      >
+
+      <input
+        id="password"
+        class="input"
+        type="password"
+        placeholder="Password"
+      >
+
+      <button
+        class="main-btn"
+        onclick="register()">
+        CREATE ACCOUNT
+      </button>
+
+    `;
+
+  message.textContent = "";
+
+}
+
+
+// REGISTER
+
+async function register() {
+
+  const username =
+    document.getElementById("username")
+      .value.trim();
+
+  const email =
+    document.getElementById("email")
+      .value.trim();
+
+  const password =
+    document.getElementById("password")
+      .value;
+
+
+  if (!username ||
+      !email ||
+      !password) {
+
+    showError(
+      "Fill in all fields."
+    );
+
+    return;
+
+  }
+
+
+  if (password.length < 6) {
+
+    showError(
+      "Password must be at least 6 characters."
+    );
+
+    return;
+
+  }
+
+
+  try {
+
+    const result =
+      await auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+
+
+    await db
+      .collection("users")
+      .doc(result.user.uid)
+      .set({
+
+        username: username,
+
+        email: email,
+
+        createdAt:
+          firebase.firestore.FieldValue
+            .serverTimestamp()
+
+      });
+
+
+    localStorage.setItem(
+      "novexName",
+      username
+    );
+
+
+    window.location.href =
+      "index.html";
+
+  }
+
+  catch(error) {
+
+    showError(
+      firebaseError(error)
+    );
+
+  }
+
+}
+
+
+// LOGIN
+
+async function login() {
+
+  const email =
+    document.getElementById("email")
+      .value.trim();
+
+  const password =
+    document.getElementById("password")
+      .value;
+
+
+  if (!email || !password) {
+
+    showError(
+      "Enter your email and password."
+    );
+
+    return;
+
+  }
+
+
+  try {
+
+    await auth
+      .signInWithEmailAndPassword(
+        email,
+        password
+      );
+
+
+    window.location.href =
+      "index.html";
+
+  }
+
+  catch(error) {
+
+    showError(
+      firebaseError(error)
+    );
+
+  }
+
+}
+
+
+// GUEST
+
+function guestMode() {
+
+  localStorage.setItem(
+    "novexGuest",
+    "true"
+  );
+
+  window.location.href =
+    "index.html";
+
+}
+
+
+// ERROR
+
+function showError(text) {
+
+  message.textContent = text;
+
+}
+
+
+// FIREBASE ERROR TEXT
+
+function firebaseError(error) {
+
+  switch(error.code) {
+
+    case "auth/invalid-email":
+      return "Invalid email.";
+
+    case "auth/user-not-found":
+      return "Account not found.";
+
+    case "auth/wrong-password":
+      return "Incorrect password.";
+
+    case "auth/email-already-in-use":
+      return "Email is already registered.";
+
+    case "auth/weak-password":
+      return "Password is too weak.";
+
+    default:
+      return "Something went wrong.";
+
+  }
+
+}
+
+
+// CHECK LOGIN
+
+auth.onAuthStateChanged(user => {
+
+  if (user) {
+
+    console.log(
+      "Logged in:",
+      user.email
+    );
+
+  }
+
+});
+
+</script>
+
+</body>
+</html>

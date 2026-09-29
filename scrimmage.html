@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>NØV3X Scrimmage</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #08060d;
+      color: white;
+      min-height: 100vh;
+      padding-bottom: 30px;
+    }
+
+    /* HEADER */
+
+    header {
+      height: 65px;
+
+      display: flex;
+      align-items: center;
+      gap: 15px;
+
+      padding: 0 18px;
+
+      background: #0d0914;
+      border-bottom: 1px solid #291637;
+
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .back {
+      color: white;
+      text-decoration: none;
+      font-size: 26px;
+    }
+
+    header h1 {
+      font-size: 17px;
+      letter-spacing: 2px;
+    }
+
+    /* MAIN */
+
+    main {
+      padding: 20px;
+    }
+
+    /* EVENT */
+
+    .event {
+      padding: 22px;
+
+      border-radius: 18px;
+
+      border: 1px solid #542677;
+
+      background:
+        linear-gradient(
+          135deg,
+          #1a0d26,
+          #0c0811
+        );
+
+      box-shadow:
+        0 0 30px rgba(150, 60, 255, 0.10);
+
+      margin-bottom: 25px;
+    }
+
+    .event-label {
+      color: #a650df;
+
+      font-size: 10px;
+
+      font-weight: bold;
+
+      letter-spacing: 2px;
+
+      margin-bottom: 10px;
+    }
+
+    .event h2 {
+      font-size: 21px;
+
+      margin-bottom: 20px;
+    }
+
+    /* INFO */
+
+    .info {
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      padding: 13px 0;
+
+      border-top: 1px solid #291637;
+
+      font-size: 11px;
+    }
+
+    .info span {
+      color: #777;
+    }
+
+    .info strong {
+      color: #ddd;
+
+      text-align: right;
+    }
+
+    /* RULES */
+
+    .rules {
+      margin-top: 15px;
+
+      padding: 15px;
+
+      background: #100b17;
+
+      border: 1px solid #291637;
+
+      border-radius: 12px;
+    }
+
+    .rules h3 {
+      font-size: 12px;
+
+      color: #b45cff;
+
+      margin-bottom: 8px;
+
+      letter-spacing: 1px;
+    }
+
+    .rules p {
+      color: #888;
+
+      font-size: 11px;
+
+      line-height: 1.6;
+    }
+
+    /* TRYOUT LIST */
+
+    .slots-title {
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      margin-bottom: 12px;
+    }
+
+    .slots-title h2 {
+      font-size: 16px;
+
+      letter-spacing: 2px;
+    }
+
+    .slots-title span {
+      color: #777;
+
+      font-size: 10px;
+    }
+
+    .slot {
+      display: flex;
+
+      align-items: center;
+
+      padding: 16px;
+
+      margin-bottom: 8px;
+
+      border-radius: 11px;
+
+      background: #100b17;
+
+      border: 1px solid #291637;
+
+      transition: 0.15s;
+    }
+
+    .slot:active {
+      transform: scale(0.98);
+    }
+
+    .number {
+      width: 45px;
+
+      color: #9d50df;
+
+      font-size: 12px;
+
+      font-weight: bold;
+    }
+
+    .team {
+      flex: 1;
+
+      font-size: 13px;
+
+      font-weight: bold;
+    }
+
+    .open {
+      color: #777;
+
+      font-size: 10px;
+
+      font-weight: bold;
+    }
+
+    .filled {
+      color: #b45cff;
+
+      font-size: 10px;
+
+      font-weight: bold;
+    }
+
+    /* MINE SYSTEM */
+
+    .mine {
+      margin-top: 20px;
+
+      padding: 18px;
+
+      border-radius: 13px;
+
+      background: #130c1b;
+
+      border: 1px solid #3a1b50;
+    }
+
+    .mine h3 {
+      color: #b45cff;
+
+      font-size: 13px;
+
+      margin-bottom: 7px;
+    }
+
+    .mine p {
+      color: #888;
+
+      font-size: 11px;
+
+      line-height: 1.5;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+
+  <header>
+
+    <a href="index.html" class="back">
+      ←
+    </a>
+
+    <h1>
+      NØV3X SCRIMMAGE
+    </h1>
+
+  </header>
+
+
+  <main>
+
+    <!-- EVENT -->
+
+    <section class="event">
+
+      <div class="event-label">
+        UPCOMING EVENT
+      </div>
+
+      <h2>
+        🔥 8PM BR SCRIMMAGE
+      </h2>
+
+
+      <div class="info">
+
+        <span>
+          📅 DATE
+        </span>
+
+        <strong>
+          COMING SOON
+        </strong>
+
+      </div>
+
+
+      <div class="info">
+
+        <span>
+          🕗 OPEN ROOM
+        </span>
+
+        <strong>
+          8:00 PM
+        </strong>
+
+      </div>
+
+
+      <div class="info">
+
+        <span>
+          🎮 ROOM START
+        </span>
+
+        <strong>
+          8:20 PM
+        </strong>
+
+      </div>
+
+
+      <div class="info">
+
+        <span>
+          🗺️ MAPS
+        </span>
+
+        <strong>
+          ISO - BO - ISO
+        </strong>
+
+      </div>
+
+
+      <div class="rules">
+
+        <h3>
+          ⚠ SCRIMMAGE RULE
+        </h3>
+
+        <p>
+          NO SKIPPING OF SLOTS.
+          Follow the assigned slot order
+          and the official scrimmage rules.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- TRYOUT LIST -->
+
+    <section>
+
+      <div class="slots-title">
+
+        <h2>
+          TRYOUT LIST
+        </h2>
+
+        <span>
+          1–25
+        </span>
+
+      </div>
+
+
+      <div id="slots">
+
+        <div class="slot">
+          <div class="number">01</div>
+          <div class="team">OPEN</div>
+          <div class="open">AVAILABLE</div>
+        </div>
+
+        <div class="slot">
+          <div class="number">02</div>
+          <div class="team">OPEN</div>
+          <div class="open">AVAILABLE</div>
+        </div>
+
+        <div class="slot">
+          <div class="number">03</div>
+          <div class="team">OPEN</div>
+          <div class="open">AVAILABLE</div>
+        </div>
+
+        <div class="slot">
+          <div class="number">04</div>
+          <div class="team">OPEN</div>
+          <div class="open">AVAILABLE</div>
+        </div>
+
+        <div class="slot">
+          <div class="number">05</div>
+          <div class="team">OPEN</div>
+          <div class="open">AVAILABLE</div>
+        </div>
+
+        <div class="slot">
+          <div class="number">06</div>
+          <div class="team">OPEN</div>
+          <div class="open">AVAILABLE</div>
+        </div>
+
+        <div class="slot">
+          <div class="number">07</div>
+          <div class="team">OPEN</div>
+          <div class="open">AVAILABLE</div>
+        </div>
+
+        <div class="slot">
+          <div class="number">08</div>
+          <div class="team">OPEN</div>
+          <div class="open">AVAILABLE</div>
+        </div>
+
+        <div class="slot">
+          <div class="number">09</div>
+          <div class="team">OPEN</div>
+          <div class="open">AVAILABLE</div>
+        </div>
+
+        <div class="slot">
+          <div class="number">10</div>
+          <div class="team">OPEN</div>
+          <div class="open">AVAILABLE</div>
+        </div>
+
+        <div class="slot">
+          <div class="number">11</div>
+          <div class="team">OPEN</div>
+          <div class="open">AVAILABLE</div>
+        </div>
+
+        <div class="slot">
+          <div class="number">12</div>
+          <div class="team">OPEN</div>
+          <div class="open">AVAILABLE</div>
+        </div>
+
+        <div class="slot">
+          <div class="number">13</div>
+          <div class="team">OPEN</div>
+          <div class="open">AVAILABLE</div>
+        </div>
+
+        <div class="slot">
+          <div class="number">14</div>
+          <div class="team">OPEN</div>
+          <div class="open">AVAILABLE</div>
+        </div>
+
+        <div class="slot">
+          <div class="number">15</div>
+          <div class="team">OPEN</div>
+          <div class="open">AVAILABLE</div>
+        </div>
+
+        <div class="slot">
+          <div class="number">16</div>
+          <div class="team">OPEN</div>
+          <div class="open">AVAILABLE</div>
+        </div>
+
+        <div class="slot">
+          <div class="number">17</div>
+          <div class="team">OPEN</div>
+          <div class="open">AVAILABLE</div>
+        </div>
+
+        <div class="slot">
+          <div class="number">18</div>
+          <div class="team">OPEN</div>
+          <div class="open">AVAILABLE</div>
+        </div>
+
+        <div class="slot">
+          <div class="number">19</div>
+          <div class="team">OPEN</div>
+          <div class="open">AVAILABLE</div>
+        </div>
+
+        <div class="slot">
+          <div class="number">20</div>
+          <div class="team">OPEN</div>
+          <div class="open">AVAILABLE</div>
+        </div>
+
+        <div class="slot">
+          <div class="number">21</div>
+          <div class="team">OPEN</div>
+          <div class="open">AVAILABLE</div>
+        </div>
+
+        <div class="slot">
+          <div class="number">22</div>
+          <div class="team">OPEN</div>
+          <div class="open">AVAILABLE</div>
+        </div>
+
+        <div class="slot">
+          <div class="number">23</div>
+          <div class="team">OPEN</div>
+          <div class="open">AVAILABLE</div>
+        </div>
+
+        <div class="slot">
+          <div class="number">24</div>
+          <div class="team">OPEN</div>
+          <div class="open">AVAILABLE</div>
+        </div>
+
+        <div class="slot">
+          <div class="number">25</div>
+          <div class="team">OPEN</div>
+          <div class="open">AVAILABLE</div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- MINE SYSTEM -->
+
+    <section class="mine">
+
+      <h3>
+        🎯 MINE SYSTEM
+      </h3>
+
+      <p>
+        Teams can select or claim their available
+        slot for the upcoming game. Once confirmed,
+        the selected slot belongs to that team.
+      </p>
+
+    </section>
+
+  </main>
+
+
+  <script>
+
+    const slots = document.querySelectorAll(".slot");
+
+    slots.forEach((slot) => {
+
+      slot.addEventListener("click", () => {
+
+        const team = slot.querySelector(".team");
+        const status = slot.querySelector(".open");
+
+        if (!team || !status) {
+          return;
+        }
+
+        if (team.textContent === "OPEN") {
+
+          const name = prompt(
+            "Enter your team name:"
+          );
+
+          if (name && name.trim() !== "") {
+
+            team.textContent = name.trim();
+
+            status.textContent = "CLAIMED";
+            status.className = "filled";
+
+            alert(
+              "Slot " +
+              slot.querySelector(".number").textContent +
+              " claimed by " +
+              name.trim()
+            );
+
+          }
+
+        } else {
+
+          alert(
+            "This slot is already claimed by " +
+            team.textContent
+          );
+
+        }
+
+      });
+
+    });
+
+  </script>
+
+</body>
+</html>
