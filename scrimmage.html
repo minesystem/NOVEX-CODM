@@ -1,618 +1,1047 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>NØV3X Scrimmage</title>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0,
+               maximum-scale=1.0, user-scalable=no">
+
+<title>NØV3X — Scrimmage</title>
+
+<style>
+
+* {
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
+
+html {
+  background:#07000d !important;
+}
+
+body {
+  background:#07000d !important;
+  color:white;
+  min-height:100vh;
+  padding-bottom:90px;
+}
+
+/* HEADER */
+
+header {
+  height:65px;
+  display:flex;
+  align-items:center;
+  gap:15px;
+  padding:0 18px;
+  background:#0d0018 !important;
+  border-bottom:1px solid #542677;
+  position:sticky;
+  top:0;
+  z-index:20;
+}
+
+.back {
+  color:white;
+  text-decoration:none;
+  font-size:26px;
+}
+
+header h1 {
+  font-size:17px;
+  letter-spacing:2px;
+}
+
+/* MAIN */
+
+main {
+  width:100%;
+  max-width:700px;
+  margin:auto;
+  padding:20px;
+}
+
+/* EVENT */
+
+.event {
+  padding:22px;
+  border-radius:18px;
+  border:1px solid #542677;
+  background:linear-gradient(
+    135deg,
+    #1a0d26,
+    #0c0811
+  );
+  box-shadow:0 0 30px rgba(150,60,255,.10);
+  margin-bottom:25px;
+}
+
+.event-label {
+  color:#a650df;
+  font-size:10px;
+  font-weight:bold;
+  letter-spacing:2px;
+  margin-bottom:10px;
+}
+
+.event h2 {
+  font-size:21px;
+  margin-bottom:20px;
+}
+
+.info {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:13px 0;
+  border-top:1px solid #291637;
+  font-size:11px;
+}
+
+.info span {
+  color:#777;
+}
+
+.info strong {
+  color:#ddd;
+  text-align:right;
+}
+
+.rules {
+  margin-top:15px;
+  padding:15px;
+  background:#100b17;
+  border:1px solid #291637;
+  border-radius:12px;
+}
+
+.rules h3 {
+  font-size:12px;
+  color:#b45cff;
+  margin-bottom:8px;
+  letter-spacing:1px;
+}
+
+.rules p {
+  color:#888;
+  font-size:11px;
+  line-height:1.6;
+}
+
+/* TRYOUT LIST */
+
+.slots-title {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
+}
+
+.slots-title h2 {
+  font-size:16px;
+  letter-spacing:2px;
+}
+
+.slots-title span {
+  color:#777;
+  font-size:10px;
+}
+
+.slot {
+  display:flex;
+  align-items:center;
+  padding:16px;
+  margin-bottom:8px;
+  border-radius:11px;
+  background:#100b17;
+  border:1px solid #291637;
+  transition:.15s;
+  cursor:pointer;
+}
+
+.slot:active {
+  transform:scale(.98);
+}
+
+.number {
+  width:45px;
+  color:#9d50df;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.team {
+  flex:1;
+  font-size:13px;
+  font-weight:bold;
+  word-break:break-word;
+}
+
+.open {
+  color:#777;
+  font-size:10px;
+  font-weight:bold;
+}
+
+.filled {
+  color:#b45cff;
+  font-size:10px;
+  font-weight:bold;
+}
+
+/* BUTTON */
+
+.claim-btn {
+  margin-top:12px;
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:11px;
+  background:#7624b8;
+  color:white;
+  font-weight:bold;
+  font-size:13px;
+}
+
+.claim-btn:active {
+  transform:scale(.98);
+}
+
+/* MINE SYSTEM */
+
+.mine {
+  margin-top:20px;
+  padding:18px;
+  border-radius:13px;
+  background:#130c1b;
+  border:1px solid #3a1b50;
+}
+
+.mine h3 {
+  color:#b45cff;
+  font-size:13px;
+  margin-bottom:7px;
+}
+
+.mine p {
+  color:#888;
+  font-size:11px;
+  line-height:1.5;
+}
+
+/* MESSAGE */
+
+.message {
+  min-height:18px;
+  margin-top:12px;
+  text-align:center;
+  color:#c77dff;
+  font-size:12px;
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav {
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  height:68px;
+  background:#0d0018 !important;
+  border-top:1px solid #451067;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  z-index:50;
+}
+
+.nav-item {
+  text-decoration:none;
+  color:#806b8d;
+  text-align:center;
+  font-size:11px;
+}
+
+.nav-item.active {
+  color:#c77dff;
+}
+
+.nav-icon {
+  display:block;
+  font-size:21px;
+  margin-bottom:2px;
+}
+
+</style>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
-
-    body {
-      background: #08060d;
-      color: white;
-      min-height: 100vh;
-      padding-bottom: 30px;
-    }
-
-    /* HEADER */
-
-    header {
-      height: 65px;
-
-      display: flex;
-      align-items: center;
-      gap: 15px;
-
-      padding: 0 18px;
-
-      background: #0d0914;
-      border-bottom: 1px solid #291637;
-
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-
-    .back {
-      color: white;
-      text-decoration: none;
-      font-size: 26px;
-    }
-
-    header h1 {
-      font-size: 17px;
-      letter-spacing: 2px;
-    }
-
-    /* MAIN */
-
-    main {
-      padding: 20px;
-    }
-
-    /* EVENT */
-
-    .event {
-      padding: 22px;
-
-      border-radius: 18px;
-
-      border: 1px solid #542677;
-
-      background:
-        linear-gradient(
-          135deg,
-          #1a0d26,
-          #0c0811
-        );
-
-      box-shadow:
-        0 0 30px rgba(150, 60, 255, 0.10);
-
-      margin-bottom: 25px;
-    }
-
-    .event-label {
-      color: #a650df;
-
-      font-size: 10px;
-
-      font-weight: bold;
-
-      letter-spacing: 2px;
-
-      margin-bottom: 10px;
-    }
-
-    .event h2 {
-      font-size: 21px;
-
-      margin-bottom: 20px;
-    }
-
-    /* INFO */
-
-    .info {
-      display: flex;
-
-      justify-content: space-between;
-
-      align-items: center;
-
-      padding: 13px 0;
-
-      border-top: 1px solid #291637;
-
-      font-size: 11px;
-    }
-
-    .info span {
-      color: #777;
-    }
-
-    .info strong {
-      color: #ddd;
-
-      text-align: right;
-    }
-
-    /* RULES */
-
-    .rules {
-      margin-top: 15px;
-
-      padding: 15px;
-
-      background: #100b17;
-
-      border: 1px solid #291637;
-
-      border-radius: 12px;
-    }
-
-    .rules h3 {
-      font-size: 12px;
-
-      color: #b45cff;
-
-      margin-bottom: 8px;
-
-      letter-spacing: 1px;
-    }
-
-    .rules p {
-      color: #888;
-
-      font-size: 11px;
-
-      line-height: 1.6;
-    }
-
-    /* TRYOUT LIST */
-
-    .slots-title {
-      display: flex;
-
-      justify-content: space-between;
-
-      align-items: center;
-
-      margin-bottom: 12px;
-    }
-
-    .slots-title h2 {
-      font-size: 16px;
-
-      letter-spacing: 2px;
-    }
-
-    .slots-title span {
-      color: #777;
-
-      font-size: 10px;
-    }
-
-    .slot {
-      display: flex;
-
-      align-items: center;
-
-      padding: 16px;
-
-      margin-bottom: 8px;
-
-      border-radius: 11px;
-
-      background: #100b17;
-
-      border: 1px solid #291637;
-
-      transition: 0.15s;
-    }
-
-    .slot:active {
-      transform: scale(0.98);
-    }
-
-    .number {
-      width: 45px;
-
-      color: #9d50df;
-
-      font-size: 12px;
-
-      font-weight: bold;
-    }
-
-    .team {
-      flex: 1;
-
-      font-size: 13px;
-
-      font-weight: bold;
-    }
-
-    .open {
-      color: #777;
-
-      font-size: 10px;
-
-      font-weight: bold;
-    }
-
-    .filled {
-      color: #b45cff;
-
-      font-size: 10px;
-
-      font-weight: bold;
-    }
-
-    /* MINE SYSTEM */
-
-    .mine {
-      margin-top: 20px;
-
-      padding: 18px;
-
-      border-radius: 13px;
-
-      background: #130c1b;
-
-      border: 1px solid #3a1b50;
-    }
-
-    .mine h3 {
-      color: #b45cff;
-
-      font-size: 13px;
-
-      margin-bottom: 7px;
-    }
-
-    .mine p {
-      color: #888;
-
-      font-size: 11px;
-
-      line-height: 1.5;
-    }
-
-  </style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
+<header>
 
-  <header>
+  <a href="index.html"
+     class="back">
+    ←
+  </a>
 
-    <a href="index.html" class="back">
-      ←
-    </a>
+  <h1>
+    NØV3X SCRIMMAGE
+  </h1>
 
-    <h1>
-      NØV3X SCRIMMAGE
-    </h1>
+</header>
 
-  </header>
 
+<main>
 
-  <main>
+  <!-- EVENT -->
 
-    <!-- EVENT -->
+  <section class="event">
 
-    <section class="event">
+    <div class="event-label">
+      UPCOMING EVENT
+    </div>
 
-      <div class="event-label">
-        UPCOMING EVENT
-      </div>
+    <h2>
+      🔥 8PM BR SCRIMMAGE
+    </h2>
 
-      <h2>
-        🔥 8PM BR SCRIMMAGE
-      </h2>
+    <div class="info">
 
+      <span>📅 DATE</span>
 
-      <div class="info">
+      <strong>
+        COMING SOON
+      </strong>
 
-        <span>
-          📅 DATE
-        </span>
+    </div>
 
-        <strong>
-          COMING SOON
-        </strong>
+    <div class="info">
 
-      </div>
+      <span>🕗 OPEN ROOM</span>
 
+      <strong>
+        8:00 PM
+      </strong>
 
-      <div class="info">
+    </div>
 
-        <span>
-          🕗 OPEN ROOM
-        </span>
+    <div class="info">
 
-        <strong>
-          8:00 PM
-        </strong>
+      <span>🎮 ROOM START</span>
 
-      </div>
+      <strong>
+        8:20 PM
+      </strong>
 
+    </div>
 
-      <div class="info">
+    <div class="info">
 
-        <span>
-          🎮 ROOM START
-        </span>
+      <span>🗺️ MAPS</span>
 
-        <strong>
-          8:20 PM
-        </strong>
+      <strong>
+        ISO - BO - ISO
+      </strong>
 
-      </div>
+    </div>
 
-
-      <div class="info">
-
-        <span>
-          🗺️ MAPS
-        </span>
-
-        <strong>
-          ISO - BO - ISO
-        </strong>
-
-      </div>
-
-
-      <div class="rules">
-
-        <h3>
-          ⚠ SCRIMMAGE RULE
-        </h3>
-
-        <p>
-          NO SKIPPING OF SLOTS.
-          Follow the assigned slot order
-          and the official scrimmage rules.
-        </p>
-
-      </div>
-
-    </section>
-
-
-    <!-- TRYOUT LIST -->
-
-    <section>
-
-      <div class="slots-title">
-
-        <h2>
-          TRYOUT LIST
-        </h2>
-
-        <span>
-          1–25
-        </span>
-
-      </div>
-
-
-      <div id="slots">
-
-        <div class="slot">
-          <div class="number">01</div>
-          <div class="team">OPEN</div>
-          <div class="open">AVAILABLE</div>
-        </div>
-
-        <div class="slot">
-          <div class="number">02</div>
-          <div class="team">OPEN</div>
-          <div class="open">AVAILABLE</div>
-        </div>
-
-        <div class="slot">
-          <div class="number">03</div>
-          <div class="team">OPEN</div>
-          <div class="open">AVAILABLE</div>
-        </div>
-
-        <div class="slot">
-          <div class="number">04</div>
-          <div class="team">OPEN</div>
-          <div class="open">AVAILABLE</div>
-        </div>
-
-        <div class="slot">
-          <div class="number">05</div>
-          <div class="team">OPEN</div>
-          <div class="open">AVAILABLE</div>
-        </div>
-
-        <div class="slot">
-          <div class="number">06</div>
-          <div class="team">OPEN</div>
-          <div class="open">AVAILABLE</div>
-        </div>
-
-        <div class="slot">
-          <div class="number">07</div>
-          <div class="team">OPEN</div>
-          <div class="open">AVAILABLE</div>
-        </div>
-
-        <div class="slot">
-          <div class="number">08</div>
-          <div class="team">OPEN</div>
-          <div class="open">AVAILABLE</div>
-        </div>
-
-        <div class="slot">
-          <div class="number">09</div>
-          <div class="team">OPEN</div>
-          <div class="open">AVAILABLE</div>
-        </div>
-
-        <div class="slot">
-          <div class="number">10</div>
-          <div class="team">OPEN</div>
-          <div class="open">AVAILABLE</div>
-        </div>
-
-        <div class="slot">
-          <div class="number">11</div>
-          <div class="team">OPEN</div>
-          <div class="open">AVAILABLE</div>
-        </div>
-
-        <div class="slot">
-          <div class="number">12</div>
-          <div class="team">OPEN</div>
-          <div class="open">AVAILABLE</div>
-        </div>
-
-        <div class="slot">
-          <div class="number">13</div>
-          <div class="team">OPEN</div>
-          <div class="open">AVAILABLE</div>
-        </div>
-
-        <div class="slot">
-          <div class="number">14</div>
-          <div class="team">OPEN</div>
-          <div class="open">AVAILABLE</div>
-        </div>
-
-        <div class="slot">
-          <div class="number">15</div>
-          <div class="team">OPEN</div>
-          <div class="open">AVAILABLE</div>
-        </div>
-
-        <div class="slot">
-          <div class="number">16</div>
-          <div class="team">OPEN</div>
-          <div class="open">AVAILABLE</div>
-        </div>
-
-        <div class="slot">
-          <div class="number">17</div>
-          <div class="team">OPEN</div>
-          <div class="open">AVAILABLE</div>
-        </div>
-
-        <div class="slot">
-          <div class="number">18</div>
-          <div class="team">OPEN</div>
-          <div class="open">AVAILABLE</div>
-        </div>
-
-        <div class="slot">
-          <div class="number">19</div>
-          <div class="team">OPEN</div>
-          <div class="open">AVAILABLE</div>
-        </div>
-
-        <div class="slot">
-          <div class="number">20</div>
-          <div class="team">OPEN</div>
-          <div class="open">AVAILABLE</div>
-        </div>
-
-        <div class="slot">
-          <div class="number">21</div>
-          <div class="team">OPEN</div>
-          <div class="open">AVAILABLE</div>
-        </div>
-
-        <div class="slot">
-          <div class="number">22</div>
-          <div class="team">OPEN</div>
-          <div class="open">AVAILABLE</div>
-        </div>
-
-        <div class="slot">
-          <div class="number">23</div>
-          <div class="team">OPEN</div>
-          <div class="open">AVAILABLE</div>
-        </div>
-
-        <div class="slot">
-          <div class="number">24</div>
-          <div class="team">OPEN</div>
-          <div class="open">AVAILABLE</div>
-        </div>
-
-        <div class="slot">
-          <div class="number">25</div>
-          <div class="team">OPEN</div>
-          <div class="open">AVAILABLE</div>
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- MINE SYSTEM -->
-
-    <section class="mine">
+    <div class="rules">
 
       <h3>
-        🎯 MINE SYSTEM
+        ⚠ SCRIMMAGE RULE
       </h3>
 
       <p>
-        Teams can select or claim their available
-        slot for the upcoming game. Once confirmed,
-        the selected slot belongs to that team.
+        NO SKIPPING OF SLOTS.
+        Follow the assigned slot order
+        and the official scrimmage rules.
       </p>
 
-    </section>
+    </div>
 
-  </main>
+  </section>
 
 
-  <script>
+  <!-- TRYOUT LIST -->
 
-    const slots = document.querySelectorAll(".slot");
+  <section>
 
-    slots.forEach((slot) => {
+    <div class="slots-title">
 
-      slot.addEventListener("click", () => {
+      <h2>
+        TRYOUT LIST
+      </h2>
 
-        const team = slot.querySelector(".team");
-        const status = slot.querySelector(".open");
+      <span>
+        1–25
+      </span>
 
-        if (!team || !status) {
-          return;
+    </div>
+
+    <div id="slots">
+
+      Loading slots...
+
+    </div>
+
+    <button
+      class="claim-btn"
+      onclick="claimNextSlot()">
+
+      🎯 MINE NEXT AVAILABLE SLOT
+
+    </button>
+
+    <div id="message"
+         class="message"></div>
+
+  </section>
+
+
+  <!-- MINE SYSTEM -->
+
+  <section class="mine">
+
+    <h3>
+      🎯 MINE SYSTEM
+    </h3>
+
+    <p>
+      Enter your team name and claim the next
+      available slot. Your claimed slot is saved
+      to Firebase and remains after refreshing
+      the app.
+    </p>
+
+  </section>
+
+</main>
+
+
+<!-- FINAL 5-TAB NAVIGATION -->
+
+<nav class="bottom-nav">
+
+  <a class="nav-item"
+     href="index.html">
+
+    <span class="nav-icon">
+      🏠
+    </span>
+
+    Home
+
+  </a>
+
+  <a class="nav-item"
+     href="chat.html">
+
+    <span class="nav-icon">
+      💬
+    </span>
+
+    Chat
+
+  </a>
+
+  <a class="nav-item active"
+     href="scrimmage.html">
+
+    <span class="nav-icon">
+      🎮
+    </span>
+
+    Scrim
+
+  </a>
+
+  <a class="nav-item"
+     href="leaderboard.html">
+
+    <span class="nav-icon">
+      🏆
+    </span>
+
+    Rank
+
+  </a>
+
+  <a class="nav-item"
+     href="profile.html">
+
+    <span class="nav-icon">
+      👤
+    </span>
+
+    Profile
+
+  </a>
+
+</nav>
+
+
+<!-- FIREBASE -->
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script src="firebase-config.js"></script>
+
+
+<script>
+
+let currentUser = null;
+let currentUsername = "Player";
+let slotsLoaded = false;
+
+
+/* =========================
+   AUTH
+========================= */
+
+auth.onAuthStateChanged(async user => {
+
+  if (!user) {
+
+    location.href = "login.html";
+
+    return;
+
+  }
+
+  currentUser = user;
+
+  try {
+
+    const profile =
+      await db
+        .collection("users")
+        .doc(user.uid)
+        .get();
+
+    if (profile.exists) {
+
+      currentUsername =
+        profile.data().username || "Player";
+
+    }
+
+    loadSlots();
+
+  } catch(error) {
+
+    console.error(error);
+
+    showMessage(
+      "Firebase connection error."
+    );
+
+  }
+
+});
+
+
+/* =========================
+   LOAD SLOTS
+========================= */
+
+function loadSlots() {
+
+  db.collection("scrimmageSlots")
+    .orderBy("number")
+    .onSnapshot(snapshot => {
+
+      const container =
+        document.getElementById("slots");
+
+      container.innerHTML = "";
+
+      if (snapshot.empty) {
+
+        container.innerHTML =
+          '<div class="message">No slots initialized yet.</div>';
+
+        return;
+
+      }
+
+      snapshot.forEach(doc => {
+
+        const data =
+          doc.data();
+
+        const slot =
+          document.createElement("div");
+
+        slot.className =
+          "slot";
+
+
+        const number =
+          document.createElement("div");
+
+        number.className =
+          "number";
+
+        number.textContent =
+          String(data.number)
+            .padStart(2,"0");
+
+
+        const team =
+          document.createElement("div");
+
+        team.className =
+          "team";
+
+        team.textContent =
+          data.claimed
+            ? (data.teamName || "CLAIMED")
+            : "OPEN";
+
+
+        const status =
+          document.createElement("div");
+
+        if (data.claimed) {
+
+          status.className =
+            "filled";
+
+          status.textContent =
+            "CLAIMED";
+
+        } else {
+
+          status.className =
+            "open";
+
+          status.textContent =
+            "AVAILABLE";
+
         }
 
-        if (team.textContent === "OPEN") {
 
-          const name = prompt(
-            "Enter your team name:"
-          );
+        slot.appendChild(number);
+        slot.appendChild(team);
+        slot.appendChild(status);
 
-          if (name && name.trim() !== "") {
 
-            team.textContent = name.trim();
+        slot.onclick = () => {
 
-            status.textContent = "CLAIMED";
-            status.className = "filled";
+          if (!data.claimed) {
 
-            alert(
-              "Slot " +
-              slot.querySelector(".number").textContent +
-              " claimed by " +
-              name.trim()
+            claimSpecificSlot(
+              doc.id,
+              data.number
+            );
+
+          } else if (
+            data.uid === currentUser.uid
+          ) {
+
+            releaseSlot(
+              doc.id
+            );
+
+          } else {
+
+            showMessage(
+              "This slot is already claimed."
             );
 
           }
 
-        } else {
+        };
 
-          alert(
-            "This slot is already claimed by " +
-            team.textContent
+
+        container.appendChild(slot);
+
+      });
+
+      slotsLoaded = true;
+
+    }, error => {
+
+      console.error(error);
+
+      document.getElementById("slots").innerHTML =
+        '<div class="message">Unable to load slots.</div>';
+
+    });
+
+}
+
+
+/* =========================
+   MINE NEXT SLOT
+========================= */
+
+async function claimNextSlot() {
+
+  if (!currentUser) return;
+
+  const teamName =
+    prompt(
+      "Enter your team name:"
+    );
+
+  if (!teamName ||
+      !teamName.trim()) {
+
+    return;
+
+  }
+
+  const cleanName =
+    teamName.trim();
+
+  if (cleanName.length > 30) {
+
+    showMessage(
+      "Team name is too long."
+    );
+
+    return;
+
+  }
+
+
+  try {
+
+    const snapshot =
+      await db
+        .collection("scrimmageSlots")
+        .where("claimed","==",false)
+        .orderBy("number")
+        .limit(1)
+        .get();
+
+
+    if (snapshot.empty) {
+
+      showMessage(
+        "All 25 slots are already claimed."
+      );
+
+      return;
+
+    }
+
+
+    const doc =
+      snapshot.docs[0];
+
+    await db
+      .runTransaction(
+        async transaction => {
+
+          const ref =
+            db
+              .collection("scrimmageSlots")
+              .doc(doc.id);
+
+          const latest =
+            await transaction.get(ref);
+
+          if (
+            latest.data().claimed === true
+          ) {
+
+            throw new Error(
+              "SLOT_TAKEN"
+            );
+
+          }
+
+          transaction.update(
+            ref,
+            {
+
+              claimed:true,
+
+              teamName:cleanName,
+
+              uid:currentUser.uid,
+
+              username:currentUsername,
+
+              claimedAt:
+                firebase.firestore
+                  .FieldValue
+                  .serverTimestamp()
+
+            }
+          );
+
+        }
+      );
+
+
+    showMessage(
+      "Slot claimed successfully!"
+    );
+
+  } catch(error) {
+
+    console.error(error);
+
+    if (error.message === "SLOT_TAKEN") {
+
+      showMessage(
+        "Slot was just claimed. Try again."
+      );
+
+    } else {
+
+      showMessage(
+        "Unable to claim slot."
+      );
+
+    }
+
+  }
+
+}
+
+
+/* =========================
+   SPECIFIC SLOT
+========================= */
+
+async function claimSpecificSlot(
+  docId,
+  slotNumber
+) {
+
+  if (!currentUser) return;
+
+
+  const teamName =
+    prompt(
+      "Enter your team name for Slot " +
+      slotNumber + ":"
+    );
+
+
+  if (!teamName ||
+      !teamName.trim()) {
+
+    return;
+
+  }
+
+
+  const cleanName =
+    teamName.trim();
+
+
+  if (cleanName.length > 30) {
+
+    showMessage(
+      "Team name is too long."
+    );
+
+    return;
+
+  }
+
+
+  try {
+
+    await db.runTransaction(
+      async transaction => {
+
+        const ref =
+          db
+            .collection("scrimmageSlots")
+            .doc(docId);
+
+        const doc =
+          await transaction.get(ref);
+
+        if (!doc.exists) {
+
+          throw new Error(
+            "NOT_FOUND"
           );
 
         }
 
+
+        const data =
+          doc.data();
+
+
+        if (data.claimed === true) {
+
+          throw new Error(
+            "TAKEN"
+          );
+
+        }
+
+
+        transaction.update(
+          ref,
+          {
+
+            claimed:true,
+
+            teamName:cleanName,
+
+            uid:currentUser.uid,
+
+            username:currentUsername,
+
+            claimedAt:
+              firebase.firestore
+                .FieldValue
+                .serverTimestamp()
+
+          }
+        );
+
+      }
+    );
+
+
+    showMessage(
+      "Slot " +
+      slotNumber +
+      " claimed!"
+    );
+
+
+  } catch(error) {
+
+    console.error(error);
+
+
+    if (error.message === "TAKEN") {
+
+      showMessage(
+        "That slot is already claimed."
+      );
+
+    } else {
+
+      showMessage(
+        "Unable to claim slot."
+      );
+
+    }
+
+  }
+
+}
+
+
+/* =========================
+   RELEASE OWN SLOT
+========================= */
+
+async function releaseSlot(docId) {
+
+  if (!currentUser) return;
+
+
+  const confirmRelease =
+    confirm(
+      "Release your slot?"
+    );
+
+
+  if (!confirmRelease) return;
+
+
+  try {
+
+    await db
+      .collection("scrimmageSlots")
+      .doc(docId)
+      .update({
+
+        claimed:false,
+
+        teamName:
+          firebase.firestore
+            .FieldValue
+            .delete(),
+
+        uid:
+          firebase.firestore
+            .FieldValue
+            .delete(),
+
+        username:
+          firebase.firestore
+            .FieldValue
+            .delete(),
+
+        claimedAt:
+          firebase.firestore
+            .FieldValue
+            .delete()
+
       });
 
-    });
 
-  </script>
+    showMessage(
+      "Your slot has been released."
+    );
+
+
+  } catch(error) {
+
+    console.error(error);
+
+    showMessage(
+      "Unable to release slot."
+    );
+
+  }
+
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+function showMessage(text) {
+
+  const element =
+    document.getElementById(
+      "message"
+    );
+
+  element.textContent =
+    text;
+
+  setTimeout(() => {
+
+    if (
+      element.textContent === text
+    ) {
+
+      element.textContent = "";
+
+    }
+
+  }, 3500);
+
+}
+
+</script>
 
 </body>
 </html>
