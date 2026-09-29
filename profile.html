@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0,
+               maximum-scale=1.0, user-scalable=no">
+
+<title>NØV3X — Profile</title>
+
+<style>
+html {
+  background:#07000d !important;
+}
+
+body {
+  margin:0 !important;
+  padding:0 0 90px 0 !important;
+  min-height:100vh;
+  background:#07000d !important;
+  color:#fff !important;
+  font-family:Arial,sans-serif;
+}
+
+* {
+  box-sizing:border-box;
+}
+
+header {
+  height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 18px;
+  background:#0d0018 !important;
+  border-bottom:1px solid #7520c0;
+  position:sticky;
+  top:0;
+  z-index:20;
+}
+
+.logo {
+  color:#c77dff;
+  font-size:24px;
+  font-weight:900;
+  letter-spacing:3px;
+}
+
+.container {
+  width:100%;
+  max-width:650px;
+  margin:auto;
+  padding:20px;
+}
+
+.title {
+  font-size:25px;
+  font-weight:900;
+}
+
+.subtitle {
+  color:#806b8d;
+  font-size:12px;
+  margin-top:5px;
+  margin-bottom:20px;
+}
+
+.profile-card {
+  padding:22px;
+  background:#100019 !important;
+  border:1px solid #542677;
+  border-radius:18px;
+  text-align:center;
+}
+
+.avatar {
+  width:80px;
+  height:80px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:#21002f !important;
+  border:2px solid #9b42e8;
+  color:#c77dff;
+  font-size:34px;
+  font-weight:900;
+}
+
+.username {
+  margin-top:15px;
+  font-size:22px;
+  font-weight:900;
+}
+
+.role {
+  display:inline-block;
+  margin-top:7px;
+  padding:5px 12px;
+  border-radius:20px;
+  background:#250039 !important;
+  color:#c77dff;
+  font-size:10px;
+  font-weight:bold;
+  letter-spacing:1px;
+}
+
+.info-card {
+  margin-top:15px;
+  padding:18px;
+  background:#100019 !important;
+  border:1px solid #321650;
+  border-radius:14px;
+}
+
+.info-row {
+  padding:12px 0;
+  border-bottom:1px solid #291034;
+}
+
+.info-row:last-child {
+  border-bottom:0;
+}
+
+.label {
+  color:#806b8d;
+  font-size:10px;
+  margin-bottom:5px;
+}
+
+.value {
+  color:#fff;
+  font-size:13px;
+  word-break:break-word;
+}
+
+.edit-area {
+  margin-top:15px;
+  padding:18px;
+  background:#100019 !important;
+  border:1px solid #321650;
+  border-radius:14px;
+}
+
+.input {
+  width:100%;
+  padding:13px;
+  background:#08000f !important;
+  color:#fff !important;
+  border:1px solid #42155f;
+  border-radius:10px;
+  outline:none;
+  font-size:14px;
+}
+
+.input:focus {
+  border-color:#a448ff;
+}
+
+.btn {
+  width:100%;
+  padding:13px;
+  margin-top:10px;
+  border:0;
+  border-radius:10px;
+  font-weight:bold;
+  color:#fff !important;
+}
+
+.save {
+  background:#7628c8 !important;
+}
+
+.admin {
+  background:#250039 !important;
+  border:1px solid #842bd1;
+  color:#c77dff !important;
+}
+
+.logout {
+  background:#24000d !important;
+  border:1px solid #7a1635;
+  color:#ff6b88 !important;
+}
+
+.message {
+  min-height:18px;
+  margin-top:10px;
+  text-align:center;
+  font-size:12px;
+  color:#c77dff;
+}
+
+.bottom-nav {
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  height:70px;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  background:#0d0018 !important;
+  border-top:1px solid #451067;
+  z-index:50;
+}
+
+.nav-item {
+  text-decoration:none;
+  color:#806b8d;
+  text-align:center;
+  font-size:20px;
+}
+
+.nav-item.active {
+  color:#c77dff;
+}
+
+.nav-item span {
+  display:block;
+  font-size:9px;
+  margin-top:3px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">NØV3X</div>
+</header>
+
+<main class="container">
+
+  <div class="title">PROFILE</div>
+
+  <div class="subtitle">
+    NØV3X MEMBER PROFILE
+  </div>
+
+  <section class="profile-card">
+
+    <div class="avatar" id="avatar">
+      N
+    </div>
+
+    <div class="username" id="username">
+      Loading...
+    </div>
+
+    <div class="role" id="role">
+      PLAYER
+    </div>
+
+  </section>
+
+  <section class="info-card">
+
+    <div class="info-row">
+      <div class="label">EMAIL</div>
+      <div class="value" id="email">
+        Loading...
+      </div>
+    </div>
+
+    <div class="info-row">
+      <div class="label">USER ID</div>
+      <div class="value" id="uid">
+        Loading...
+      </div>
+    </div>
+
+  </section>
+
+  <section class="edit-area">
+
+    <div class="label">
+      CHANGE USERNAME
+    </div>
+
+    <input
+      id="usernameInput"
+      class="input"
+      type="text"
+      maxlength="20"
+      placeholder="Enter new username">
+
+    <button
+      class="btn save"
+      onclick="saveUsername()">
+      SAVE USERNAME
+    </button>
+
+    <div id="message"
+         class="message"></div>
+
+  </section>
+
+  <div id="adminArea"></div>
+
+  <button
+    class="btn logout"
+    onclick="logout()">
+    LOG OUT
+  </button>
+
+</main>
+
+<nav class="bottom-nav">
+
+  <a class="nav-item"
+     href="index.html">
+    🏠
+    <span>Home</span>
+  </a>
+
+  <a class="nav-item"
+     href="chat.html">
+    💬
+    <span>Chat</span>
+  </a>
+
+  <a class="nav-item"
+     href="scrimmage.html">
+    🎮
+    <span>Scrim</span>
+  </a>
+
+  <a class="nav-item"
+     href="leaderboard.html">
+    🏆
+    <span>Ranks</span>
+  </a>
+
+  <a class="nav-item active"
+     href="profile.html">
+    👤
+    <span>Profile</span>
+  </a>
+
+</nav>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+
+<script>
+
+let currentUser = null;
+let currentRole = "player";
+
+auth.onAuthStateChanged(async user => {
+
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  currentUser = user;
+
+  document.getElementById("email")
+    .textContent = user.email || "No email";
+
+  document.getElementById("uid")
+    .textContent = user.uid;
+
+  try {
+
+    const doc = await db
+      .collection("users")
+      .doc(user.uid)
+      .get();
+
+    if (!doc.exists) {
+      showMessage("Profile not found.");
+      return;
+    }
+
+    const data = doc.data();
+
+    const username =
+      data.username || "Player";
+
+    currentRole =
+      data.role || "player";
+
+    document.getElementById("username")
+      .textContent = username;
+
+    document.getElementById("usernameInput")
+      .value = username;
+
+    document.getElementById("avatar")
+      .textContent =
+        username.charAt(0).toUpperCase();
+
+    document.getElementById("role")
+      .textContent =
+        currentRole.toUpperCase();
+
+    if (currentRole === "admin") {
+
+      document.getElementById("adminArea")
+        .innerHTML = `
+
+          <button
+            class="btn admin"
+            onclick="openAdmin()">
+            ⚙️ ADMIN CONTROL CENTER
+          </button>
+
+        `;
+
+    }
+
+  } catch(error) {
+
+    console.error(error);
+
+    showMessage(
+      "Unable to load profile."
+    );
+
+  }
+
+});
+
+
+async function saveUsername() {
+
+  if (!currentUser) return;
+
+  const input =
+    document.getElementById("usernameInput");
+
+  const newUsername =
+    input.value.trim();
+
+  if (!newUsername) {
+
+    showMessage(
+      "Username cannot be empty."
+    );
+
+    return;
+  }
+
+  if (newUsername.length < 2) {
+
+    showMessage(
+      "Username must be at least 2 characters."
+    );
+
+    return;
+  }
+
+  try {
+
+    await db
+      .collection("users")
+      .doc(currentUser.uid)
+      .update({
+
+        username:newUsername,
+
+        updatedAt:
+          firebase.firestore.FieldValue
+            .serverTimestamp()
+
+      });
+
+    document.getElementById("username")
+      .textContent = newUsername;
+
+    document.getElementById("avatar")
+      .textContent =
+        newUsername.charAt(0).toUpperCase();
+
+    localStorage.setItem(
+      "novexName",
+      newUsername
+    );
+
+    showMessage(
+      "Username updated!"
+    );
+
+  } catch(error) {
+
+    console.error(error);
+
+    showMessage(
+      "Failed to update username."
+    );
+
+  }
+
+}
+
+
+function openAdmin() {
+
+  window.location.href =
+    "admin.html";
+
+}
+
+
+async function logout() {
+
+  try {
+
+    await auth.signOut();
+
+    localStorage.removeItem("novexName");
+    localStorage.removeItem("novexGuest");
+
+    window.location.href =
+      "login.html";
+
+  } catch(error) {
+
+    console.error(error);
+
+    showMessage(
+      "Logout failed."
+    );
+
+  }
+
+}
+
+
+function showMessage(text) {
+
+  document.getElementById("message")
+    .textContent = text;
+
+}
+
+</script>
+
+</body>
+</html>
