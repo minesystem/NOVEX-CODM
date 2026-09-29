@@ -1,5 +1,5 @@
 const firebaseConfig = {
-  apiKey: "AIzaSyAADWbdAbIZOBhDklehWsRXadIDmYI8I",
+  apiKey: "AIzaSyAADWbdJOAbIZOBhDklehWsRXadIDmYI8I",
   authDomain: "novex-codm-ee936.firebaseapp.com",
   projectId: "novex-codm-ee936",
   storageBucket: "novex-codm-ee936.firebasestorage.app",
