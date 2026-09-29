@@ -1,167 +1,439 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NØV3X • Admin</title>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0,
+      maximum-scale=1.0,user-scalable=no">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<title>NØV3X • Admin</title>
 
-    body {
-      background: #050509;
-      color: white;
-      font-family: Arial, sans-serif;
-      min-height: 100vh;
-      padding-bottom: 40px;
-    }
+<style>
+*{
+  box-sizing:border-box;
+}
 
-    .topbar {
-      padding: 18px;
-      background: #08060d;
-      border-bottom: 1px solid #2b1c38;
-    }
+html{
+  background:#07000d!important;
+}
 
-    .logo {
-      color: #b56cff;
-      font-size: 23px;
-      font-weight: 900;
-      letter-spacing: 2px;
-    }
+body{
+  margin:0;
+  padding:0 0 30px;
+  min-height:100vh;
+  background:#07000d!important;
+  color:#fff;
+  font-family:Arial,sans-serif;
+}
 
-    .container {
-      width: 92%;
-      max-width: 700px;
-      margin: auto;
-    }
+.topbar{
+  height:70px;
+  padding:0 18px;
+  background:#0d0018!important;
+  border-bottom:1px solid #7520c0;
+  display:flex;
+  align-items:center;
+}
 
-    .title {
-      margin-top: 30px;
-      font-size: 30px;
-      font-weight: 900;
-    }
+.logo{
+  color:#c77dff;
+  font-size:23px;
+  font-weight:900;
+  letter-spacing:2px;
+}
 
-    .subtitle {
-      color: #777;
-      margin-top: 6px;
-    }
+.container{
+  width:92%;
+  max-width:720px;
+  margin:auto;
+}
 
-    .admin-card {
-      margin-top: 22px;
-      padding: 20px;
-      background: #0d0a13;
-      border: 1px solid #6d28d9;
-      border-radius: 18px;
-    }
+.title{
+  margin-top:28px;
+  font-size:28px;
+  font-weight:900;
+}
 
-    .admin-name {
-      color: #c084fc;
-      font-size: 20px;
-      font-weight: 900;
-    }
+.subtitle{
+  color:#806b8d;
+  margin-top:6px;
+  font-size:12px;
+}
 
-    .admin-role {
-      margin-top: 6px;
-      color: #888;
-      font-size: 13px;
-    }
+.admin-card{
+  margin-top:20px;
+  padding:18px;
+  background:#0d0017!important;
+  border:1px solid #7020a8;
+  border-radius:17px;
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 20px;
-    }
+.admin-name{
+  color:#d18aff;
+  font-size:20px;
+  font-weight:900;
+}
 
-    .card {
-      padding: 22px 15px;
-      background: #0d0a13;
-      border: 1px solid #24192e;
-      border-radius: 16px;
-      text-decoration: none;
-      color: white;
-    }
+.admin-role{
+  margin-top:6px;
+  color:#806b8d;
+  font-size:12px;
+}
 
-    .icon {
-      font-size: 28px;
-    }
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+  margin-top:14px;
+}
 
-    .card-title {
-      margin-top: 10px;
-      font-weight: 900;
-    }
+.stat{
+  background:#11001b!important;
+  border:1px solid #321044;
+  border-radius:12px;
+  padding:14px 5px;
+  text-align:center;
+}
 
-    .card-text {
-      margin-top: 5px;
-      color: #777;
-      font-size: 12px;
-      line-height: 1.4;
-    }
+.stat-number{
+  color:#d18aff;
+  font-size:20px;
+  font-weight:900;
+}
 
-    .back {
-      display: block;
-      margin-top: 25px;
-      padding: 14px;
-      text-align: center;
-      background: #7c3aed;
-      color: white;
-      text-decoration: none;
-      border-radius: 11px;
-      font-weight: 900;
-    }
+.stat-label{
+  color:#806b8d;
+  font-size:9px;
+  margin-top:4px;
+}
 
-    #loading {
-      text-align: center;
-      color: #777;
-      margin-top: 40px;
-    }
+.section{
+  margin-top:18px;
+  padding:16px;
+  background:#0d0017!important;
+  border:1px solid #451067;
+  border-radius:16px;
+}
 
-    #denied {
-      display: none;
-      margin-top: 30px;
-      padding: 25px;
-      text-align: center;
-      background: #0d0a13;
-      border: 1px solid #3a2020;
-      border-radius: 16px;
-    }
-  </style>
+.section-title{
+  color:#c77dff;
+  font-size:16px;
+  font-weight:900;
+  margin-bottom:12px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.card{
+  padding:17px 13px;
+  background:#11001b!important;
+  border:1px solid #321044;
+  border-radius:13px;
+  text-decoration:none;
+  color:white;
+}
+
+.card:active{
+  transform:scale(.98);
+}
+
+.icon{
+  font-size:25px;
+}
+
+.card-title{
+  margin-top:8px;
+  font-weight:900;
+  font-size:13px;
+}
+
+.card-text{
+  margin-top:4px;
+  color:#806b8d;
+  font-size:10px;
+  line-height:1.4;
+}
+
+input,textarea,select{
+  width:100%;
+  background:#09000f!important;
+  border:1px solid #4a146d;
+  border-radius:10px;
+  color:#fff!important;
+  outline:none;
+  padding:11px;
+  font-family:Arial,sans-serif;
+}
+
+input{
+  height:43px;
+  margin-bottom:8px;
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+  border-color:#a13cff;
+}
+
+button{
+  cursor:pointer;
+}
+
+.primary{
+  width:100%;
+  min-height:43px;
+  margin-top:9px;
+  background:#7624b8!important;
+  border:0;
+  border-radius:10px;
+  color:#fff;
+  font-weight:900;
+}
+
+.secondary{
+  width:100%;
+  min-height:40px;
+  margin-top:8px;
+  background:#180027!important;
+  border:1px solid #542078;
+  border-radius:10px;
+  color:#d39aff;
+  font-weight:900;
+}
+
+.danger{
+  background:#22000d!important;
+  border:1px solid #71304b;
+  color:#ff8da8;
+}
+
+.status{
+  text-align:center;
+  color:#9d85aa;
+  font-size:11px;
+  margin-top:8px;
+}
+
+.item{
+  padding:12px;
+  margin-top:8px;
+  background:#11001b!important;
+  border:1px solid #321044;
+  border-radius:11px;
+}
+
+.item-title{
+  color:#fff;
+  font-weight:900;
+  font-size:12px;
+  word-break:break-word;
+}
+
+.item-sub{
+  color:#806b8d;
+  font-size:10px;
+  margin-top:4px;
+  word-break:break-word;
+}
+
+.item-actions{
+  display:flex;
+  gap:6px;
+  margin-top:9px;
+}
+
+.small-btn{
+  flex:1;
+  min-height:32px;
+  background:#180027!important;
+  border:1px solid #542078;
+  border-radius:7px;
+  color:#d39aff;
+  font-size:9px;
+  font-weight:900;
+}
+
+.small-btn.delete{
+  border-color:#71304b;
+  color:#ff8da8;
+}
+
+.slot-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:6px;
+  margin-top:10px;
+}
+
+.slot{
+  min-height:48px;
+  padding:5px;
+  border-radius:8px;
+  border:1px solid #321044;
+  background:#11001b!important;
+  text-align:center;
+  font-size:9px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.slot-number{
+  color:#c77dff;
+  font-weight:900;
+}
+
+.slot-name{
+  margin-top:3px;
+  color:#fff;
+  word-break:break-word;
+}
+
+.empty{
+  color:#806b8d;
+  text-align:center;
+  padding:15px;
+  font-size:11px;
+}
+
+#loading{
+  text-align:center;
+  color:#806b8d;
+  padding-top:45px;
+}
+
+#denied{
+  display:none;
+  margin-top:30px;
+  padding:25px;
+  text-align:center;
+  background:#0d0017!important;
+  border:1px solid #71304b;
+  border-radius:16px;
+}
+
+.back{
+  display:block;
+  margin-top:20px;
+  padding:14px;
+  text-align:center;
+  background:#7624b8;
+  color:#fff;
+  text-decoration:none;
+  border-radius:10px;
+  font-weight:900;
+}
+
+.logout{
+  width:100%;
+  margin-top:10px;
+  min-height:43px;
+  background:#180027!important;
+  border:1px solid #542078;
+  color:#d39aff;
+  border-radius:10px;
+  font-weight:900;
+}
+
+@media(max-width:430px){
+  .grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .slot-grid{
+    grid-template-columns:repeat(5,1fr);
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <div class="topbar">
-    <div class="logo">NØV3X ADMIN</div>
+<div class="topbar">
+  <div class="logo">NØV3X ADMIN</div>
+</div>
+
+<div class="container">
+
+  <div id="loading">
+    Checking admin access...
   </div>
 
-  <div class="container">
+  <div id="denied">
 
-    <div id="loading">
-      Checking admin access...
+    <div style="font-size:40px;">🚫</div>
+
+    <h2 style="margin-top:10px;">
+      Access Denied
+    </h2>
+
+    <p style="color:#806b8d;margin-top:8px;">
+      This page is only available to NØV3X administrators.
+    </p>
+
+    <a class="back" href="index.html">
+      RETURN HOME
+    </a>
+
+  </div>
+
+  <div id="adminContent" style="display:none;">
+
+    <div class="title">
+      ADMIN DASHBOARD
     </div>
 
-    <div id="adminContent" style="display:none;">
+    <div class="subtitle">
+      Manage NØV3X CODM
+    </div>
 
-      <div class="title">ADMIN DASHBOARD</div>
+    <div class="admin-card">
 
-      <div class="subtitle">
-        Manage NØV3X CODM
+      <div class="admin-name" id="adminName">
+        NØV3X ADMIN
       </div>
 
-      <div class="admin-card">
+      <div class="admin-role">
+        👑 Administrator
+      </div>
 
-        <div class="admin-name" id="adminName">
-          ADMIN
+      <div class="stats">
+
+        <div class="stat">
+          <div class="stat-number" id="userCount">0</div>
+          <div class="stat-label">USERS</div>
         </div>
 
-        <div class="admin-role">
-          👑 Administrator
+        <div class="stat">
+          <div class="stat-number" id="teamCount">0</div>
+          <div class="stat-label">TEAMS</div>
         </div>
 
+        <div class="stat">
+          <div class="stat-number" id="slotCount">0</div>
+          <div class="stat-label">SLOTS</div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- QUICK ACCESS -->
+
+    <div class="section">
+
+      <div class="section-title">
+        ⚡ QUICK ACCESS
       </div>
 
       <div class="grid">
@@ -170,7 +442,7 @@
           <div class="icon">🏆</div>
           <div class="card-title">Leaderboard</div>
           <div class="card-text">
-            Add and manage team scores.
+            Manage team scores.
           </div>
         </a>
 
@@ -178,7 +450,7 @@
           <div class="icon">🎮</div>
           <div class="card-title">Scrimmage</div>
           <div class="card-text">
-            View and manage scrimmage slots.
+            View live scrimmage slots.
           </div>
         </a>
 
@@ -186,7 +458,7 @@
           <div class="icon">👥</div>
           <div class="card-title">Teams</div>
           <div class="card-text">
-            View registered NØV3X teams.
+            View registered teams.
           </div>
         </a>
 
@@ -194,90 +466,978 @@
           <div class="icon">💬</div>
           <div class="card-title">Chat</div>
           <div class="card-text">
-            Open the NØV3X community chat.
+            Open community chat.
           </div>
         </a>
 
       </div>
 
-      <a href="index.html" class="back">
-        BACK TO NØV3X
-      </a>
+    </div>
+
+    <!-- ANNOUNCEMENTS -->
+
+    <div class="section">
+
+      <div class="section-title">
+        📢 ANNOUNCEMENT
+      </div>
+
+      <input
+        id="announcementTitle"
+        maxlength="80"
+        placeholder="Announcement title">
+
+      <textarea
+        id="announcementText"
+        maxlength="500"
+        placeholder="Write announcement..."></textarea>
+
+      <button
+        class="primary"
+        onclick="postAnnouncement()">
+        POST ANNOUNCEMENT
+      </button>
+
+      <div
+        id="announcementStatus"
+        class="status">
+      </div>
 
     </div>
 
-    <div id="denied">
+    <!-- USERS -->
 
-      <div style="font-size:40px;">🚫</div>
+    <div class="section">
 
-      <h2 style="margin-top:10px;">
-        Access Denied
-      </h2>
+      <div class="section-title">
+        👤 USER MANAGEMENT
+      </div>
 
-      <p style="color:#777;margin-top:8px;">
-        This page is only available to NØV3X administrators.
-      </p>
-
-      <a
-        href="index.html"
-        style="display:block;margin-top:18px;color:#b56cff;"
-      >
-        Return Home
-      </a>
+      <div id="userList">
+        <div class="empty">
+          Loading users...
+        </div>
+      </div>
 
     </div>
+
+    <!-- TEAMS -->
+
+    <div class="section">
+
+      <div class="section-title">
+        👥 TEAM MANAGEMENT
+      </div>
+
+      <div id="adminTeamList">
+        <div class="empty">
+          Loading teams...
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SCRIMMAGE -->
+
+    <div class="section">
+
+      <div class="section-title">
+        🎮 SCRIMMAGE CONTROL
+      </div>
+
+      <button
+        class="primary"
+        onclick="initializeSlots()">
+        INITIALIZE / RESET 25 SLOTS
+      </button>
+
+      <button
+        class="secondary danger"
+        onclick="clearSlots()">
+        CLEAR ALL SLOTS
+      </button>
+
+      <div id="slotGrid" class="slot-grid">
+        <div class="empty">
+          Loading slots...
+        </div>
+      </div>
+
+      <div
+        id="slotStatus"
+        class="status">
+      </div>
+
+    </div>
+
+    <button
+      class="logout"
+      onclick="logout()">
+      LOGOUT ADMIN
+    </button>
+
+    <a href="index.html" class="back">
+      BACK TO NØV3X
+    </a>
 
   </div>
 
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-  <script src="firebase-config.js"></script>
+</div>
 
-  <script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
 
-    auth.onAuthStateChanged(async (user) => {
+<script>
 
-      if (!user) {
-        window.location.href = "login.html";
+let adminUser = null;
+
+
+/* AUTH + ADMIN CHECK */
+
+auth.onAuthStateChanged(async user => {
+
+  if (!user) {
+    location.href = "login.html";
+    return;
+  }
+
+  adminUser = user;
+
+  try {
+
+    const profile =
+      await db.collection("users")
+        .doc(user.uid)
+        .get();
+
+    if (
+      !profile.exists ||
+      profile.data().role !== "admin"
+    ) {
+
+      document.getElementById(
+        "loading"
+      ).style.display = "none";
+
+      document.getElementById(
+        "denied"
+      ).style.display = "block";
+
+      return;
+    }
+
+    const data =
+      profile.data();
+
+    document.getElementById(
+      "adminName"
+    ).textContent =
+      data.username || "NØV3X ADMIN";
+
+    document.getElementById(
+      "loading"
+    ).style.display = "none";
+
+    document.getElementById(
+      "adminContent"
+    ).style.display = "block";
+
+    startAdminListeners();
+
+  } catch(error) {
+
+    console.error(error);
+
+    document.getElementById(
+      "loading"
+    ).textContent =
+      "Unable to verify admin account.";
+
+  }
+
+});
+
+
+/* ADMIN LISTENERS */
+
+function startAdminListeners(){
+
+  loadUsers();
+  loadTeams();
+  loadSlots();
+
+}
+
+
+/* USERS */
+
+function loadUsers(){
+
+  db.collection("users")
+    .orderBy("createdAt","desc")
+    .onSnapshot(snapshot => {
+
+      document.getElementById(
+        "userCount"
+      ).textContent =
+        snapshot.size;
+
+      const list =
+        document.getElementById(
+          "userList"
+        );
+
+      list.innerHTML = "";
+
+      if(snapshot.empty){
+
+        list.innerHTML =
+          '<div class="empty">No users found.</div>';
+
         return;
       }
 
-      try {
+      snapshot.forEach(doc => {
 
-        const doc = await db
-          .collection("users")
-          .doc(user.uid)
-          .get();
+        const data =
+          doc.data();
 
-        if (!doc.exists || doc.data().role !== "admin") {
+        const item =
+          document.createElement(
+            "div"
+          );
 
-          document.getElementById("loading").style.display = "none";
-          document.getElementById("denied").style.display = "block";
+        item.className =
+          "item";
 
-          return;
+        const title =
+          document.createElement(
+            "div"
+          );
+
+        title.className =
+          "item-title";
+
+        title.textContent =
+          data.username ||
+          "Player";
+
+        const sub =
+          document.createElement(
+            "div"
+          );
+
+        sub.className =
+          "item-sub";
+
+        sub.textContent =
+          (data.email || "No email") +
+          " • " +
+          (data.role || "player");
+
+        item.appendChild(title);
+        item.appendChild(sub);
+
+        const actions =
+          document.createElement(
+            "div"
+          );
+
+        actions.className =
+          "item-actions";
+
+        if(doc.id !== adminUser.uid){
+
+          const roleBtn =
+            document.createElement(
+              "button"
+            );
+
+          roleBtn.className =
+            "small-btn";
+
+          roleBtn.textContent =
+            data.role === "admin"
+              ? "MAKE PLAYER"
+              : "MAKE ADMIN";
+
+          roleBtn.onclick = () =>
+            changeRole(
+              doc.id,
+              data.role
+            );
+
+          actions.appendChild(
+            roleBtn
+          );
+
+          const deleteBtn =
+            document.createElement(
+              "button"
+            );
+
+          deleteBtn.className =
+            "small-btn delete";
+
+          deleteBtn.textContent =
+            "DELETE";
+
+          deleteBtn.onclick = () =>
+            deleteUserProfile(
+              doc.id,
+              data.username ||
+              "this user"
+            );
+
+          actions.appendChild(
+            deleteBtn
+          );
+
         }
 
-        const data = doc.data();
+        item.appendChild(actions);
 
-        document.getElementById("adminName").textContent =
-          data.username || "NØV3X ADMIN";
+        list.appendChild(item);
 
-        document.getElementById("loading").style.display = "none";
-        document.getElementById("adminContent").style.display = "block";
+      });
 
-      } catch (error) {
+    },error => {
 
-        console.error(error);
-
-        document.getElementById("loading").textContent =
-          "Unable to verify admin account.";
-
-      }
+      console.error(error);
 
     });
 
-  </script>
+}
+
+
+/* CHANGE USER ROLE */
+
+async function changeRole(
+  uid,
+  currentRole
+){
+
+  const newRole =
+    currentRole === "admin"
+      ? "player"
+      : "admin";
+
+  if(
+    !confirm(
+      "Change this user's role to " +
+      newRole +
+      "?"
+    )
+  ){
+    return;
+  }
+
+  try{
+
+    await db.collection("users")
+      .doc(uid)
+      .update({
+
+        role:newRole,
+
+        updatedAt:
+          firebase.firestore
+            .FieldValue
+            .serverTimestamp()
+
+      });
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "Could not change user role."
+    );
+
+  }
+
+}
+
+
+/* DELETE PROFILE */
+
+async function deleteUserProfile(
+  uid,
+  username
+){
+
+  if(
+    !confirm(
+      "Delete " +
+      username +
+      "'s NØV3X profile?"
+    )
+  ){
+    return;
+  }
+
+  try{
+
+    await db.collection("users")
+      .doc(uid)
+      .delete();
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "Could not delete profile."
+    );
+
+  }
+
+}
+
+
+/* TEAMS */
+
+function loadTeams(){
+
+  db.collection("teams")
+    .orderBy("createdAt","desc")
+    .onSnapshot(snapshot => {
+
+      document.getElementById(
+        "teamCount"
+      ).textContent =
+        snapshot.size;
+
+      const list =
+        document.getElementById(
+          "adminTeamList"
+        );
+
+      list.innerHTML = "";
+
+      if(snapshot.empty){
+
+        list.innerHTML =
+          '<div class="empty">No teams found.</div>';
+
+        return;
+
+      }
+
+      snapshot.forEach(doc => {
+
+        const data =
+          doc.data();
+
+        const item =
+          document.createElement(
+            "div"
+          );
+
+        item.className =
+          "item";
+
+        const title =
+          document.createElement(
+            "div"
+          );
+
+        title.className =
+          "item-title";
+
+        title.textContent =
+          data.name ||
+          "Unnamed Team";
+
+        const sub =
+          document.createElement(
+            "div"
+          );
+
+        sub.className =
+          "item-sub";
+
+        sub.textContent =
+          "Owner: " +
+          (data.ownerName ||
+           "Player");
+
+        item.appendChild(title);
+        item.appendChild(sub);
+
+        const actions =
+          document.createElement(
+            "div"
+          );
+
+        actions.className =
+          "item-actions";
+
+        const deleteBtn =
+          document.createElement(
+            "button"
+          );
+
+        deleteBtn.className =
+          "small-btn delete";
+
+        deleteBtn.textContent =
+          "DELETE TEAM";
+
+        deleteBtn.onclick = () =>
+          adminDeleteTeam(
+            doc.id,
+            data.name ||
+            "this team"
+          );
+
+        actions.appendChild(
+          deleteBtn
+        );
+
+        item.appendChild(actions);
+
+        list.appendChild(item);
+
+      });
+
+    },error => {
+
+      console.error(error);
+
+    });
+
+}
+
+
+/* ADMIN DELETE TEAM */
+
+async function adminDeleteTeam(
+  id,
+  name
+){
+
+  if(
+    !confirm(
+      "Delete " +
+      name +
+      "?"
+    )
+  ){
+    return;
+  }
+
+  try{
+
+    await db.collection("teams")
+      .doc(id)
+      .delete();
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "Could not delete team."
+    );
+
+  }
+
+}
+
+
+/* ANNOUNCEMENT */
+
+async function postAnnouncement(){
+
+  const title =
+    document.getElementById(
+      "announcementTitle"
+    ).value.trim();
+
+  const text =
+    document.getElementById(
+      "announcementText"
+    ).value.trim();
+
+  const status =
+    document.getElementById(
+      "announcementStatus"
+    );
+
+  if(!title || !text){
+
+    status.textContent =
+      "Enter a title and message.";
+
+    return;
+
+  }
+
+  try{
+
+    const now =
+      firebase.firestore
+        .FieldValue
+        .serverTimestamp();
+
+    await db.collection(
+      "announcements"
+    ).add({
+
+      title:title,
+
+      text:text,
+
+      createdAt:now,
+
+      createdBy:
+        adminUser.uid,
+
+      createdByName:
+        document.getElementById(
+          "adminName"
+        ).textContent
+
+    });
+
+    await db.collection(
+      "notifications"
+    ).add({
+
+      title:title,
+
+      text:text,
+
+      createdAt:
+        firebase.firestore
+          .FieldValue
+          .serverTimestamp(),
+
+      createdBy:
+        adminUser.uid,
+
+      readBy:[]
+
+    });
+
+    document.getElementById(
+      "announcementTitle"
+    ).value = "";
+
+    document.getElementById(
+      "announcementText"
+    ).value = "";
+
+    status.textContent =
+      "Announcement posted!";
+
+    setTimeout(() => {
+      status.textContent = "";
+    },3000);
+
+  }catch(error){
+
+    console.error(error);
+
+    status.textContent =
+      "Could not post announcement.";
+
+  }
+
+}
+
+
+/* SCRIMMAGE SLOTS */
+
+function loadSlots(){
+
+  db.collection("scrimmageSlots")
+    .onSnapshot(snapshot => {
+
+      let claimed = 0;
+
+      const slots = {};
+
+      snapshot.forEach(doc => {
+
+        const data =
+          doc.data();
+
+        const number =
+          Number(
+            data.slot ||
+            doc.id
+              .replace("slot-","")
+          );
+
+        slots[number] = {
+          id:doc.id,
+          data:data
+        };
+
+        if(
+          data.claimed === true
+        ){
+          claimed++;
+        }
+
+      });
+
+      document.getElementById(
+        "slotCount"
+      ).textContent =
+        claimed + "/25";
+
+      const grid =
+        document.getElementById(
+          "slotGrid"
+        );
+
+      grid.innerHTML = "";
+
+      for(
+        let i=1;
+        i<=25;
+        i++
+      ){
+
+        const slot =
+          document.createElement(
+            "div"
+          );
+
+        slot.className =
+          "slot";
+
+        const number =
+          document.createElement(
+            "div"
+          );
+
+        number.className =
+          "slot-number";
+
+        number.textContent =
+          "#" + i;
+
+        const name =
+          document.createElement(
+            "div"
+          );
+
+        name.className =
+          "slot-name";
+
+        const slotInfo =
+          slots[i];
+
+        if(
+          slotInfo &&
+          slotInfo.data &&
+          slotInfo.data.claimed
+        ){
+
+          name.textContent =
+            slotInfo.data.teamName ||
+            slotInfo.data.name ||
+            "CLAIMED";
+
+        }else{
+
+          name.textContent =
+            "OPEN";
+
+        }
+
+        slot.appendChild(number);
+        slot.appendChild(name);
+
+        grid.appendChild(slot);
+
+      }
+
+    },error => {
+
+      console.error(error);
+
+    });
+
+}
+
+
+/* INITIALIZE 25 SLOTS */
+
+async function initializeSlots(){
+
+  if(
+    !confirm(
+      "Initialize/reset all 25 scrimmage slots?"
+    )
+  ){
+    return;
+  }
+
+  const status =
+    document.getElementById(
+      "slotStatus"
+    );
+
+  try{
+
+    const batch =
+      db.batch();
+
+    for(
+      let i=1;
+      i<=25;
+      i++
+    ){
+
+      const ref =
+        db.collection(
+          "scrimmageSlots"
+        ).doc(
+          "slot-" + i
+        );
+
+      batch.set(
+        ref,
+        {
+
+          slot:i,
+
+          claimed:false,
+
+          uid:"",
+
+          teamName:"",
+
+          ownerName:"",
+
+          updatedAt:
+            firebase.firestore
+              .FieldValue
+              .serverTimestamp()
+
+        }
+      );
+
+    }
+
+    await batch.commit();
+
+    status.textContent =
+      "25 slots initialized.";
+
+  }catch(error){
+
+    console.error(error);
+
+    status.textContent =
+      "Could not initialize slots.";
+
+  }
+
+}
+
+
+/* CLEAR ALL SLOTS */
+
+async function clearSlots(){
+
+  if(
+    !confirm(
+      "Clear all 25 scrimmage slots?"
+    )
+  ){
+    return;
+  }
+
+  const status =
+    document.getElementById(
+      "slotStatus"
+    );
+
+  try{
+
+    const batch =
+      db.batch();
+
+    for(
+      let i=1;
+      i<=25;
+      i++
+    ){
+
+      const ref =
+        db.collection(
+          "scrimmageSlots"
+        ).doc(
+          "slot-" + i
+        );
+
+      batch.set(
+        ref,
+        {
+
+          slot:i,
+
+          claimed:false,
+
+          uid:"",
+
+          teamName:"",
+
+          ownerName:"",
+
+          updatedAt:
+            firebase.firestore
+              .FieldValue
+              .serverTimestamp()
+
+        }
+      );
+
+    }
+
+    await batch.commit();
+
+    status.textContent =
+      "All slots cleared.";
+
+  }catch(error){
+
+    console.error(error);
+
+    status.textContent =
+      "Could not clear slots.";
+
+  }
+
+}
+
+
+/* LOGOUT */
+
+async function logout(){
+
+  try{
+
+    await auth.signOut();
+
+  }catch(error){
+
+    console.error(error);
+
+  }
+
+}
+
+</script>
 
 </body>
 </html>
