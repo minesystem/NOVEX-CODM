@@ -1,237 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NØV3X Scrimmage</title>
 
-<title>NØV3X — Scrimmage</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-<style>
+    body {
+      background:
+        radial-gradient(circle at top, #261044 0%, #09050e 45%, #020204 100%);
+      color: white;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      padding-bottom: 100px;
+    }
 
-*{
-  box-sizing:border-box;
-}
+    .container {
+      max-width: 650px;
+      margin: auto;
+    }
 
-body{
-  margin:0;
-  background:#07000d;
-  color:white;
-  font-family:Arial,sans-serif;
-  min-height:100vh;
-  padding-bottom:85px;
-}
+    .header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
 
-header{
-  padding:22px 18px;
-  background:#0d0015;
-  border-bottom:1px solid #321650;
-}
+    .logo {
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: 5px;
+      text-shadow: 0 0 20px #8d3bc0;
+    }
 
-.logo{
-  color:#c56cff;
-  font-size:27px;
-  font-weight:900;
-  letter-spacing:4px;
-}
+    .subtitle {
+      color: #b89dca;
+      font-size: 12px;
+      letter-spacing: 2px;
+      margin-top: 5px;
+    }
 
-.subtitle{
-  margin-top:5px;
-  color:#806b8d;
-  font-size:11px;
-  letter-spacing:2px;
-}
+    .card {
+      background: rgba(13, 8, 21, .95);
+      border: 1px solid #4b2670;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 15px;
+    }
 
-.container{
-  max-width:700px;
-  margin:auto;
-  padding:16px;
-}
+    h2 {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
 
-.card{
-  background:#100019;
-  border:1px solid #321650;
-  border-radius:15px;
-  padding:16px;
-  margin-bottom:14px;
-}
+    .online {
+      color: #8cffad;
+      font-size: 12px;
+      margin-top: 5px;
+    }
 
-.card h2{
-  margin:0 0 12px;
-  color:#d39aff;
-  font-size:17px;
-}
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
 
-.info{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-}
+    .info {
+      background: #0a0710;
+      border: 1px solid #332044;
+      border-radius: 10px;
+      padding: 13px;
+    }
 
-.infoBox{
-  background:#08000f;
-  border:1px solid #291039;
-  border-radius:9px;
-  padding:11px;
-}
+    .label {
+      color: #927aa2;
+      font-size: 10px;
+      margin-bottom: 5px;
+    }
 
-.label{
-  color:#806b8d;
-  font-size:9px;
-  margin-bottom:4px;
-}
+    .value {
+      font-weight: bold;
+      font-size: 14px;
+    }
 
-.value{
-  color:white;
-  font-size:12px;
-  font-weight:bold;
-}
+    .rules {
+      color: #c9b8d3;
+      line-height: 1.5;
+      font-size: 14px;
+    }
 
-.notice{
-  color:#ffb6ff;
-  font-size:12px;
-  line-height:1.5;
-  background:#180321;
-  border:1px solid #4b1d63;
-  border-radius:10px;
-  padding:12px;
-}
+    .slot {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px;
+      margin-bottom: 8px;
+      border: 1px solid #32203f;
+      border-radius: 11px;
+      background: #09070d;
+    }
 
-.slot{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  background:#08000f;
-  border:1px solid #291039;
-  border-radius:10px;
-  padding:11px;
-  margin-bottom:7px;
-}
+    .slot-number {
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9px;
+      background: #241333;
+      color: #d7a9f0;
+      font-weight: bold;
+    }
 
-.slotNumber{
-  width:35px;
-  height:35px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:8px;
-  background:#1b0828;
-  color:#c56cff;
-  font-weight:900;
-  font-size:13px;
-}
+    .slot-info {
+      flex: 1;
+    }
 
-.slotInfo{
-  flex:1;
-}
+    .team {
+      font-weight: bold;
+      font-size: 14px;
+    }
 
-.slotName{
-  font-size:13px;
-  font-weight:bold;
-}
+    .status {
+      font-size: 10px;
+      margin-top: 4px;
+    }
 
-.slotStatus{
-  color:#806b8d;
-  font-size:9px;
-  margin-top:3px;
-}
+    .claimed {
+      color: #ff7777;
+    }
 
-.open{
-  color:#55e39b;
-}
+    .available {
+      color: #70ff9a;
+    }
 
-.claimed{
-  color:#c56cff;
-}
+    .mine {
+      color: #d08aff;
+    }
 
-.mine{
-  border-color:#9d45e8;
-  box-shadow:0 0 12px rgba(157,69,232,.2);
-}
+    input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid #492467;
+      background: #07050a;
+      color: white;
+      outline: none;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
 
-input{
-  width:100%;
-  padding:13px;
-  margin:5px 0;
-  border-radius:9px;
-  border:1px solid #321650;
-  background:#08000f;
-  color:white;
-  outline:none;
-}
+    input:focus {
+      border-color: #a348d5;
+    }
 
-button{
-  width:100%;
-  padding:13px;
-  margin-top:8px;
-  border:0;
-  border-radius:9px;
-  background:#7628c8;
-  color:white;
-  font-weight:bold;
-}
+    .mine-btn {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #6e249e, #a63bd8);
+      color: white;
+      font-weight: 900;
+      cursor: pointer;
+      font-size: 14px;
+    }
 
-button:disabled{
-  opacity:.5;
-}
+    .mine-btn:disabled {
+      opacity: .5;
+    }
 
-.status{
-  text-align:center;
-  color:#806b8d;
-  font-size:11px;
-  margin:10px 0;
-}
+    .message {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 13px;
+      min-height: 18px;
+    }
 
-nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  height:65px;
-  background:#0d0015;
-  border-top:1px solid #321650;
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-  z-index:10;
-}
+    .success {
+      color: #72ff9b;
+    }
 
-nav a{
-  color:#806b8d;
-  text-decoration:none;
-  font-size:11px;
-  text-align:center;
-}
+    .error {
+      color: #ff7777;
+    }
 
-nav a.active{
-  color:#c56cff;
-}
+    .nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(8, 5, 12, .97);
+      border-top: 1px solid #3d2153;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px;
+      z-index: 10;
+    }
 
-</style>
+    .nav a {
+      color: #a991b0;
+      text-decoration: none;
+      font-size: 11px;
+      text-align: center;
+      padding: 6px 10px;
+    }
 
+    .nav a.active {
+      color: #d177ff;
+    }
+
+    @media(max-width: 450px) {
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
-
-  <div class="logo">
-    NØV3X
-  </div>
-
-  <div class="subtitle">
-    SCRIMMAGE
-  </div>
-
-</header>
-
-
 <div class="container">
 
-  <div
-    id="status"
-    class="status">
-    Checking session...
+  <div class="header">
+    <div class="logo">NØV3X</div>
+    <div class="subtitle">NØV3X SCRIMMAGE • ONLINE</div>
   </div>
 
 
@@ -241,57 +241,26 @@ nav a.active{
 
     <h2>🔥 8PM BR SCRIMMAGE</h2>
 
-    <div class="info">
+    <div class="info-grid">
 
-      <div class="infoBox">
-
-        <div class="label">
-          DATE
-        </div>
-
-        <div class="value">
-          DATE COMING SOON
-        </div>
-
+      <div class="info">
+        <div class="label">DATE</div>
+        <div class="value">DATE COMING SOON</div>
       </div>
 
-
-      <div class="infoBox">
-
-        <div class="label">
-          OPEN ROOM
-        </div>
-
-        <div class="value">
-          8:00 PM
-        </div>
-
+      <div class="info">
+        <div class="label">OPEN ROOM</div>
+        <div class="value">8:00 PM</div>
       </div>
 
-
-      <div class="infoBox">
-
-        <div class="label">
-          ROOM START
-        </div>
-
-        <div class="value">
-          8:20 PM
-        </div>
-
+      <div class="info">
+        <div class="label">ROOM START</div>
+        <div class="value">8:20 PM</div>
       </div>
 
-
-      <div class="infoBox">
-
-        <div class="label">
-          MAPS
-        </div>
-
-        <div class="value">
-          ISO - BO - ISO
-        </div>
-
+      <div class="info">
+        <div class="label">MAPS</div>
+        <div class="value">ISO - BO - ISO</div>
       </div>
 
     </div>
@@ -305,12 +274,10 @@ nav a.active{
 
     <h2>📜 SCRIMMAGE RULE</h2>
 
-    <div class="notice">
-
-      NO SKIPPING OF SLOTS.
-      Follow the assigned slot order
-      and the official scrimmage rules.
-
+    <div class="rules">
+      <b>NO SKIPPING OF SLOTS.</b>
+      Follow the assigned slot order and the official
+      scrimmage rules.
     </div>
 
   </div>
@@ -322,11 +289,8 @@ nav a.active{
 
     <h2>🎯 TRYOUT LIST</h2>
 
-    <div
-      id="slotList">
-
+    <div id="slots">
       Loading slots...
-
     </div>
 
   </div>
@@ -338,46 +302,39 @@ nav a.active{
 
     <h2>🎯 MINE SYSTEM</h2>
 
-    <div class="notice">
-
-      Enter your team name and claim
-      the next available slot.
-
-      <br><br>
-
-      Your claimed slot is saved to Firebase
-      and remains after refreshing the app.
-
+    <div class="rules" style="margin-bottom:15px;">
+      Enter your team name and press MINE.
+      The system automatically assigns the
+      <b>next available OPEN slot.</b>
     </div>
-
 
     <input
-      id="teamName"
       type="text"
+      id="teamName"
+      placeholder="Enter your team name"
       maxlength="40"
-      placeholder="Enter team name">
-
+    >
 
     <button
+      class="mine-btn"
       id="mineButton"
-      onclick="mineSlot()">
-
-      🎯 MINE NEXT AVAILABLE SLOT
-
+    >
+      🎯 MINE NEXT SLOT
     </button>
 
-
     <div
-      id="mineStatus"
-      class="status">
-    </div>
+      class="message"
+      id="message"
+    ></div>
 
   </div>
 
 </div>
 
 
-<nav>
+<!-- NAVIGATION -->
+
+<div class="nav">
 
   <a href="index.html">
     🏠<br>Home
@@ -387,9 +344,7 @@ nav a.active{
     💬<br>Chat
   </a>
 
-  <a
-    href="scrimmage.html"
-    class="active">
+  <a href="scrimmage.html" class="active">
     🎮<br>Scrim
   </a>
 
@@ -401,15 +356,13 @@ nav a.active{
     👤<br>Profile
   </a>
 
-</nav>
+</div>
 
 
 <!-- FIREBASE -->
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 <script src="firebase-config.js"></script>
@@ -419,418 +372,288 @@ nav a.active{
 
 let currentUser = null;
 
-let userTeam = null;
 
-let slotListener = null;
+// ======================================
+// AUTH
+// ======================================
 
+auth.onAuthStateChanged(user => {
 
-const status =
-  document.getElementById("status");
-
-const slotList =
-  document.getElementById("slotList");
-
-const mineStatus =
-  document.getElementById("mineStatus");
-
-const teamInput =
-  document.getElementById("teamName");
-
-const mineButton =
-  document.getElementById("mineButton");
-
-
-/*
-  WAIT FOR FIREBASE SESSION
-*/
-
-auth.onAuthStateChanged(async function(user){
-
-  if(!user){
-
-    status.textContent =
-      "Session not found.";
-
-    setTimeout(function(){
-
-      window.location.replace(
-        "login.html"
-      );
-
-    },300);
-
+  if (!user) {
+    window.location.href = "login.html";
     return;
   }
 
-
   currentUser = user;
-
-  status.textContent =
-    "NØV3X SCRIMMAGE • ONLINE";
-
-
-  await findMySlot();
 
   loadSlots();
 
 });
 
 
-/*
-  LOAD SLOTS IN REAL TIME
-*/
+// ======================================
+// LOAD SLOTS REAL-TIME
+// ======================================
 
-function loadSlots(){
+function loadSlots() {
 
-  if(slotListener){
+  db.collection("scrimmageSlots")
+    .orderBy("slot")
+    .onSnapshot(snapshot => {
 
-    slotListener();
+      const container =
+        document.getElementById("slots");
 
-  }
+      container.innerHTML = "";
+
+      snapshot.forEach(doc => {
+
+        const data = doc.data();
+
+        const slotNumber =
+          data.slot || 0;
+
+        const team =
+          data.teamName || "OPEN";
+
+        const claimed =
+          data.claimed === true;
+
+        const mine =
+          claimed &&
+          data.uid === currentUser.uid;
 
 
-  slotListener =
-    db
-    .collection("scrimmageSlots")
-    .orderBy("number")
-    .onSnapshot(
+        const slot =
+          document.createElement("div");
 
-      function(snapshot){
+        slot.className = "slot";
 
-        if(snapshot.empty){
 
-          slotList.innerHTML = `
-            <div class="status">
-              No slots initialized yet.
-            </div>
-          `;
+        let statusText = "AVAILABLE";
 
-          return;
+        let statusClass = "available";
+
+
+        if (mine) {
+
+          statusText = "YOUR SLOT";
+          statusClass = "mine";
+
+        } else if (claimed) {
+
+          statusText = "CLAIMED";
+          statusClass = "claimed";
+
         }
 
 
-        let html = "";
+        slot.innerHTML = `
 
+          <div class="slot-number">
+            ${slotNumber}
+          </div>
 
-        snapshot.forEach(function(doc){
+          <div class="slot-info">
 
-          const data =
-            doc.data();
-
-          const number =
-            data.number || 0;
-
-          const claimed =
-            data.claimed === true;
-
-          const name =
-            data.teamName ||
-            "CLAIMED";
-
-
-          const isMine =
-            data.uid ===
-            currentUser.uid;
-
-
-          html += `
-
-            <div class="slot
-              ${isMine ? "mine" : ""}">
-
-              <div class="slotNumber">
-                ${number}
-              </div>
-
-              <div class="slotInfo">
-
-                <div class="slotName">
-
-                  ${
-                    claimed
-                    ? escapeHTML(name)
-                    : "OPEN"
-                  }
-
-                </div>
-
-                <div
-                  class="slotStatus
-                  ${claimed ? "claimed" : "open"}">
-
-                  ${
-                    isMine
-                    ? "YOUR SLOT"
-                    : claimed
-                    ? "CLAIMED"
-                    : "AVAILABLE"
-                  }
-
-                </div>
-
-              </div>
-
+            <div class="team">
+              ${escapeHTML(team)}
             </div>
 
-          `;
+            <div class="status ${statusClass}">
+              ${statusText}
+            </div>
 
-        });
-
-
-        slotList.innerHTML =
-          html;
-
-      },
-
-      function(error){
-
-        console.error(error);
-
-        slotList.innerHTML = `
-          <div class="status">
-            Unable to load slots.
           </div>
+
         `;
 
-      }
 
-    );
+        container.appendChild(slot);
 
-}
+      });
 
+    }, error => {
 
-/*
-  FIND USER'S CURRENT SLOT
-*/
+      console.error(error);
 
-async function findMySlot(){
-
-  try{
-
-    const snapshot =
-      await db
-      .collection("scrimmageSlots")
-      .where(
-        "uid",
-        "==",
-        currentUser.uid
-      )
-      .get();
-
-
-    if(!snapshot.empty){
-
-      const doc =
-        snapshot.docs[0];
-
-      const data =
-        doc.data();
-
-
-      userTeam =
-        data.teamName ||
-        null;
-
-
-      if(userTeam){
-
-        teamInput.value =
-          userTeam;
-
-        mineStatus.textContent =
-          "You already claimed Slot " +
-          data.number +
-          " — " +
-          userTeam;
-
-        mineButton.disabled =
-          true;
-
-        mineButton.textContent =
-          "✓ SLOT ALREADY CLAIMED";
-
-      }
-
-    }
-
-  }
-  catch(error){
-
-    console.error(
-      "Mine check error:",
-      error
-    );
-
-  }
-
-}
-
-
-/*
-  MINE NEXT SLOT
-*/
-
-async function mineSlot(){
-
-  if(!currentUser){
-
-    return;
-  }
-
-
-  if(userTeam){
-
-    mineStatus.textContent =
-      "You already have a slot.";
-
-    return;
-  }
-
-
-  const teamName =
-    teamInput.value.trim();
-
-
-  if(!teamName){
-
-    mineStatus.textContent =
-      "Enter your team name.";
-
-    return;
-  }
-
-
-  mineButton.disabled =
-    true;
-
-  mineButton.textContent =
-    "CLAIMING...";
-
-  mineStatus.textContent =
-    "";
-
-
-  try{
-
-    /*
-      Get slots in order
-    */
-
-    const snapshot =
-      await db
-      .collection("scrimmageSlots")
-      .orderBy("number")
-      .get();
-
-
-    let availableSlot = null;
-
-
-    snapshot.forEach(function(doc){
-
-      if(
-        !availableSlot &&
-        doc.data().claimed !== true
-      ){
-
-        availableSlot = doc;
-
-      }
+      document.getElementById("slots").textContent =
+        "Unable to load slots.";
 
     });
 
+}
 
-    if(!availableSlot){
 
-      mineStatus.textContent =
-        "No available slots.";
+// ======================================
+// MINE NEXT AVAILABLE SLOT
+// ======================================
 
-      mineButton.disabled =
-        false;
+document
+  .getElementById("mineButton")
+  .onclick = async () => {
 
-      mineButton.textContent =
-        "🎯 MINE NEXT AVAILABLE SLOT";
+    if (!currentUser) {
+      return;
+    }
+
+
+    const input =
+      document.getElementById("teamName");
+
+    const teamName =
+      input.value.trim();
+
+
+    const message =
+      document.getElementById("message");
+
+
+    if (!teamName) {
+
+      message.className =
+        "message error";
+
+      message.textContent =
+        "Enter your team name first.";
 
       return;
     }
 
 
-    /*
-      Claim selected slot
-    */
+    const button =
+      document.getElementById("mineButton");
 
-    await db
-      .collection("scrimmageSlots")
-      .doc(availableSlot.id)
-      .update({
+    button.disabled = true;
 
-        claimed:true,
+    button.textContent =
+      "⏳ FINDING SLOT...";
 
-        teamName:teamName,
 
-        uid:currentUser.uid,
+    message.className =
+      "message";
 
-        username:
-          currentUser.email,
+    message.textContent =
+      "Finding the next available slot...";
 
-        claimedAt:
-          firebase.firestore
-          .FieldValue
-          .serverTimestamp()
+
+    try {
+
+      const snapshot =
+        await db
+          .collection("scrimmageSlots")
+          .orderBy("slot")
+          .get();
+
+
+      let targetDoc = null;
+
+
+      // FIND FIRST OPEN SLOT
+
+      snapshot.forEach(doc => {
+
+        if (targetDoc) {
+          return;
+        }
+
+        const data = doc.data();
+
+        if (data.claimed !== true) {
+          targetDoc = doc;
+        }
 
       });
 
 
-    userTeam =
-      teamName;
+      if (!targetDoc) {
+
+        throw new Error(
+          "NO_SLOTS_AVAILABLE"
+        );
+
+      }
 
 
-    mineStatus.textContent =
-      "✓ Slot " +
-      availableSlot.data().number +
-      " claimed successfully!";
+      const slotData =
+        targetDoc.data();
 
 
-    mineButton.textContent =
-      "✓ SLOT CLAIMED";
+      // CLAIM THE SLOT
+
+      await targetDoc.ref.update({
+
+        teamName: teamName,
+
+        claimed: true,
+
+        uid: currentUser.uid,
+
+        claimedAt:
+          new Date().toISOString()
+
+      });
 
 
-    teamInput.disabled =
-      true;
+      message.className =
+        "message success";
+
+      message.textContent =
+        `🔥 Slot ${slotData.slot} claimed successfully!`;
 
 
-  }
-  catch(error){
-
-    console.error(error);
-
-    mineStatus.textContent =
-      "Unable to claim slot: " +
-      error.code;
+      input.value = "";
 
 
-    mineButton.disabled =
-      false;
+    } catch (error) {
 
-    mineButton.textContent =
-      "🎯 MINE NEXT AVAILABLE SLOT";
-
-  }
-
-}
+      console.error(error);
 
 
-/*
-  ESCAPE HTML
-*/
+      message.className =
+        "message error";
 
-function escapeHTML(text){
+
+      if (error.message === "NO_SLOTS_AVAILABLE") {
+
+        message.textContent =
+          "❌ All 25 slots are already claimed.";
+
+      } else if (
+        error.code === "permission-denied"
+      ) {
+
+        message.textContent =
+          "❌ Firebase permission denied. Update your Firestore rules.";
+
+      } else {
+
+        message.textContent =
+          "❌ Unable to claim the slot.";
+
+      }
+
+    }
+
+
+    button.disabled = false;
+
+    button.textContent =
+      "🎯 MINE NEXT SLOT";
+
+  };
+
+
+// ======================================
+// HTML SAFETY
+// ======================================
+
+function escapeHTML(text) {
 
   const div =
     document.createElement("div");
 
-  div.textContent =
-    text;
+  div.textContent = text;
 
   return div.innerHTML;
 
