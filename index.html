@@ -1,372 +1,530 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NØV3X — Home</title>
 
-<title>NØV3X</title>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
 
-<style>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-*{
-  box-sizing:border-box;
-}
+    body {
+      background: #08060d;
+      color: white;
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      padding-bottom: 90px;
+    }
 
-body{
-  margin:0;
-  background:#07000d;
-  color:white;
-  font-family:Arial,sans-serif;
-  min-height:100vh;
-  padding-bottom:80px;
-}
+    header {
+      padding: 28px 18px;
+      text-align: center;
+      background: #0d0915;
+      border-bottom: 1px solid #2b193e;
+    }
 
-header{
-  padding:25px 20px;
-  background:#0d0015;
-  border-bottom:1px solid #321650;
-}
+    header h1 {
+      color: #b66cff;
+      font-size: 32px;
+      letter-spacing: 5px;
+    }
 
-.logo{
-  color:#c56cff;
-  font-size:30px;
-  font-weight:900;
-  letter-spacing:5px;
-}
+    header p {
+      color: #817589;
+      margin-top: 6px;
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
 
-.welcome{
-  margin-top:6px;
-  color:#806b8d;
-  font-size:13px;
-}
+    .container {
+      width: 94%;
+      max-width: 700px;
+      margin: 22px auto;
+    }
 
-.container{
-  max-width:700px;
-  margin:auto;
-  padding:18px;
-}
+    .welcome {
+      background: linear-gradient(
+        135deg,
+        #160d20,
+        #0d0915
+      );
 
-.card{
-  background:#100019;
-  border:1px solid #321650;
-  border-radius:15px;
-  padding:18px;
-  margin-bottom:14px;
-}
+      border: 1px solid #3a2052;
+      border-radius: 18px;
+      padding: 22px;
+      margin-bottom: 18px;
+      box-shadow:
+        0 0 25px rgba(157, 75, 255, 0.08);
+    }
 
-.card h2{
-  margin:0 0 8px;
-  color:#d39aff;
-  font-size:18px;
-}
+    .welcome small {
+      color: #817589;
+      font-size: 12px;
+    }
 
-.card p{
-  color:#9b7aa8;
-  font-size:13px;
-  line-height:1.5;
-}
+    .welcome h2 {
+      margin-top: 6px;
+      font-size: 24px;
+    }
 
-.button{
-  display:block;
-  width:100%;
-  padding:14px;
-  margin-top:10px;
-  border-radius:10px;
-  background:#7628c8;
-  color:white;
-  text-align:center;
-  text-decoration:none;
-  font-weight:bold;
-}
+    .welcome h2 span {
+      color: #b66cff;
+    }
 
-.status{
-  text-align:center;
-  color:#806b8d;
-  font-size:12px;
-  margin:15px 0;
-}
+    .welcome p {
+      color: #95889e;
+      margin-top: 8px;
+      font-size: 13px;
+    }
 
-nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  height:65px;
-  background:#0d0015;
-  border-top:1px solid #321650;
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-}
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
 
-nav a{
-  color:#806b8d;
-  text-decoration:none;
-  font-size:11px;
-  text-align:center;
-}
+    .card {
+      text-decoration: none;
+      color: white;
+      background: #100b18;
+      border: 1px solid #2b193e;
+      border-radius: 16px;
+      padding: 20px 15px;
+      transition: 0.2s;
+    }
 
-nav a.active{
-  color:#c56cff;
-}
+    .card:hover {
+      border-color: #9d4fff;
+      transform: translateY(-2px);
+    }
 
-</style>
+    .icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
 
+    .card h3 {
+      font-size: 15px;
+    }
+
+    .card p {
+      color: #817589;
+      font-size: 11px;
+      margin-top: 5px;
+      line-height: 1.4;
+    }
+
+    .admin-card {
+      display: none;
+      margin-top: 12px;
+      background: #170d20;
+      border: 1px solid #6c36a0;
+    }
+
+    .admin-card h3 {
+      color: #c184ff;
+    }
+
+    .announcement {
+      margin-top: 18px;
+      background: #100b18;
+      border: 1px solid #2b193e;
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .announcement h2 {
+      font-size: 17px;
+      color: #b66cff;
+      margin-bottom: 12px;
+    }
+
+    .announcement-item {
+      padding: 12px;
+      background: #0b0810;
+      border-radius: 10px;
+      border: 1px solid #241633;
+      margin-bottom: 8px;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .announcement-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .empty {
+      color: #766b80;
+      font-size: 12px;
+    }
+
+    .loading {
+      text-align: center;
+      color: #b66cff;
+      padding: 40px;
+    }
+
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 68px;
+      background: #0d0915;
+      border-top: 1px solid #29183b;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 20;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #817589;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    nav a.active {
+      color: #b66cff;
+    }
+
+    nav div {
+      font-size: 21px;
+      margin-bottom: 3px;
+    }
+
+    @media (max-width: 420px) {
+      .grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .card {
+        padding: 16px 12px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
+  <header>
+    <h1>NØV3X</h1>
+    <p>ONE SQUAD, ONE FATE</p>
+  </header>
 
-  <div class="logo">NØV3X</div>
+  <main class="container">
 
-  <div
-    id="welcome"
-    class="welcome">
-    Loading...
-  </div>
+    <div id="loading" class="loading">
+      Loading NØV3X...
+    </div>
 
-</header>
+    <div id="content" style="display:none;">
+
+      <section class="welcome">
+
+        <small>WELCOME BACK</small>
+
+        <h2>
+          <span id="username">PLAYER</span> 👋
+        </h2>
+
+        <p>
+          Ready for the next NØV3X scrimmage?
+        </p>
+
+      </section>
 
 
-<div class="container">
+      <div class="grid">
 
-  <div
-    id="status"
-    class="status">
-    Checking session...
-  </div>
+        <a class="card" href="scrimmage.html">
+
+          <div class="icon">⚔️</div>
+
+          <h3>SCRIMMAGE</h3>
+
+          <p>
+            Claim your slot in the Mine System.
+          </p>
+
+        </a>
 
 
-  <div class="card">
+        <a class="card" href="leaderboard.html">
 
-    <h2>🔥 8PM BR SCRIMMAGE</h2>
+          <div class="icon">🏆</div>
 
-    <p>
-      ONE SQUAD, ONE FATE
-    </p>
+          <h3>LEADERBOARD</h3>
 
-    <a
-      href="scrimmage.html"
-      class="button">
-      OPEN SCRIMMAGE
+          <p>
+            View team rankings and points.
+          </p>
+
+        </a>
+
+
+        <a class="card" href="teams.html">
+
+          <div class="icon">👥</div>
+
+          <h3>TEAMS</h3>
+
+          <p>
+            Create and manage your team.
+          </p>
+
+        </a>
+
+
+        <a class="card" href="chat.html">
+
+          <div class="icon">💬</div>
+
+          <h3>GLOBAL CHAT</h3>
+
+          <p>
+            Talk with the NØV3X community.
+          </p>
+
+        </a>
+
+      </div>
+
+
+      <a
+        id="adminCard"
+        class="card admin-card"
+        href="admin.html">
+
+        <div class="icon">⚙️</div>
+
+        <h3>ADMIN CONTROL CENTER</h3>
+
+        <p>
+          Manage slots, leaderboard,
+          announcements and notifications.
+        </p>
+
+      </a>
+
+
+      <section class="announcement">
+
+        <h2>📢 ANNOUNCEMENTS</h2>
+
+        <div id="announcementList">
+          <div class="empty">
+            No announcements yet.
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+
+  <nav>
+
+    <a href="index.html" class="active">
+      <div>⌂</div>
+      Home
     </a>
 
-  </div>
-
-
-  <div class="card">
-
-    <h2>🏆 LEADERBOARD</h2>
-
-    <p>
-      Check the latest NØV3X team scores.
-    </p>
-
-    <a
-      href="leaderboard.html"
-      class="button">
-      VIEW LEADERBOARD
+    <a href="chat.html">
+      <div>💬</div>
+      Chat
     </a>
 
-  </div>
-
-
-  <div class="card">
-
-    <h2>💬 COMMUNITY CHAT</h2>
-
-    <p>
-      Talk with the NØV3X community.
-    </p>
-
-    <a
-      href="chat.html"
-      class="button">
-      OPEN CHAT
+    <a href="scrimmage.html">
+      <div>⚔</div>
+      Scrim
     </a>
 
-  </div>
-
-
-  <div
-    id="adminCard"
-    class="card"
-    style="display:none">
-
-    <h2>⚙️ ADMIN PANEL</h2>
-
-    <p>
-      Manage scrimmage slots, leaderboard,
-      announcements and notifications.
-    </p>
-
-    <a
-      href="admin.html"
-      class="button">
-      OPEN ADMIN PANEL
+    <a href="leaderboard.html">
+      <div>🏆</div>
+      Rank
     </a>
 
-  </div>
+    <a href="profile.html">
+      <div>👤</div>
+      Profile
+    </a>
 
-</div>
-
-
-<nav>
-
-  <a
-    href="index.html"
-    class="active">
-    🏠<br>Home
-  </a>
-
-  <a href="chat.html">
-    💬<br>Chat
-  </a>
-
-  <a href="scrimmage.html">
-    🎮<br>Scrim
-  </a>
-
-  <a href="leaderboard.html">
-    🏆<br>Rank
-  </a>
-
-  <a href="profile.html">
-    👤<br>Profile
-  </a>
-
-</nav>
+  </nav>
 
 
-<!-- FIREBASE -->
+  <script>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    const loading =
+      document.getElementById("loading");
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    const content =
+      document.getElementById("content");
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    const usernameElement =
+      document.getElementById("username");
 
-<script src="firebase-config.js"></script>
-
-
-<script>
-
-/*
-  NØV3X SESSION CHECK
-
-  IMPORTANT:
-  We use onAuthStateChanged
-  instead of auth.currentUser
-  because Firebase needs time
-  to restore the saved session.
-*/
-
-auth.onAuthStateChanged(async function(user){
-
-  const status =
-    document.getElementById("status");
-
-  const welcome =
-    document.getElementById("welcome");
-
-  const adminCard =
-    document.getElementById("adminCard");
+    const adminCard =
+      document.getElementById("adminCard");
 
 
-  if(!user){
+    auth.onAuthStateChanged(async (user) => {
 
-    status.textContent =
-      "No active session.";
+      if (!user) {
 
-    /*
-      Only redirect after Firebase
-      has confirmed there is no user.
-    */
-
-    setTimeout(function(){
-
-      window.location.replace(
-        "login.html"
-      );
-
-    },300);
-
-    return;
-  }
-
-
-  console.log(
-    "NØV3X SESSION ACTIVE:",
-    user.email
-  );
-
-
-  status.textContent =
-    "NØV3X session active ✓";
-
-
-  /*
-    Get profile
-  */
-
-  try{
-
-    const profile =
-      await db
-      .collection("users")
-      .doc(user.uid)
-      .get();
-
-
-    if(profile.exists){
-
-      const data =
-        profile.data();
-
-
-      welcome.textContent =
-        "Welcome, " +
-        (data.username || "NØV3X Member");
-
-
-      /*
-        Show Admin Panel
-        only to admins.
-      */
-
-      if(data.role === "admin"){
-
-        adminCard.style.display =
-          "block";
+        window.location.href = "login.html";
+        return;
 
       }
 
+
+      try {
+
+        const userDoc = await db
+          .collection("users")
+          .doc(user.uid)
+          .get();
+
+
+        let username = "NØV3X Player";
+        let role = "player";
+
+
+        if (userDoc.exists) {
+
+          const data = userDoc.data();
+
+          username =
+            data.username ||
+            username;
+
+          role =
+            data.role ||
+            "player";
+
+        }
+
+
+        usernameElement.textContent =
+          username;
+
+
+        if (role === "admin") {
+
+          adminCard.style.display =
+            "block";
+
+        }
+
+
+        loading.style.display =
+          "none";
+
+        content.style.display =
+          "block";
+
+
+        loadAnnouncements();
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        loading.textContent =
+          "Error: " + error.message;
+
+      }
+
+    });
+
+
+    function loadAnnouncements() {
+
+      db.collection("announcements")
+        .orderBy("createdAt", "desc")
+        .limit(10)
+        .onSnapshot(
+
+          (snapshot) => {
+
+            const list =
+              document.getElementById(
+                "announcementList"
+              );
+
+
+            list.innerHTML = "";
+
+
+            if (snapshot.empty) {
+
+              list.innerHTML = `
+                <div class="empty">
+                  No announcements yet.
+                </div>
+              `;
+
+              return;
+
+            }
+
+
+            snapshot.forEach((doc) => {
+
+              const data = doc.data();
+
+
+              const item =
+                document.createElement("div");
+
+              item.className =
+                "announcement-item";
+
+
+              item.textContent =
+                data.text || "";
+
+
+              list.appendChild(item);
+
+            });
+
+          },
+
+          (error) => {
+
+            console.error(error);
+
+            document.getElementById(
+              "announcementList"
+            ).innerHTML = `
+              <div class="empty">
+                Unable to load announcements.
+              </div>
+            `;
+
+          }
+
+        );
+
     }
-    else{
 
-      welcome.textContent =
-        "Welcome, NØV3X Member";
-
-    }
-
-  }
-  catch(error){
-
-    console.error(
-      "Profile error:",
-      error
-    );
-
-    welcome.textContent =
-      "Welcome to NØV3X";
-
-  }
-
-});
-
-</script>
+  </script>
 
 </body>
 </html>
