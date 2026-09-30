@@ -13,4 +13,16 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
 
-console.log("NØV3X Firebase connected!");
+/*
+  KEEP LOGIN SESSION
+  Firebase will remember the account
+  even after closing/reopening the app.
+*/
+auth.setPersistence(
+  firebase.auth.Auth.Persistence.LOCAL
+).then(() => {
+  console.log("NØV3X Firebase connected!");
+  console.log("Login persistence enabled!");
+}).catch(error => {
+  console.error("Persistence error:", error);
+});
