@@ -1,1042 +1,1134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>NØV3X — Admin Panel</title>
+  <title>NØV3X — Admin</title>
 
-<style>
-*{box-sizing:border-box}
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
 
-body{
- margin:0;
- background:#07000d;
- color:white;
- font-family:Arial,sans-serif;
- padding-bottom:80px;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-header{
- padding:22px 18px;
- border-bottom:1px solid #321650;
- background:#0d0015;
-}
+    body {
+      background: #08060d;
+      color: white;
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      padding-bottom: 85px;
+    }
 
-.logo{
- color:#c56cff;
- font-size:27px;
- font-weight:900;
- letter-spacing:3px;
-}
+    header {
+      background: #0d0915;
+      border-bottom: 1px solid #32194a;
+      padding: 25px 15px;
+      text-align: center;
+    }
 
-.sub{
- color:#806b8d;
- font-size:12px;
- margin-top:5px;
-}
+    header h1 {
+      color: #b66cff;
+      font-size: 27px;
+      letter-spacing: 4px;
+    }
 
-.container{
- max-width:700px;
- margin:auto;
- padding:18px;
-}
+    header p {
+      color: #817589;
+      font-size: 12px;
+      margin-top: 6px;
+    }
 
-.card{
- background:#100019;
- border:1px solid #321650;
- border-radius:15px;
- padding:16px;
- margin-bottom:15px;
-}
+    .container {
+      width: 94%;
+      max-width: 750px;
+      margin: 20px auto;
+    }
 
-.card h2{
- margin:0 0 13px;
- font-size:17px;
- color:#d39aff;
-}
+    .loading {
+      text-align: center;
+      color: #b66cff;
+      padding: 50px 10px;
+    }
 
-button{
- border:0;
- border-radius:9px;
- padding:11px 14px;
- margin:4px;
- background:#7628c8;
- color:white;
- font-weight:bold;
-}
+    .denied {
+      text-align: center;
+      padding: 50px 20px;
+      color: #ff76c8;
+    }
 
-button.danger{
- background:#a51f3c;
-}
+    .section {
+      background: #100b18;
+      border: 1px solid #2b193e;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 18px;
+    }
 
-button.edit{
- background:#4d2180;
-}
+    .section h2 {
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: white;
+    }
 
-input{
- width:100%;
- padding:12px;
- margin:5px 0;
- border-radius:9px;
- border:1px solid #3b1854;
- background:#08000f;
- color:white;
- outline:none;
-}
+    .section h2 span {
+      color: #b66cff;
+    }
 
-.stats{
- display:grid;
- grid-template-columns:repeat(3,1fr);
- gap:8px;
-}
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
 
-.stat{
- background:#08000f;
- border:1px solid #291039;
- border-radius:10px;
- padding:13px;
- text-align:center;
-}
+    .stat {
+      background: #100b18;
+      border: 1px solid #2b193e;
+      border-radius: 14px;
+      padding: 17px 8px;
+      text-align: center;
+    }
 
-.stat b{
- display:block;
- color:#c56cff;
- font-size:22px;
-}
+    .stat-number {
+      color: #bd78ff;
+      font-size: 25px;
+      font-weight: bold;
+    }
 
-.stat span{
- color:#806b8d;
- font-size:10px;
-}
+    .stat-label {
+      color: #817589;
+      font-size: 10px;
+      margin-top: 5px;
+    }
 
-.message{
- min-height:18px;
- margin:8px 0;
- color:#b968ff;
- font-size:12px;
-}
+    input,
+    textarea {
+      width: 100%;
+      background: #0a0710;
+      color: white;
+      border: 1px solid #38204e;
+      border-radius: 10px;
+      padding: 13px;
+      margin-bottom: 10px;
+      outline: none;
+      font-family: Arial, sans-serif;
+    }
 
-.slot,.team{
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:10px;
- padding:11px;
- margin:6px 0;
- background:#08000f;
- border:1px solid #291039;
- border-radius:9px;
-}
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
 
-.info{
- flex:1;
-}
+    input:focus,
+    textarea:focus {
+      border-color: #a052ff;
+    }
 
-.number{
- color:#b968ff;
- font-weight:bold;
-}
+    button {
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      padding: 13px;
+      background: #8b3dff;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 5px;
+    }
 
-.name{
- margin-top:3px;
- font-size:13px;
-}
+    button:hover {
+      background: #a258ff;
+    }
 
-.points{
- color:#c56cff;
- font-weight:bold;
-}
+    .danger {
+      background: #321329;
+      color: #ff7bc9;
+      border: 1px solid #63214f;
+    }
 
-.actions{
- white-space:nowrap;
-}
+    .danger:hover {
+      background: #461936;
+    }
 
-nav{
- position:fixed;
- bottom:0;
- left:0;
- right:0;
- height:65px;
- background:#0d0015;
- border-top:1px solid #321650;
- display:flex;
- justify-content:space-around;
- align-items:center;
-}
+    .slot-list,
+    .leaderboard-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
 
-nav a{
- color:#806b8d;
- text-decoration:none;
- font-size:11px;
- text-align:center;
-}
+    .slot,
+    .leaderboard-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      background: #0b0810;
+      border: 1px solid #28183a;
+      border-radius: 11px;
+    }
 
-</style>
+    .slot-number {
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #21112e;
+      color: #bd78ff;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    .slot-info,
+    .leader-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .slot-name,
+    .leader-name {
+      font-weight: bold;
+      font-size: 13px;
+      word-break: break-word;
+    }
+
+    .slot-status,
+    .leader-points {
+      color: #817589;
+      font-size: 10px;
+      margin-top: 3px;
+    }
+
+    .open {
+      color: #7f7390;
+    }
+
+    .claimed {
+      color: #b96eff;
+    }
+
+    .small-btn {
+      width: auto;
+      padding: 8px 10px;
+      margin: 0;
+      font-size: 10px;
+      white-space: nowrap;
+    }
+
+    .quick-links {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .quick-links button {
+      margin: 0;
+      background: #1b1027;
+      border: 1px solid #3a2052;
+      color: #bd78ff;
+    }
+
+    #status {
+      text-align: center;
+      color: #b66cff;
+      font-size: 12px;
+      margin-top: 10px;
+      min-height: 16px;
+    }
+
+    nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 68px;
+      background: #0d0915;
+      border-top: 1px solid #29183b;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      z-index: 50;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #817589;
+      text-align: center;
+      font-size: 11px;
+    }
+
+    nav a.active {
+      color: #b66cff;
+    }
+
+    nav div {
+      font-size: 20px;
+      margin-bottom: 3px;
+    }
+
+    @media (max-width: 450px) {
+      .stats {
+        gap: 6px;
+      }
+
+      .stat-number {
+        font-size: 21px;
+      }
+
+      .quick-links {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
- <div class="logo">NØV3X</div>
- <div class="sub">ADMIN CONTROL CENTER</div>
-</header>
+  <header>
+    <h1>NØV3X</h1>
+    <p>ADMIN CONTROL CENTER</p>
+  </header>
 
-<div class="container">
+  <main class="container">
 
-<div id="message" class="message"></div>
+    <div id="loading" class="loading">
+      Checking admin access...
+    </div>
 
-<!-- SCRIM STATUS -->
+    <div id="denied" class="denied" style="display:none;">
+      <h2>ACCESS DENIED</h2>
+      <p style="margin-top:8px;">
+        Admin permission is required.
+      </p>
+    </div>
 
-<div class="card">
+    <div id="adminPanel" style="display:none;">
 
-<h2>📊 SCRIMMAGE STATUS</h2>
+      <!-- STATS -->
+      <div class="stats">
 
-<div class="stats">
+        <div class="stat">
+          <div id="totalSlots" class="stat-number">25</div>
+          <div class="stat-label">TOTAL SLOTS</div>
+        </div>
 
-<div class="stat">
-<b id="totalSlots">25</b>
-<span>TOTAL</span>
-</div>
+        <div class="stat">
+          <div id="claimedSlots" class="stat-number">0</div>
+          <div class="stat-label">CLAIMED</div>
+        </div>
 
-<div class="stat">
-<b id="claimedSlots">0</b>
-<span>CLAIMED</span>
-</div>
+        <div class="stat">
+          <div id="openSlots" class="stat-number">25</div>
+          <div class="stat-label">OPEN</div>
+        </div>
 
-<div class="stat">
-<b id="openSlots">25</b>
-<span>OPEN</span>
-</div>
+      </div>
 
-</div>
+      <!-- SCRIMMAGE -->
+      <div class="section">
 
-</div>
+        <h2>⚔ <span>SCRIMMAGE SYSTEM</span></h2>
 
-<!-- SCRIMMAGE -->
+        <button onclick="initializeSlots()">
+          INITIALIZE 25 SLOTS
+        </button>
 
-<div class="card">
+        <button class="danger" onclick="resetSlots()">
+          RESET ALL SLOTS
+        </button>
 
-<h2>🎮 SCRIMMAGE MANAGEMENT</h2>
+        <div id="slotList" class="slot-list" style="margin-top:15px;">
+          Loading slots...
+        </div>
 
-<button onclick="initializeSlots()">
-INITIALIZE 25 SLOTS
-</button>
+      </div>
 
-<button class="danger" onclick="resetSlots()">
-RESET ALL SLOTS
-</button>
+      <!-- LEADERBOARD -->
+      <div class="section">
 
-<div id="slots">
-Loading slots...
-</div>
+        <h2>🏆 <span>LEADERBOARD MANAGER</span></h2>
 
-</div>
+        <input
+          id="teamName"
+          maxlength="40"
+          placeholder="Team name"
+        >
 
-<!-- LEADERBOARD -->
+        <input
+          id="teamPoints"
+          type="number"
+          min="0"
+          placeholder="Points"
+        >
 
-<div class="card">
+        <button onclick="saveLeaderboard()">
+          ADD / UPDATE TEAM
+        </button>
 
-<h2>🏆 LEADERBOARD MANAGEMENT</h2>
+        <div id="leaderboardList"
+             class="leaderboard-list"
+             style="margin-top:15px;">
+          Loading leaderboard...
+        </div>
 
-<input
- id="teamName"
- placeholder="Team name"
- maxlength="40">
+      </div>
 
-<input
- id="teamPoints"
- type="number"
- min="0"
- placeholder="Points">
+      <!-- ANNOUNCEMENT -->
+      <div class="section">
 
-<button onclick="addTeam()">
-➕ ADD / UPDATE TEAM
-</button>
+        <h2>📢 <span>ANNOUNCEMENT</span></h2>
 
-<div id="leaderboard">
-Loading leaderboard...
-</div>
+        <textarea
+          id="announcementText"
+          maxlength="500"
+          placeholder="Write an announcement..."
+        ></textarea>
 
-</div>
+        <button onclick="postAnnouncement()">
+          POST ANNOUNCEMENT
+        </button>
 
-<!-- ANNOUNCEMENT -->
+      </div>
 
-<div class="card">
+      <!-- NOTIFICATION -->
+      <div class="section">
 
-<h2>📢 ANNOUNCEMENT</h2>
+        <h2>🔔 <span>NOTIFICATION</span></h2>
 
-<input
- id="announcementText"
- placeholder="Write announcement..."
- maxlength="300">
+        <input
+          id="notificationText"
+          maxlength="300"
+          placeholder="Notification message"
+        >
 
-<button onclick="postAnnouncement()">
-POST ANNOUNCEMENT
-</button>
+        <button onclick="sendNotification()">
+          SEND NOTIFICATION
+        </button>
 
-</div>
+      </div>
 
-<!-- NOTIFICATION -->
+      <!-- QUICK LINKS -->
+      <div class="section">
 
-<div class="card">
+        <h2>⚡ <span>QUICK LINKS</span></h2>
 
-<h2>🔔 NOTIFICATION</h2>
+        <div class="quick-links">
 
-<input
- id="notificationText"
- placeholder="Notification message..."
- maxlength="300">
+          <button onclick="location.href='scrimmage.html'">
+            ⚔ SCRIMMAGE
+          </button>
 
-<button onclick="sendNotification()">
-SEND NOTIFICATION
-</button>
+          <button onclick="location.href='leaderboard.html'">
+            🏆 LEADERBOARD
+          </button>
 
-</div>
+          <button onclick="location.href='teams.html'">
+            👥 TEAMS
+          </button>
 
-<!-- QUICK LINKS -->
+          <button onclick="location.href='chat.html'">
+            💬 CHAT
+          </button>
 
-<div class="card">
+        </div>
 
-<h2>🏆 QUICK LINKS</h2>
+      </div>
 
-<button onclick="location.href='leaderboard.html'">
-LEADERBOARD
-</button>
+      <button class="danger" onclick="logout()">
+        LOG OUT
+      </button>
 
-<button onclick="location.href='scrimmage.html'">
-SCRIMMAGE
-</button>
-
-<button onclick="location.href='teams.html'">
-TEAMS
-</button>
-
-<button onclick="location.href='chat.html'">
-CHAT
-</button>
-
-</div>
-
-<button
- class="danger"
- onclick="logout()"
- style="width:100%;margin:0">
-LOG OUT
-</button>
-
-</div>
-
-<nav>
-
-<a href="index.html">🏠<br>Home</a>
-<a href="chat.html">💬<br>Chat</a>
-<a href="scrimmage.html">🎮<br>Scrim</a>
-<a href="leaderboard.html">🏆<br>Rank</a>
-<a href="profile.html">👤<br>Profile</a>
-
-</nav>
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script src="firebase-config.js"></script>
-
-<script>
-
-let currentUser=null;
-
-const message=
-document.getElementById("message");
-
-
-function showMessage(text){
- message.textContent=text;
-}
-
-
-/* ADMIN CHECK */
-
-auth.onAuthStateChanged(async user=>{
-
- if(!user){
-  location.href="login.html";
-  return;
- }
-
- currentUser=user;
-
- try{
-
-  const snap=
-  await db
-  .collection("users")
-  .doc(user.uid)
-  .get();
-
-  if(
-   !snap.exists ||
-   snap.data().role!=="admin"
-  ){
-
-   alert("Admin access required.");
-
-   location.href="index.html";
-
-   return;
-  }
-
-  loadSlots();
-  loadLeaderboard();
-
- }catch(error){
-
-  console.error(error);
-
-  showMessage(
-   "Admin verification failed."
-  );
-
- }
-
-});
-
-
-/* SCRIMMAGE */
-
-async function initializeSlots(){
-
- showMessage(
-  "Initializing 25 slots..."
- );
-
- try{
-
-  const batch=db.batch();
-
-  for(let i=1;i<=25;i++){
-
-   const ref=
-   db
-   .collection("scrimmageSlots")
-   .doc("slot-"+i);
-
-   batch.set(
-    ref,
-    {
-     number:i,
-     claimed:false
-    },
-    {merge:true}
-   );
-
-  }
-
-  await batch.commit();
-
-  showMessage(
-   "25 slots initialized."
-  );
-
-  loadSlots();
-
- }catch(error){
-
-  console.error(error);
-
-  showMessage(
-   "ERROR: "+error.code
-  );
-
- }
-
-}
-
-
-async function loadSlots(){
-
- try{
-
-  const snap=
-  await db
-  .collection("scrimmageSlots")
-  .orderBy("number")
-  .get();
-
-  let claimed=0;
-  let html="";
-
-  snap.forEach(doc=>{
-
-   const data=doc.data();
-
-   if(data.claimed)
-    claimed++;
-
-   html+=`
-
-   <div class="slot">
-
-    <div class="info">
-
-     <div class="number">
-      SLOT ${data.number}
-     </div>
-
-     <div class="name">
-      ${
-       data.claimed
-       ? escapeHTML(
-          data.teamName || "CLAIMED"
-         )
-       : "OPEN"
-      }
-     </div>
+      <div id="status"></div>
 
     </div>
 
-    <div class="actions">
+  </main>
 
-    ${
-     data.claimed
-     ?
-     `<button
-      class="danger"
-      onclick="releaseSlot('${doc.id}')">
-      RELEASE
-     </button>`
-     :
-     ""
+  <nav>
+
+    <a href="index.html">
+      <div>⌂</div>
+      Home
+    </a>
+
+    <a href="chat.html">
+      <div>💬</div>
+      Chat
+    </a>
+
+    <a href="scrimmage.html">
+      <div>⚔</div>
+      Scrim
+    </a>
+
+    <a href="leaderboard.html">
+      <div>🏆</div>
+      Rank
+    </a>
+
+    <a href="profile.html">
+      <div>👤</div>
+      Profile
+    </a>
+
+  </nav>
+
+  <script>
+
+    let currentUser = null;
+
+    auth.onAuthStateChanged(async (user) => {
+
+      if (!user) {
+        location.href = "login.html";
+        return;
+      }
+
+      currentUser = user;
+
+      try {
+
+        const userDoc = await db
+          .collection("users")
+          .doc(user.uid)
+          .get();
+
+        if (
+          !userDoc.exists ||
+          userDoc.data().role !== "admin"
+        ) {
+
+          document.getElementById("loading").style.display = "none";
+          document.getElementById("denied").style.display = "block";
+
+          return;
+        }
+
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("adminPanel").style.display = "block";
+
+        loadSlots();
+        loadLeaderboard();
+
+      } catch (error) {
+
+        console.error(error);
+
+        document.getElementById("loading").textContent =
+          "Error: " + error.message;
+
+      }
+
+    });
+
+
+    // =========================
+    // SCRIMMAGE SLOTS
+    // =========================
+
+    function loadSlots() {
+
+      db.collection("scrimmageSlots")
+        .onSnapshot((snapshot) => {
+
+          const slotList =
+            document.getElementById("slotList");
+
+          slotList.innerHTML = "";
+
+          let claimed = 0;
+
+          const slots = [];
+
+          snapshot.forEach((doc) => {
+
+            const data = doc.data();
+
+            slots.push({
+              id: doc.id,
+              ...data
+            });
+
+          });
+
+          slots.sort((a, b) =>
+            Number(a.slot || 0) -
+            Number(b.slot || 0)
+          );
+
+          slots.forEach((slot) => {
+
+            if (slot.claimed) claimed++;
+
+            const item =
+              document.createElement("div");
+
+            item.className = "slot";
+
+            const statusClass =
+              slot.claimed ? "claimed" : "open";
+
+            const statusText =
+              slot.claimed
+                ? "CLAIMED"
+                : "OPEN";
+
+            item.innerHTML = `
+              <div class="slot-number">
+                ${escapeHTML(slot.slot || "?")}
+              </div>
+
+              <div class="slot-info">
+
+                <div class="slot-name">
+                  ${escapeHTML(
+                    slot.claimed
+                      ? (slot.teamName || "Unknown Team")
+                      : "OPEN"
+                  )}
+                </div>
+
+                <div class="slot-status ${statusClass}">
+                  ${statusText}
+                </div>
+
+              </div>
+
+              ${
+                slot.claimed
+                  ? `
+                    <button
+                      class="small-btn danger"
+                      onclick="releaseSlot('${slot.id}')">
+                      RELEASE
+                    </button>
+                  `
+                  : ""
+              }
+            `;
+
+            slotList.appendChild(item);
+
+          });
+
+          document.getElementById("totalSlots").textContent =
+            slots.length || 25;
+
+          document.getElementById("claimedSlots").textContent =
+            claimed;
+
+          document.getElementById("openSlots").textContent =
+            (slots.length || 25) - claimed;
+
+          if (!slots.length) {
+
+            slotList.innerHTML = `
+              <div style="text-align:center;color:#817589;padding:20px;">
+                No slots initialized.
+              </div>
+            `;
+
+          }
+
+        }, (error) => {
+
+          console.error(error);
+
+          document.getElementById("slotList").innerHTML =
+            `<div style="color:#ff78c8;">
+              ${escapeHTML(error.message)}
+            </div>`;
+
+        });
+
     }
 
-    </div>
 
-   </div>
+    async function initializeSlots() {
 
-   `;
+      setStatus("Initializing slots...");
 
-  });
+      try {
 
-  document.getElementById("slots")
-  .innerHTML=
-  html || "No slots initialized.";
+        const batch = db.batch();
 
-  document.getElementById("claimedSlots")
-  .textContent=claimed;
+        for (let i = 1; i <= 25; i++) {
 
-  document.getElementById("openSlots")
-  .textContent=
-  Math.max(25-claimed,0);
+          const ref = db
+            .collection("scrimmageSlots")
+            .doc(String(i));
 
- }catch(error){
+          batch.set(
+            ref,
+            {
+              slot: i,
+              claimed: false,
+              teamName: "",
+              uid: "",
+              createdAt:
+                firebase.firestore.FieldValue.serverTimestamp()
+            },
+            { merge: true }
+          );
 
-  console.error(error);
+        }
 
-  document.getElementById("slots")
-  .textContent=
-  "Unable to load slots.";
+        await batch.commit();
 
- }
+        setStatus("25 slots initialized!");
 
-}
+      } catch (error) {
 
+        setStatus(error.message);
 
-async function releaseSlot(id){
+      }
 
- if(
-  !confirm("Release this slot?")
- ) return;
+    }
 
- try{
 
-  await db
-  .collection("scrimmageSlots")
-  .doc(id)
-  .set({
+    async function resetSlots() {
 
-   claimed:false,
+      const confirmed = confirm(
+        "Reset ALL 25 slots?"
+      );
 
-   teamName:
-   firebase.firestore.FieldValue.delete(),
+      if (!confirmed) return;
 
-   uid:
-   firebase.firestore.FieldValue.delete(),
+      setStatus("Resetting slots...");
 
-   username:
-   firebase.firestore.FieldValue.delete(),
+      try {
 
-   claimedAt:
-   firebase.firestore.FieldValue.delete()
+        const snapshot = await db
+          .collection("scrimmageSlots")
+          .get();
 
-  },{merge:true});
+        const batch = db.batch();
 
-  showMessage(
-   "Slot released."
-  );
+        snapshot.forEach((doc) => {
 
-  loadSlots();
+          batch.update(
+            doc.ref,
+            {
+              claimed: false,
+              teamName: "",
+              uid: ""
+            }
+          );
 
- }catch(error){
+        });
 
-  console.error(error);
+        await batch.commit();
 
-  showMessage(
-   "ERROR: "+error.code
-  );
+        setStatus("All slots reset!");
 
- }
+      } catch (error) {
 
-}
+        setStatus(error.message);
 
+      }
 
-async function resetSlots(){
+    }
 
- if(
-  !confirm(
-   "RESET ALL 25 SLOTS?"
-  )
- ) return;
 
- try{
+    async function releaseSlot(slotId) {
 
-  const batch=db.batch();
+      const confirmed = confirm(
+        "Release this slot?"
+      );
 
-  for(let i=1;i<=25;i++){
+      if (!confirmed) return;
 
-   const ref=
-   db
-   .collection("scrimmageSlots")
-   .doc("slot-"+i);
+      try {
 
-   batch.set(
-    ref,
-    {
-     number:i,
-     claimed:false,
+        await db
+          .collection("scrimmageSlots")
+          .doc(slotId)
+          .update({
+            claimed: false,
+            teamName: "",
+            uid: ""
+          });
 
-     teamName:
-     firebase.firestore.FieldValue.delete(),
+        setStatus("Slot released!");
 
-     uid:
-     firebase.firestore.FieldValue.delete(),
+      } catch (error) {
 
-     username:
-     firebase.firestore.FieldValue.delete(),
+        setStatus(error.message);
 
-     claimedAt:
-     firebase.firestore.FieldValue.delete()
+      }
 
-    },
-    {merge:true}
-   );
+    }
 
-  }
 
-  await batch.commit();
+    // =========================
+    // LEADERBOARD
+    // =========================
 
-  showMessage(
-   "All slots reset."
-  );
+    function loadLeaderboard() {
 
-  loadSlots();
+      db.collection("leaderboard")
+        .onSnapshot((snapshot) => {
 
- }catch(error){
+          const list =
+            document.getElementById("leaderboardList");
 
-  console.error(error);
+          list.innerHTML = "";
 
-  showMessage(
-   "ERROR: "+error.code
-  );
+          if (snapshot.empty) {
 
- }
+            list.innerHTML = `
+              <div style="text-align:center;color:#817589;padding:20px;">
+                No teams yet.
+              </div>
+            `;
 
-}
+            return;
+          }
 
+          const teams = [];
 
-/* LEADERBOARD */
+          snapshot.forEach((doc) => {
 
-async function loadLeaderboard(){
+            teams.push({
+              id: doc.id,
+              ...doc.data()
+            });
 
- try{
+          });
 
-  const snap=
-  await db
-  .collection("leaderboard")
-  .get();
+          teams.sort(
+            (a, b) =>
+              Number(b.points || 0) -
+              Number(a.points || 0)
+          );
 
-  let teams=[];
+          teams.forEach((team, index) => {
 
-  snap.forEach(doc=>{
+            const item =
+              document.createElement("div");
 
-   const data=doc.data();
+            item.className = "leaderboard-item";
 
-   teams.push({
+            item.innerHTML = `
 
-    id:doc.id,
+              <div class="slot-number">
+                ${index + 1}
+              </div>
 
-    name:data.name || doc.id,
+              <div class="leader-info">
 
-    points:Number(data.points)||0
+                <div class="leader-name">
+                  ${escapeHTML(
+                    team.name || team.id
+                  )}
+                </div>
 
-   });
+                <div class="leader-points">
+                  ${Number(team.points || 0)} pts
+                </div>
 
-  });
+              </div>
 
-  teams.sort(
-   (a,b)=>b.points-a.points
-  );
+              <button
+                class="small-btn"
+                onclick="editTeam(
+                  '${team.id}',
+                  '${escapeAttribute(team.name || team.id)}',
+                  '${Number(team.points || 0)}'
+                )">
+                EDIT
+              </button>
 
-  let html="";
+              <button
+                class="small-btn danger"
+                onclick="deleteTeam(
+                  '${team.id}'
+                )">
+                DELETE
+              </button>
 
-  teams.forEach((team,index)=>{
+            `;
 
-   html+=`
+            list.appendChild(item);
 
-   <div class="team">
+          });
 
-    <div class="info">
+        });
 
-     <div class="number">
-      #${index+1}
-     </div>
+    }
 
-     <div class="name">
-      ${escapeHTML(team.name)}
-     </div>
 
-     <div class="points">
-      ${team.points} POINTS
-     </div>
+    async function saveLeaderboard() {
 
-    </div>
+      const nameInput =
+        document.getElementById("teamName");
 
-    <div class="actions">
+      const pointsInput =
+        document.getElementById("teamPoints");
 
-     <button
-      class="edit"
-      onclick="editTeam(
-       '${team.id}',
-       '${escapeAttribute(team.name)}',
-       ${team.points}
-      )">
-      EDIT
-     </button>
+      const name =
+        nameInput.value.trim();
 
-     <button
-      class="danger"
-      onclick="deleteTeam('${team.id}')">
-      DELETE
-     </button>
+      const points =
+        Number(pointsInput.value);
 
-    </div>
+      if (!name) {
 
-   </div>
+        setStatus("Enter a team name.");
+        return;
 
-   `;
+      }
 
-  });
+      if (
+        !Number.isFinite(points) ||
+        points < 0
+      ) {
 
-  document.getElementById("leaderboard")
-  .innerHTML=
-  html || "No leaderboard teams yet.";
+        setStatus("Enter valid points.");
+        return;
 
- }catch(error){
+      }
 
-  console.error(error);
+      try {
 
-  document.getElementById("leaderboard")
-  .textContent=
-  "Unable to load leaderboard.";
+        const id =
+          name
+            .toUpperCase()
+            .replace(/[^A-Z0-9]+/g, "_")
+            .replace(/^_|_$/g, "");
 
- }
+        if (!id) {
 
-}
+          setStatus("Invalid team name.");
+          return;
 
+        }
 
-async function addTeam(){
+        await db
+          .collection("leaderboard")
+          .doc(id)
+          .set({
+            name: name,
+            points: points,
+            updatedAt:
+              firebase.firestore.FieldValue.serverTimestamp()
+          }, { merge: true });
 
- const name=
- document.getElementById("teamName")
- .value.trim();
+        nameInput.value = "";
+        pointsInput.value = "";
 
- const points=
- Number(
-  document.getElementById("teamPoints")
-  .value
- );
+        setStatus("Leaderboard updated!");
 
- if(!name){
+      } catch (error) {
 
-  showMessage(
-   "Enter a team name."
-  );
+        setStatus(error.message);
 
-  return;
- }
+      }
 
- if(
-  !Number.isFinite(points) ||
-  points<0
- ){
+    }
 
-  showMessage(
-   "Enter valid points."
-  );
 
-  return;
- }
+    function editTeam(id, name, points) {
 
- try{
+      document.getElementById("teamName").value =
+        name;
 
-  const id=
-   name
-   .toUpperCase()
-   .replace(/[^A-Z0-9]+/g,"_")
-   .replace(/^_|_$/g,"");
+      document.getElementById("teamPoints").value =
+        points;
 
-  await db
-  .collection("leaderboard")
-  .doc(id)
-  .set({
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
 
-   name:name,
+    }
 
-   points:points,
 
-   updatedAt:
-   firebase.firestore.FieldValue.serverTimestamp()
+    async function deleteTeam(id) {
 
-  },{merge:true});
+      const confirmed = confirm(
+        "Delete this leaderboard team?"
+      );
 
-  document.getElementById("teamName")
-  .value="";
+      if (!confirmed) return;
 
-  document.getElementById("teamPoints")
-  .value="";
+      try {
 
-  showMessage(
-   "Leaderboard updated."
-  );
+        await db
+          .collection("leaderboard")
+          .doc(id)
+          .delete();
 
-  loadLeaderboard();
+        setStatus("Team deleted!");
 
- }catch(error){
+      } catch (error) {
 
-  console.error(error);
+        setStatus(error.message);
 
-  showMessage(
-   "ERROR: "+error.code
-  );
+      }
 
- }
+    }
 
-}
 
+    // =========================
+    // ANNOUNCEMENTS
+    // =========================
 
-function editTeam(
- id,
- name,
- points
-){
+    async function postAnnouncement() {
 
- document.getElementById("teamName")
- .value=name;
+      const input =
+        document.getElementById("announcementText");
 
- document.getElementById("teamPoints")
- .value=points;
+      const text =
+        input.value.trim();
 
- document.getElementById("teamName")
- .focus();
+      if (!text) {
 
- showMessage(
-  "Edit the values, then tap ADD / UPDATE TEAM."
- );
+        setStatus("Write an announcement first.");
+        return;
 
-}
+      }
 
+      try {
 
-async function deleteTeam(id){
+        await db.collection("announcements").add({
 
- if(
-  !confirm(
-   "Delete this leaderboard team?"
-  )
- ) return;
+          text: text,
 
- try{
+          createdAt:
+            firebase.firestore.FieldValue.serverTimestamp(),
 
-  await db
-  .collection("leaderboard")
-  .doc(id)
-  .delete();
+          createdBy: currentUser.uid
 
-  showMessage(
-   "Team deleted."
-  );
+        });
 
-  loadLeaderboard();
+        input.value = "";
 
- }catch(error){
+        setStatus("Announcement posted!");
 
-  console.error(error);
+      } catch (error) {
 
-  showMessage(
-   "ERROR: "+error.code
-  );
+        setStatus(error.message);
 
- }
+      }
 
-}
+    }
 
 
-/* ANNOUNCEMENTS */
+    // =========================
+    // NOTIFICATIONS
+    // =========================
 
-async function postAnnouncement(){
+    async function sendNotification() {
 
- const text=
- document.getElementById(
-  "announcementText"
- ).value.trim();
+      const input =
+        document.getElementById("notificationText");
 
- if(!text){
+      const text =
+        input.value.trim();
 
-  showMessage(
-   "Enter an announcement."
-  );
+      if (!text) {
 
-  return;
- }
+        setStatus("Write a notification first.");
+        return;
 
- try{
+      }
 
-  await db
-  .collection("announcements")
-  .add({
+      try {
 
-   text:text,
+        await db.collection("notifications").add({
 
-   createdAt:
-   firebase.firestore.FieldValue
-   .serverTimestamp(),
+          text: text,
 
-   createdBy:
-   currentUser.uid
+          readBy: [],
 
-  });
+          createdAt:
+            firebase.firestore.FieldValue.serverTimestamp(),
 
-  document.getElementById(
-   "announcementText"
-  ).value="";
+          createdBy: currentUser.uid
 
-  showMessage(
-   "Announcement posted."
-  );
+        });
 
- }catch(error){
+        input.value = "";
 
-  console.error(error);
+        setStatus("Notification sent!");
 
-  showMessage(
-   "ERROR: "+error.code
-  );
+      } catch (error) {
 
- }
+        setStatus(error.message);
 
-}
+      }
 
+    }
 
-/* NOTIFICATIONS */
 
-async function sendNotification(){
+    // =========================
+    // LOGOUT
+    // =========================
 
- const text=
- document.getElementById(
-  "notificationText"
- ).value.trim();
+    async function logout() {
 
- if(!text){
+      await auth.signOut();
 
-  showMessage(
-   "Enter a notification."
-  );
+      location.href = "login.html";
 
-  return;
- }
+    }
 
- try{
 
-  await db
-  .collection("notifications")
-  .add({
+    // =========================
+    // HELPERS
+    // =========================
 
-   text:text,
+    function setStatus(text) {
 
-   createdAt:
-   firebase.firestore.FieldValue
-   .serverTimestamp(),
+      const status =
+        document.getElementById("status");
 
-   createdBy:
-   currentUser.uid,
+      status.textContent = text;
 
-   readBy:[]
+      setTimeout(() => {
 
-  });
+        if (status.textContent === text) {
+          status.textContent = "";
+        }
 
-  document.getElementById(
-   "notificationText"
-  ).value="";
+      }, 3000);
 
-  showMessage(
-   "Notification sent."
-  );
+    }
 
- }catch(error){
 
-  console.error(error);
+    function escapeHTML(text) {
 
-  showMessage(
-   "Notification sent."
-  );
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
- }
+    }
 
-}
 
+    function escapeAttribute(text) {
 
-/* HELPERS */
+      return String(text)
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'")
+        .replace(/"/g, "&quot;");
 
-function escapeHTML(text){
+    }
 
- const div=
- document.createElement("div");
-
- div.textContent=text;
-
- return div.innerHTML;
-
-}
-
-
-function escapeAttribute(text){
-
- return String(text)
- .replace(/\\/g,"\\\\")
- .replace(/'/g,"\\'")
- .replace(/"/g,"&quot;");
-
-}
-
-
-async function logout(){
-
- await auth.signOut();
-
- location.href=
- "login.html";
-
-}
-
-</script>
+  </script>
 
 </body>
 </html>
