@@ -1,5 +1,5 @@
 const firebaseConfig = {
-  apiKey: "AIzaSyAADWbdJOAbIZOBDkhlehsRXadIDmYI8I",
+  apiKey: "AIzaSyAADWbdJOAbIZOBhDklehWsRXadIDmYI8I",
   authDomain: "novex-codm-ee936.firebaseapp.com",
   projectId: "novex-codm-ee936",
   storageBucket: "novex-codm-ee936.firebasestorage.app",
@@ -13,16 +13,8 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
 
-/*
-  KEEP USER LOGGED IN
-*/
 auth.setPersistence(
   firebase.auth.Auth.Persistence.LOCAL
-)
-.then(() => {
-  console.log("NØV3X Firebase ready");
-  console.log("Login persistence: LOCAL");
-})
-.catch((error) => {
-  console.error("Firebase persistence error:", error);
+).catch(error => {
+  console.error("Persistence error:", error);
 });
