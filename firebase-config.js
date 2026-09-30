@@ -1,5 +1,5 @@
 const firebaseConfig = {
-  apiKey: "AIzaSyAADWbdJOAbIZOBhDklehWsRXadIDmYI8I",
+  apiKey: "AIzaSyAADWbdJOAbIZOBDkhlehsRXadIDmYI8I",
   authDomain: "novex-codm-ee936.firebaseapp.com",
   projectId: "novex-codm-ee936",
   storageBucket: "novex-codm-ee936.firebasestorage.app",
@@ -14,15 +14,15 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 
 /*
-  KEEP LOGIN SESSION
-  Firebase will remember the account
-  even after closing/reopening the app.
+  KEEP USER LOGGED IN
 */
 auth.setPersistence(
   firebase.auth.Auth.Persistence.LOCAL
-).then(() => {
-  console.log("NØV3X Firebase connected!");
-  console.log("Login persistence enabled!");
-}).catch(error => {
-  console.error("Persistence error:", error);
+)
+.then(() => {
+  console.log("NØV3X Firebase ready");
+  console.log("Login persistence: LOCAL");
+})
+.catch((error) => {
+  console.error("Firebase persistence error:", error);
 });
