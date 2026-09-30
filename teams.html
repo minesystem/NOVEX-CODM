@@ -1,1282 +1,515 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0,
-      maximum-scale=1.0,user-scalable=no">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>NØV3X — Teams</title>
+  <title>NØV3X — Teams</title>
 
-<style>
-html{
-  background:#07000d!important;
-}
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
 
-body{
-  margin:0!important;
-  padding:0 0 85px 0!important;
-  min-height:100vh;
-  background:#07000d!important;
-  color:#fff!important;
-  font-family:Arial,sans-serif;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-*{
-  box-sizing:border-box;
-}
+    body {
+      background: #08060d;
+      color: white;
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      padding-bottom: 85px;
+    }
 
-header{
-  height:70px;
-  background:#0d0018!important;
-  border-bottom:1px solid #7520c0;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 18px;
-  position:sticky;
-  top:0;
-  z-index:20;
-}
+    header {
+      text-align: center;
+      padding: 24px 15px;
+      background: #0d0915;
+      border-bottom: 1px solid #29183b;
+    }
 
-.logo{
-  color:#c77dff;
-  font-size:24px;
-  font-weight:900;
-  letter-spacing:2px;
-}
+    header h1 {
+      color: #b66cff;
+      letter-spacing: 4px;
+      font-size: 28px;
+    }
 
-.header-right{
-  position:relative;
-}
+    header p {
+      color: #817589;
+      font-size: 12px;
+      margin-top: 5px;
+    }
 
-.bell{
-  width:43px;
-  height:43px;
-  border:0;
-  border-radius:50%;
-  background:#1a0029!important;
-  color:#fff;
-  font-size:21px;
-}
+    .container {
+      width: 94%;
+      max-width: 650px;
+      margin: 22px auto;
+    }
 
-.notification-badge{
-  position:absolute;
-  top:-3px;
-  right:-3px;
-  min-width:18px;
-  height:18px;
-  border-radius:20px;
-  background:#ff1744;
-  border:2px solid #0d0018;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  color:#fff;
-  font-size:10px;
-  font-weight:bold;
-}
+    .section {
+      background: #100b18;
+      border: 1px solid #2b193e;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 18px;
+    }
 
-.container{
-  width:100%;
-  max-width:720px;
-  margin:auto;
-  padding:18px;
-}
+    .section h2 {
+      font-size: 19px;
+      margin-bottom: 15px;
+    }
 
-.title{
-  text-align:center;
-  color:#d18aff;
-  font-size:27px;
-  font-weight:900;
-}
+    .section h2 span {
+      color: #b66cff;
+    }
 
-.subtitle{
-  text-align:center;
-  color:#806b8d;
-  font-size:11px;
-  margin-top:5px;
-  margin-bottom:18px;
-}
+    input {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 10px;
+      border-radius: 11px;
+      border: 1px solid #38204e;
+      background: #0b0810;
+      color: white;
+      outline: none;
+      font-size: 14px;
+    }
 
-.card{
-  background:#0d0017!important;
-  border:1px solid #451067;
-  border-radius:16px;
-  padding:15px;
-  margin-bottom:15px;
-}
+    input:focus {
+      border-color: #9b4dff;
+    }
 
-.card h2{
-  color:#c77dff;
-  font-size:17px;
-  margin:0 0 10px 0;
-}
+    button {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 11px;
+      background: #8b3dff;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-input{
-  width:100%;
-  height:45px;
-  background:#09000f!important;
-  border:1px solid #4a146d;
-  border-radius:10px;
-  color:#fff!important;
-  padding:0 13px;
-  outline:none;
-  margin-bottom:9px;
-}
+    button:hover {
+      background: #a05bff;
+    }
 
-input::placeholder{
-  color:#806b8d;
-}
+    .team-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-input:focus{
-  border-color:#a13cff;
-}
+    .team {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 15px;
+      background: #0c0911;
+      border: 1px solid #29183b;
+      border-radius: 13px;
+    }
 
-.primary{
-  width:100%;
-  height:45px;
-  background:#7624b8!important;
-  color:#fff;
-  border:0;
-  border-radius:10px;
-  font-weight:900;
-}
+    .team-logo {
+      width: 45px;
+      height: 45px;
+      border-radius: 10px;
+      background: #21102f;
+      color: #c084ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
 
-.primary:active{
-  transform:scale(.98);
-}
+    .team-info {
+      flex: 1;
+      min-width: 0;
+    }
 
-.search{
-  margin-bottom:15px;
-}
+    .team-name {
+      font-weight: bold;
+      font-size: 15px;
+      word-break: break-word;
+    }
 
-.team-list{
-  display:flex;
-  flex-direction:column;
-  gap:9px;
-}
+    .team-owner {
+      color: #766b80;
+      font-size: 11px;
+      margin-top: 4px;
+    }
 
-.team{
-  background:#11001b!important;
-  border:1px solid #321044;
-  border-radius:12px;
-  padding:13px;
-}
+    .delete-btn {
+      width: auto;
+      padding: 8px 10px;
+      background: #24101f;
+      color: #ff78c8;
+      border: 1px solid #5c214d;
+      font-size: 11px;
+    }
 
-.team-top{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
+    .delete-btn:hover {
+      background: #35152d;
+    }
 
-.team-icon{
-  width:38px;
-  height:38px;
-  flex-shrink:0;
-  border-radius:10px;
-  background:#200035!important;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#d18aff;
-  font-size:18px;
-}
+    .empty {
+      text-align: center;
+      color: #766b80;
+      padding: 25px 10px;
+    }
 
-.team-info{
-  flex:1;
-  min-width:0;
-}
+    .loading {
+      text-align: center;
+      color: #a85cff;
+      padding: 25px;
+    }
 
-.team-name{
-  color:#fff!important;
-  font-size:14px;
-  font-weight:900;
-  word-break:break-word;
-}
+    #message {
+      text-align: center;
+      font-size: 12px;
+      margin-top: 10px;
+      color: #a85cff;
+    }
 
-.team-owner{
-  color:#806b8d;
-  font-size:10px;
-  margin-top:3px;
-}
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 68px;
+      background: #0d0915;
+      border-top: 1px solid #29183b;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 20;
+    }
 
-.team-actions{
-  display:flex;
-  gap:7px;
-  margin-top:10px;
-}
+    nav a {
+      text-decoration: none;
+      color: #817589;
+      font-size: 11px;
+      text-align: center;
+    }
 
-.action{
-  flex:1;
-  height:35px;
-  border-radius:8px;
-  border:1px solid #542078;
-  background:#180027!important;
-  color:#d39aff;
-  font-size:10px;
-  font-weight:bold;
-}
+    nav a.active {
+      color: #b66cff;
+    }
 
-.action.delete{
-  border-color:#71304b;
-  color:#ff8da8;
-}
-
-.status{
-  text-align:center;
-  color:#9d85aa;
-  font-size:11px;
-  margin-top:8px;
-}
-
-.empty{
-  text-align:center;
-  color:#806b8d;
-  padding:30px 10px;
-  font-size:12px;
-}
-
-/* BOTTOM NAV */
-
-.bottom-nav{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  height:68px;
-  background:#0d0018!important;
-  border-top:1px solid #451067;
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-  z-index:30;
-}
-
-.nav-item{
-  text-decoration:none;
-  color:#806b8d;
-  font-size:11px;
-  text-align:center;
-  min-width:55px;
-}
-
-.nav-item.active{
-  color:#c77dff;
-}
-
-.nav-icon{
-  display:block;
-  font-size:21px;
-  margin-bottom:2px;
-}
-
-/* NOTIFICATIONS */
-
-.notification-overlay{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.8);
-  z-index:100;
-  padding:20px;
-}
-
-.notification-modal{
-  max-width:500px;
-  margin:50px auto;
-  background:#100019!important;
-  border:1px solid #7020a8;
-  border-radius:18px;
-  overflow:hidden;
-  max-height:75vh;
-}
-
-.notification-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:17px;
-  border-bottom:1px solid #351047;
-}
-
-.notification-header h2{
-  color:#fff;
-  font-size:18px;
-  margin:0;
-}
-
-.close-btn{
-  border:0;
-  background:none;
-  color:#fff;
-  font-size:23px;
-}
-
-.mark-all{
-  background:none;
-  border:0;
-  color:#c77dff;
-  font-size:11px;
-  padding:10px 17px;
-}
-
-.notification-list{
-  max-height:58vh;
-  overflow-y:auto;
-}
-
-.notification-item{
-  padding:15px 17px;
-  border-top:1px solid #291034;
-}
-
-.notification-item.unread{
-  background:#190025!important;
-}
-
-.notification-title{
-  color:#d59aff;
-  font-weight:bold;
-  font-size:14px;
-}
-
-.notification-text{
-  color:#eee0f5;
-  font-size:13px;
-  margin-top:5px;
-}
-
-.notification-time{
-  color:#75617e;
-  font-size:10px;
-  margin-top:6px;
-}
-</style>
+    nav div {
+      font-size: 21px;
+      margin-bottom: 3px;
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
+  <header>
+    <h1>NØV3X</h1>
+    <p>ONE SQUAD, ONE FATE</p>
+  </header>
 
-  <div class="logo">NØV3X</div>
+  <main class="container">
 
-  <div class="header-right">
+    <div class="section">
 
-    <button
-      class="bell"
-      onclick="openNotifications()">
-      🔔
-    </button>
+      <h2>➕ <span>CREATE TEAM</span></h2>
 
-    <span
-      id="notificationBadge"
-      class="notification-badge">
-      0
-    </span>
+      <input
+        id="teamName"
+        type="text"
+        maxlength="40"
+        placeholder="Enter team name"
+      >
 
-  </div>
+      <button onclick="createTeam()">
+        CREATE TEAM
+      </button>
 
-</header>
+      <div id="message"></div>
 
-<main class="container">
-
-  <div class="title">
-    NØV3X TEAMS
-  </div>
-
-  <div class="subtitle">
-    ONE SQUAD, ONE FATE
-  </div>
-
-  <div class="card">
-
-    <h2>⚡ CREATE YOUR TEAM</h2>
-
-    <input
-      id="teamNameInput"
-      type="text"
-      maxlength="40"
-      placeholder="Enter team name">
-
-    <button
-      class="primary"
-      onclick="createTeam()">
-      CREATE TEAM
-    </button>
-
-    <div
-      id="createStatus"
-      class="status">
     </div>
 
-  </div>
+    <div class="section">
 
-  <input
-    id="searchInput"
-    class="search"
-    type="text"
-    placeholder="Search teams..."
-    oninput="renderTeams()">
+      <h2>👥 <span>NØV3X TEAMS</span></h2>
 
-  <div class="card">
-
-    <h2>👥 NØV3X TEAMS</h2>
-
-    <div
-      id="teamList"
-      class="team-list">
-
-      <div class="empty">
-        Loading teams...
+      <div id="teamList" class="team-list">
+        <div class="loading">
+          Loading teams...
+        </div>
       </div>
 
     </div>
 
-  </div>
+  </main>
 
-</main>
+  <nav>
 
-<!-- NOTIFICATIONS -->
+    <a href="index.html">
+      <div>⌂</div>
+      Home
+    </a>
 
-<div
-  id="notificationOverlay"
-  class="notification-overlay">
+    <a href="chat.html">
+      <div>💬</div>
+      Chat
+    </a>
 
-  <div class="notification-modal">
+    <a href="scrimmage.html">
+      <div>⚔</div>
+      Scrim
+    </a>
 
-    <div class="notification-header">
+    <a href="leaderboard.html">
+      <div>🏆</div>
+      Rank
+    </a>
 
-      <h2>🔔 Notifications</h2>
+    <a href="profile.html">
+      <div>👤</div>
+      Profile
+    </a>
 
-      <button
-        class="close-btn"
-        onclick="closeNotifications()">
-        ×
-      </button>
+  </nav>
 
-    </div>
+  <script>
 
-    <button
-      class="mark-all"
-      onclick="markAllRead()">
-      Mark all as read
-    </button>
+    const teamList = document.getElementById("teamList");
+    const message = document.getElementById("message");
 
-    <div
-      id="notificationList"
-      class="notification-list">
-    </div>
+    let currentUser = null;
+    let currentRole = "player";
 
-  </div>
+    auth.onAuthStateChanged(async (user) => {
 
-</div>
+      if (!user) {
+        window.location.href = "login.html";
+        return;
+      }
 
-<!-- FINAL NAVIGATION -->
+      currentUser = user;
 
-<nav class="bottom-nav">
+      try {
 
-  <a class="nav-item" href="index.html">
-    <span class="nav-icon">⌂</span>
-    Home
-  </a>
+        const userDoc = await db
+          .collection("users")
+          .doc(user.uid)
+          .get();
 
-  <a class="nav-item" href="chat.html">
-    <span class="nav-icon">💬</span>
-    Chat
-  </a>
+        if (userDoc.exists) {
+          currentRole = userDoc.data().role || "player";
+        }
 
-  <a class="nav-item" href="scrimmage.html">
-    <span class="nav-icon">🎮</span>
-    Scrim
-  </a>
+        loadTeams();
 
-  <a class="nav-item" href="leaderboard.html">
-    <span class="nav-icon">🏆</span>
-    Rank
-  </a>
+      } catch (error) {
 
-  <a class="nav-item" href="profile.html">
-    <span class="nav-icon">👤</span>
-    Profile
-  </a>
+        console.error(error);
+        loadTeams();
 
-</nav>
-
-<!-- FIREBASE -->
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script src="firebase-config.js"></script>
-
-<script>
-
-let currentUser = null;
-let currentUsername = "Player";
-let currentRole = "player";
-
-let teamsData = [];
-let notificationCache = [];
-
-
-/* AUTH */
-
-auth.onAuthStateChanged(async user => {
-
-  if (!user) {
-    location.href = "login.html";
-    return;
-  }
-
-  currentUser = user;
-
-  try {
-
-    const profile = await db
-      .collection("users")
-      .doc(user.uid)
-      .get();
-
-    if (profile.exists) {
-
-      const data = profile.data();
-
-      currentUsername =
-        data.username || "Player";
-
-      currentRole =
-        data.role || "player";
-    }
-
-    loadTeams();
-    startNotifications();
-
-  } catch(error) {
-
-    console.error(error);
-
-  }
-
-});
-
-
-/* LOAD TEAMS */
-
-function loadTeams() {
-
-  db.collection("teams")
-    .orderBy("createdAt","desc")
-    .onSnapshot(snapshot => {
-
-      teamsData = [];
-
-      snapshot.forEach(doc => {
-
-        const data = doc.data();
-
-        teamsData.push({
-
-          id:doc.id,
-
-          name:
-            data.name ||
-            "Unnamed Team",
-
-          ownerUid:
-            data.ownerUid ||
-            "",
-
-          ownerName:
-            data.ownerName ||
-            "Player",
-
-          createdAt:
-            data.createdAt ||
-            null
-
-        });
-
-      });
-
-      renderTeams();
-
-    },error => {
-
-      console.error(error);
-
-      document.getElementById("teamList").innerHTML =
-        '<div class="empty">Unable to load teams.</div>';
+      }
 
     });
 
-}
+    function loadTeams() {
 
+      db.collection("teams")
+        .onSnapshot(
+          (snapshot) => {
 
-/* CREATE TEAM */
+            teamList.innerHTML = "";
 
-async function createTeam() {
+            if (snapshot.empty) {
 
-  if (!currentUser) return;
+              teamList.innerHTML = `
+                <div class="empty">
+                  No teams yet.
+                </div>
+              `;
 
-  const input =
-    document.getElementById(
-      "teamNameInput"
-    );
+              return;
+            }
 
-  const status =
-    document.getElementById(
-      "createStatus"
-    );
+            snapshot.forEach((doc) => {
 
-  const name =
-    input.value.trim();
+              const data = doc.data();
 
-  if (!name) {
+              const name = data.name || "Unnamed Team";
+              const owner = data.ownerName || "Unknown";
+              const ownerUid = data.ownerUid || "";
 
-    status.textContent =
-      "Enter a team name.";
+              const firstLetter =
+                name.trim().charAt(0).toUpperCase() || "N";
 
-    return;
+              const team = document.createElement("div");
+              team.className = "team";
 
-  }
+              let deleteButton = "";
 
-  if (name.length < 2) {
+              if (
+                currentUser &&
+                (
+                  ownerUid === currentUser.uid ||
+                  currentRole === "admin"
+                )
+              ) {
 
-    status.textContent =
-      "Team name is too short.";
+                deleteButton = `
+                  <button
+                    class="delete-btn"
+                    onclick="deleteTeam('${doc.id}')">
+                    DELETE
+                  </button>
+                `;
+              }
 
-    return;
+              team.innerHTML = `
+                <div class="team-logo">
+                  ${escapeHTML(firstLetter)}
+                </div>
 
-  }
+                <div class="team-info">
+                  <div class="team-name">
+                    ${escapeHTML(name)}
+                  </div>
 
-  try {
+                  <div class="team-owner">
+                    Owner: ${escapeHTML(owner)}
+                  </div>
+                </div>
 
-    await db
-      .collection("teams")
-      .add({
+                ${deleteButton}
+              `;
 
-        name:name,
+              teamList.appendChild(team);
 
-        ownerUid:
-          currentUser.uid,
+            });
 
-        ownerName:
-          currentUsername,
+          },
 
-        createdAt:
-          firebase.firestore
-            .FieldValue
-            .serverTimestamp()
+          (error) => {
 
-      });
+            console.error(error);
 
-    input.value = "";
+            teamList.innerHTML = `
+              <div class="empty">
+                Failed to load teams.
+                <br><br>
+                ${escapeHTML(error.message)}
+              </div>
+            `;
 
-    status.textContent =
-      "Team created successfully!";
-
-    setTimeout(() => {
-
-      status.textContent = "";
-
-    },3000);
-
-  } catch(error) {
-
-    console.error(error);
-
-    status.textContent =
-      "Could not create team.";
-
-  }
-
-}
-
-
-/* RENDER TEAMS */
-
-function renderTeams() {
-
-  const searchInput =
-    document.getElementById(
-      "searchInput"
-    );
-
-  const search =
-    searchInput.value
-      .trim()
-      .toLowerCase();
-
-  const filtered =
-    teamsData.filter(team =>
-      team.name
-        .toLowerCase()
-        .includes(search)
-    );
-
-  const list =
-    document.getElementById(
-      "teamList"
-    );
-
-  list.innerHTML = "";
-
-  if (filtered.length === 0) {
-
-    list.innerHTML =
-      '<div class="empty">No teams found.</div>';
-
-    return;
-
-  }
-
-  filtered.forEach(team => {
-
-    const box =
-      document.createElement("div");
-
-    box.className =
-      "team";
-
-    const top =
-      document.createElement("div");
-
-    top.className =
-      "team-top";
-
-    const icon =
-      document.createElement("div");
-
-    icon.className =
-      "team-icon";
-
-    icon.textContent =
-      "⚔";
-
-    const info =
-      document.createElement("div");
-
-    info.className =
-      "team-info";
-
-    const name =
-      document.createElement("div");
-
-    name.className =
-      "team-name";
-
-    name.textContent =
-      team.name;
-
-    const owner =
-      document.createElement("div");
-
-    owner.className =
-      "team-owner";
-
-    owner.textContent =
-      "Owner: " +
-      team.ownerName;
-
-    info.appendChild(name);
-    info.appendChild(owner);
-
-    top.appendChild(icon);
-    top.appendChild(info);
-
-    box.appendChild(top);
-
-    const isOwner =
-      team.ownerUid ===
-      currentUser.uid;
-
-    const isAdmin =
-      currentRole === "admin";
-
-    if (isOwner || isAdmin) {
-
-      const actions =
-        document.createElement(
-          "div"
+          }
         );
-
-      actions.className =
-        "team-actions";
-
-      if (isOwner) {
-
-        const edit =
-          document.createElement(
-            "button"
-          );
-
-        edit.className =
-          "action";
-
-        edit.textContent =
-          "EDIT";
-
-        edit.onclick = () =>
-          editTeam(
-            team.id,
-            team.name
-          );
-
-        actions.appendChild(edit);
-
-      }
-
-      const deleteBtn =
-        document.createElement(
-          "button"
-        );
-
-      deleteBtn.className =
-        "action delete";
-
-      deleteBtn.textContent =
-        "DELETE";
-
-      deleteBtn.onclick = () =>
-        deleteTeam(team.id);
-
-      actions.appendChild(deleteBtn);
-
-      box.appendChild(actions);
 
     }
 
-    list.appendChild(box);
+    async function createTeam() {
 
-  });
+      if (!currentUser) return;
 
-}
+      const input = document.getElementById("teamName");
+      const name = input.value.trim();
 
+      if (!name) {
 
-/* EDIT TEAM */
+        message.textContent = "Enter a team name.";
+        return;
 
-async function editTeam(
-  id,
-  oldName
-) {
+      }
 
-  const newName =
-    prompt(
-      "Enter new team name:",
-      oldName
-    );
+      if (name.length < 2) {
 
-  if (newName === null)
-    return;
+        message.textContent = "Team name is too short.";
+        return;
 
-  const name =
-    newName.trim();
+      }
 
-  if (!name) {
+      try {
 
-    alert(
-      "Team name cannot be empty."
-    );
+        message.textContent = "Creating team...";
 
-    return;
+        const userDoc = await db
+          .collection("users")
+          .doc(currentUser.uid)
+          .get();
 
-  }
+        const username =
+          userDoc.exists
+            ? userDoc.data().username || currentUser.email
+            : currentUser.email;
 
-  if (name.length < 2) {
+        await db.collection("teams").add({
 
-    alert(
-      "Team name is too short."
-    );
-
-    return;
-
-  }
-
-  try {
-
-    await db
-      .collection("teams")
-      .doc(id)
-      .update({
-
-        name:name
-
-      });
-
-  } catch(error) {
-
-    console.error(error);
-
-    alert(
-      "Could not update team."
-    );
-
-  }
-
-}
-
-
-/* DELETE TEAM */
-
-async function deleteTeam(id) {
-
-  const team =
-    teamsData.find(
-      item =>
-        item.id === id
-    );
-
-  if (!team)
-    return;
-
-  if (
-    !confirm(
-      "Delete " +
-      team.name +
-      "?"
-    )
-  ) {
-
-    return;
-
-  }
-
-  try {
-
-    await db
-      .collection("teams")
-      .doc(id)
-      .delete();
-
-  } catch(error) {
-
-    console.error(error);
-
-    alert(
-      "Could not delete team."
-    );
-
-  }
-
-}
-
-
-/* NOTIFICATIONS */
-
-function startNotifications() {
-
-  db.collection("notifications")
-    .orderBy(
-      "createdAt",
-      "desc"
-    )
-    .limit(50)
-    .onSnapshot(
-      snapshot => {
-
-        notificationCache =
-          snapshot.docs;
-
-        let unread = 0;
-
-        snapshot.forEach(doc => {
-
-          const data =
-            doc.data();
-
-          const readBy =
-            data.readBy || [];
-
-          if (
-            !readBy.includes(
-              currentUser.uid
-            )
-          ) {
-
-            unread++;
-
-          }
+          name: name,
+          ownerUid: currentUser.uid,
+          ownerName: username,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
 
         });
 
-        updateNotificationBadge(
-          unread
-        );
+        input.value = "";
 
-      },
-      error => {
+        message.textContent = "Team created successfully!";
 
-        console.error(
-          "Notification error:",
-          error
-        );
+        setTimeout(() => {
+          message.textContent = "";
+        }, 2000);
 
-      }
-    );
+      } catch (error) {
 
-}
-
-
-function updateNotificationBadge(
-  count
-) {
-
-  const badge =
-    document.getElementById(
-      "notificationBadge"
-    );
-
-  if (count > 0) {
-
-    badge.textContent =
-      count > 99
-        ? "99+"
-        : count;
-
-    badge.style.display =
-      "flex";
-
-  } else {
-
-    badge.style.display =
-      "none";
-
-  }
-
-}
-
-
-/* OPEN NOTIFICATIONS */
-
-function openNotifications() {
-
-  document.getElementById(
-    "notificationOverlay"
-  ).style.display =
-    "block";
-
-  loadNotifications();
-
-}
-
-
-/* CLOSE NOTIFICATIONS */
-
-function closeNotifications() {
-
-  document.getElementById(
-    "notificationOverlay"
-  ).style.display =
-    "none";
-
-}
-
-
-/* LOAD NOTIFICATIONS */
-
-function loadNotifications() {
-
-  const list =
-    document.getElementById(
-      "notificationList"
-    );
-
-  list.innerHTML = "";
-
-  if (
-    notificationCache.length === 0
-  ) {
-
-    list.innerHTML =
-      '<div class="empty">No notifications.</div>';
-
-    return;
-
-  }
-
-  notificationCache.forEach(
-    doc => {
-
-      const data =
-        doc.data();
-
-      const item =
-        document.createElement(
-          "div"
-        );
-
-      item.className =
-        "notification-item";
-
-      const readBy =
-        data.readBy || [];
-
-      if (
-        !readBy.includes(
-          currentUser.uid
-        )
-      ) {
-
-        item.classList.add(
-          "unread"
-        );
-
-      }
-
-      const title =
-        document.createElement(
-          "div"
-        );
-
-      title.className =
-        "notification-title";
-
-      title.textContent =
-        data.title ||
-        "NØV3X";
-
-      const text =
-        document.createElement(
-          "div"
-        );
-
-      text.className =
-        "notification-text";
-
-      text.textContent =
-        data.text || "";
-
-      item.appendChild(title);
-      item.appendChild(text);
-
-      item.onclick = () =>
-        markNotificationRead(
-          doc.id
-        );
-
-      list.appendChild(item);
-
-    }
-  );
-
-}
-
-
-/* MARK ONE READ */
-
-async function markNotificationRead(
-  id
-) {
-
-  try {
-
-    await db
-      .collection("notifications")
-      .doc(id)
-      .update({
-
-        readBy:
-          firebase.firestore
-            .FieldValue
-            .arrayUnion(
-              currentUser.uid
-            )
-
-      });
-
-  } catch(error) {
-
-    console.error(error);
-
-  }
-
-}
-
-
-/* MARK ALL READ */
-
-async function markAllRead() {
-
-  if (
-    notificationCache.length === 0
-  ) {
-    return;
-  }
-
-  const batch =
-    db.batch();
-
-  notificationCache.forEach(
-    doc => {
-
-      const data =
-        doc.data();
-
-      const readBy =
-        data.readBy || [];
-
-      if (
-        !readBy.includes(
-          currentUser.uid
-        )
-      ) {
-
-        batch.update(
-          doc.ref,
-          {
-
-            readBy:
-              firebase.firestore
-                .FieldValue
-                .arrayUnion(
-                  currentUser.uid
-                )
-
-          }
-        );
+        console.error(error);
+        message.textContent = error.message;
 
       }
 
     }
-  );
 
-  try {
+    async function deleteTeam(teamId) {
 
-    await batch.commit();
+      if (!currentUser) return;
 
-    loadNotifications();
+      const confirmed = confirm(
+        "Delete this team?"
+      );
 
-  } catch(error) {
+      if (!confirmed) return;
 
-    console.error(error);
+      try {
 
-  }
+        await db
+          .collection("teams")
+          .doc(teamId)
+          .delete();
 
-}
+      } catch (error) {
 
+        alert(error.message);
 
-/* CLOSE WHEN CLICKING OUTSIDE */
-
-document.getElementById(
-  "notificationOverlay"
-).addEventListener(
-  "click",
-  event => {
-
-    if (
-      event.target.id ===
-      "notificationOverlay"
-    ) {
-
-      closeNotifications();
+      }
 
     }
 
-  }
-);
+    function escapeHTML(text) {
 
-</script>
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+    }
+
+  </script>
 
 </body>
 </html>
