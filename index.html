@@ -1,593 +1,240 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0,
-               maximum-scale=1.0, user-scalable=no">
 
-<title>NØV3X CODM</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>NØV3X</title>
 
 <style>
-html {
-  background:#07000d !important;
-}
 
-body {
-  margin:0 !important;
-  padding:0 0 90px 0 !important;
-  min-height:100vh;
-  background:#07000d !important;
-  color:#fff !important;
-  font-family:Arial,sans-serif;
-}
-
-* {
+*{
   box-sizing:border-box;
 }
 
-.topbar {
-  height:70px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 18px;
-  background:#0d0018 !important;
-  border-bottom:1px solid #7520c0;
-  position:sticky;
-  top:0;
-  z-index:20;
-}
-
-.logo {
-  color:#c77dff;
-  font-size:24px;
-  font-weight:900;
-  letter-spacing:3px;
-}
-
-.header-right {
-  display:flex;
-  align-items:center;
-  gap:12px;
-  position:relative;
-}
-
-.online {
-  color:#b45cff;
-  font-size:10px;
-  letter-spacing:1px;
-}
-
-.bell {
-  width:43px;
-  height:43px;
-  border:0;
-  border-radius:50%;
-  background:#1a0029 !important;
-  color:white;
-  font-size:20px;
-}
-
-.notification-badge {
-  position:absolute;
-  top:-2px;
-  right:44px;
-  min-width:18px;
-  height:18px;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  background:#ff1744;
-  color:white;
-  border:2px solid #0d0018;
-  border-radius:20px;
-  font-size:10px;
-  font-weight:bold;
-}
-
-.hero {
-  margin:20px;
-  padding:35px 20px;
-  border:1px solid #542677;
-  border-radius:18px;
-  background:linear-gradient(135deg,#1a0d26,#0b0710) !important;
-  box-shadow:0 0 30px rgba(150,60,255,.12);
-}
-
-.welcome {
-  color:#a650df;
-  font-size:11px;
-  font-weight:bold;
-  letter-spacing:3px;
-}
-
-.hero h1 {
-  font-size:34px;
-  margin:8px 0;
-  letter-spacing:2px;
-}
-
-.hero p:last-child {
-  color:#888;
-  font-size:12px;
-}
-
-.username {
-  color:#c77dff;
-}
-
-.section-title {
-  margin:22px 20px 10px;
-  color:#c77dff;
-  font-size:12px;
-  font-weight:bold;
-  letter-spacing:2px;
-}
-
-.menu {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin:20px;
-}
-
-.card {
-  padding:20px 15px;
-  min-height:145px;
-  border-radius:16px;
-  border:1px solid #291637;
-  background:#100b17 !important;
-  text-decoration:none;
-  color:white;
-  transition:.15s;
-}
-
-.card:active {
-  transform:scale(.96);
-}
-
-.icon {
-  font-size:28px;
-}
-
-.card h2 {
-  font-size:15px;
-  margin-top:12px;
-}
-
-.card p {
-  color:#777;
-  font-size:10px;
-  margin-top:6px;
-  line-height:1.4;
-}
-
-.announcement {
-  margin:20px;
-  padding:20px;
-  background:#100b17 !important;
-  border-left:3px solid #9b42e8;
-  border-radius:10px;
-}
-
-.announcement-label {
-  color:#a650df;
-  font-size:9px;
-  font-weight:bold;
-  letter-spacing:2px;
-  margin-bottom:8px;
-}
-
-.announcement h2 {
-  font-size:17px;
-  margin:0 0 8px;
-}
-
-.announcement p {
-  color:#888;
-  font-size:11px;
-  line-height:1.5;
+body{
   margin:0;
+  background:#07000d;
+  color:white;
+  font-family:Arial,sans-serif;
+  min-height:100vh;
+  padding-bottom:80px;
 }
 
-.no-announcement {
-  color:#777;
-  font-size:12px;
+header{
+  padding:25px 20px;
+  background:#0d0015;
+  border-bottom:1px solid #321650;
 }
 
-.profile-link {
+.logo{
+  color:#c56cff;
+  font-size:30px;
+  font-weight:900;
+  letter-spacing:5px;
+}
+
+.welcome{
+  margin-top:6px;
+  color:#806b8d;
+  font-size:13px;
+}
+
+.container{
+  max-width:700px;
+  margin:auto;
+  padding:18px;
+}
+
+.card{
+  background:#100019;
+  border:1px solid #321650;
+  border-radius:15px;
+  padding:18px;
+  margin-bottom:14px;
+}
+
+.card h2{
+  margin:0 0 8px;
+  color:#d39aff;
+  font-size:18px;
+}
+
+.card p{
+  color:#9b7aa8;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.button{
   display:block;
-  margin:20px;
-  padding:16px;
-  border:1px solid #3d1558;
-  border-radius:13px;
-  background:#100b17 !important;
-  color:#c77dff;
+  width:100%;
+  padding:14px;
+  margin-top:10px;
+  border-radius:10px;
+  background:#7628c8;
+  color:white;
+  text-align:center;
   text-decoration:none;
   font-weight:bold;
-  text-align:center;
 }
 
-.bottom-nav {
+.status{
+  text-align:center;
+  color:#806b8d;
+  font-size:12px;
+  margin:15px 0;
+}
+
+nav{
   position:fixed;
   bottom:0;
   left:0;
   right:0;
-  height:70px;
+  height:65px;
+  background:#0d0015;
+  border-top:1px solid #321650;
   display:flex;
   justify-content:space-around;
   align-items:center;
-  background:#0c0811 !important;
-  border-top:1px solid #291637;
-  z-index:50;
 }
 
-.bottom-nav a {
-  flex:1;
-  color:#777;
-  text-decoration:none;
-  text-align:center;
-  font-size:20px;
-  padding:8px 0;
-}
-
-.bottom-nav a.active {
-  color:#b85cff;
-}
-
-.bottom-nav span {
-  display:block;
-  font-size:9px;
-  margin-top:3px;
-}
-
-.notification-overlay {
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.8);
-  z-index:100;
-  padding:20px;
-}
-
-.notification-modal {
-  max-width:500px;
-  max-height:75vh;
-  margin:50px auto;
-  overflow:hidden;
-  background:#100019 !important;
-  border:1px solid #7020a8;
-  border-radius:18px;
-}
-
-.notification-header {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:17px;
-  border-bottom:1px solid #351047;
-}
-
-.notification-header h2 {
-  margin:0;
-  font-size:18px;
-}
-
-.close-btn,
-.mark-all {
-  border:0;
-  background:none;
-  color:#c77dff;
-}
-
-.close-btn {
-  color:white;
-  font-size:22px;
-}
-
-.mark-all {
-  padding:10px 17px;
-  font-size:11px;
-}
-
-.notification-list {
-  max-height:58vh;
-  overflow-y:auto;
-}
-
-.notification-item {
-  padding:15px 17px;
-  border-top:1px solid #291034;
-  cursor:pointer;
-}
-
-.notification-item.unread {
-  background:#190025 !important;
-}
-
-.notification-title {
-  color:#d59aff;
-  font-weight:bold;
-}
-
-.notification-text {
-  color:#eee0f5;
-  font-size:13px;
-  margin-top:5px;
-}
-
-.notification-time {
-  color:#75617e;
-  font-size:10px;
-  margin-top:6px;
-}
-
-.empty {
-  padding:25px 10px;
-  text-align:center;
+nav a{
   color:#806b8d;
+  text-decoration:none;
+  font-size:11px;
+  text-align:center;
 }
 
-@media (max-width:350px) {
-
-  .hero h1 {
-    font-size:28px;
-  }
-
-  .menu {
-    grid-template-columns:1fr;
-  }
-
-  .online {
-    display:none;
-  }
+nav a.active{
+  color:#c56cff;
 }
+
 </style>
+
 </head>
 
 <body>
 
-<header class="topbar">
+<header>
 
-  <div class="logo">
-    NØV3X
-  </div>
+  <div class="logo">NØV3X</div>
 
-  <div class="header-right">
-
-    <div class="online">
-      ● ONLINE
-    </div>
-
-    <button
-      class="bell"
-      onclick="openNotifications()"
-      aria-label="Open notifications">
-      🔔
-    </button>
-
-    <span
-      id="notificationBadge"
-      class="notification-badge">
-      0
-    </span>
-
+  <div
+    id="welcome"
+    class="welcome">
+    Loading...
   </div>
 
 </header>
 
 
-<section class="hero">
+<div class="container">
 
-  <p class="welcome">
-    WELCOME
-  </p>
-
-  <h1>
-    NØV3X
-    <span id="username" class="username">
-      PLAYER
-    </span>
-  </h1>
-
-  <p>
-    ONE SQUAD. ONE FATE.
-  </p>
-
-</section>
+  <div
+    id="status"
+    class="status">
+    Checking session...
+  </div>
 
 
-<div class="section-title">
-  NØV3X HUB
-</div>
+  <div class="card">
 
-
-<section class="menu">
-
-  <a href="chat.html" class="card">
-    <div class="icon">💬</div>
-
-    <h2>
-      CHAT
-    </h2>
+    <h2>🔥 8PM BR SCRIMMAGE</h2>
 
     <p>
-      Talk with NØV3X members
+      ONE SQUAD, ONE FATE
     </p>
-  </a>
 
-
-  <a href="scrimmage.html" class="card">
-    <div class="icon">🎮</div>
-
-    <h2>
-      SCRIMMAGE
-    </h2>
-
-    <p>
-      View scrims and claim slots
-    </p>
-  </a>
-
-
-  <a href="leaderboard.html" class="card">
-    <div class="icon">🏆</div>
-
-    <h2>
-      LEADERBOARD
-    </h2>
-
-    <p>
-      Check team rankings and points
-    </p>
-  </a>
-
-
-  <a href="teams.html" class="card">
-    <div class="icon">👥</div>
-
-    <h2>
-      TEAMS
-    </h2>
-
-    <p>
-      View registered teams
-    </p>
-  </a>
-
-</section>
-
-
-<section class="announcement">
-
-  <p class="announcement-label">
-    LATEST ANNOUNCEMENT
-  </p>
-
-  <div id="announcementContent">
-
-    <div class="empty">
-      Loading...
-    </div>
+    <a
+      href="scrimmage.html"
+      class="button">
+      OPEN SCRIMMAGE
+    </a>
 
   </div>
 
-</section>
+
+  <div class="card">
+
+    <h2>🏆 LEADERBOARD</h2>
+
+    <p>
+      Check the latest NØV3X team scores.
+    </p>
+
+    <a
+      href="leaderboard.html"
+      class="button">
+      VIEW LEADERBOARD
+    </a>
+
+  </div>
 
 
-<a
-  href="profile.html"
-  class="profile-link">
+  <div class="card">
 
-  👤 OPEN PROFILE
+    <h2>💬 COMMUNITY CHAT</h2>
 
-</a>
+    <p>
+      Talk with the NØV3X community.
+    </p>
 
+    <a
+      href="chat.html"
+      class="button">
+      OPEN CHAT
+    </a>
 
-<div
-  id="notificationOverlay"
-  class="notification-overlay">
-
-  <div class="notification-modal">
-
-    <div class="notification-header">
-
-      <h2>
-        🔔 Notifications
-      </h2>
-
-      <button
-        class="close-btn"
-        onclick="closeNotifications()">
-        ×
-      </button>
-
-    </div>
+  </div>
 
 
-    <button
-      class="mark-all"
-      onclick="markAllRead()">
+  <div
+    id="adminCard"
+    class="card"
+    style="display:none">
 
-      Mark all as read
+    <h2>⚙️ ADMIN PANEL</h2>
 
-    </button>
+    <p>
+      Manage scrimmage slots, leaderboard,
+      announcements and notifications.
+    </p>
 
-
-    <div
-      id="notificationList"
-      class="notification-list">
-
-      <div class="empty">
-        Loading notifications...
-      </div>
-
-    </div>
+    <a
+      href="admin.html"
+      class="button">
+      OPEN ADMIN PANEL
+    </a>
 
   </div>
 
 </div>
 
 
-<!-- FINAL 5-TAB NAVIGATION -->
-
-<nav class="bottom-nav">
+<nav>
 
   <a
     href="index.html"
     class="active">
-
-    🏠
-
-    <span>
-      Home
-    </span>
-
+    🏠<br>Home
   </a>
-
 
   <a href="chat.html">
-
-    💬
-
-    <span>
-      Chat
-    </span>
-
+    💬<br>Chat
   </a>
-
 
   <a href="scrimmage.html">
-
-    🎮
-
-    <span>
-      Scrim
-    </span>
-
+    🎮<br>Scrim
   </a>
-
 
   <a href="leaderboard.html">
-
-    🏆
-
-    <span>
-      Rank
-    </span>
-
+    🏆<br>Rank
   </a>
 
-
   <a href="profile.html">
-
-    👤
-
-    <span>
-      Profile
-    </span>
-
+    👤<br>Profile
   </a>
 
 </nav>
@@ -606,533 +253,118 @@ body {
 
 <script>
 
-let currentUser = null;
-let notificationCache = [];
+/*
+  NØV3X SESSION CHECK
+
+  IMPORTANT:
+  We use onAuthStateChanged
+  instead of auth.currentUser
+  because Firebase needs time
+  to restore the saved session.
+*/
+
+auth.onAuthStateChanged(async function(user){
+
+  const status =
+    document.getElementById("status");
+
+  const welcome =
+    document.getElementById("welcome");
+
+  const adminCard =
+    document.getElementById("adminCard");
 
 
-/* =========================
-   AUTH
-========================= */
+  if(!user){
 
-auth.onAuthStateChanged(async user => {
+    status.textContent =
+      "No active session.";
 
-  if (!user) {
+    /*
+      Only redirect after Firebase
+      has confirmed there is no user.
+    */
 
-    location.href = "login.html";
+    setTimeout(function(){
+
+      window.location.replace(
+        "login.html"
+      );
+
+    },300);
 
     return;
-
   }
 
-  currentUser = user;
+
+  console.log(
+    "NØV3X SESSION ACTIVE:",
+    user.email
+  );
 
 
-  try {
+  status.textContent =
+    "NØV3X session active ✓";
+
+
+  /*
+    Get profile
+  */
+
+  try{
 
     const profile =
       await db
-        .collection("users")
-        .doc(user.uid)
-        .get();
+      .collection("users")
+      .doc(user.uid)
+      .get();
 
 
-    if (profile.exists) {
+    if(profile.exists){
 
       const data =
         profile.data();
 
-      document.getElementById(
-        "username"
-      ).textContent =
-        data.username || "PLAYER";
+
+      welcome.textContent =
+        "Welcome, " +
+        (data.username || "NØV3X Member");
+
+
+      /*
+        Show Admin Panel
+        only to admins.
+      */
+
+      if(data.role === "admin"){
+
+        adminCard.style.display =
+          "block";
+
+      }
+
+    }
+    else{
+
+      welcome.textContent =
+        "Welcome, NØV3X Member";
 
     }
 
-
-    loadAnnouncements();
-
-    startNotifications();
-
-
-  } catch(error) {
+  }
+  catch(error){
 
     console.error(
       "Profile error:",
       error
     );
 
+    welcome.textContent =
+      "Welcome to NØV3X";
+
   }
 
 });
-
-
-/* =========================
-   ANNOUNCEMENTS
-========================= */
-
-function loadAnnouncements() {
-
-  db.collection("announcements")
-    .orderBy("createdAt", "desc")
-    .limit(1)
-    .onSnapshot(snapshot => {
-
-      const box =
-        document.getElementById(
-          "announcementContent"
-        );
-
-
-      box.innerHTML = "";
-
-
-      if (snapshot.empty) {
-
-        box.innerHTML =
-          '<div class="no-announcement">' +
-          'No announcements yet.' +
-          '</div>';
-
-        return;
-
-      }
-
-
-      const data =
-        snapshot.docs[0].data();
-
-
-      const title =
-        document.createElement("h2");
-
-      title.textContent =
-        data.title ||
-        "🔥 NØV3X ANNOUNCEMENT";
-
-
-      const text =
-        document.createElement("p");
-
-      text.textContent =
-        data.text || "";
-
-
-      box.appendChild(title);
-
-      box.appendChild(text);
-
-
-    }, error => {
-
-      console.error(
-        "Announcement error:",
-        error
-      );
-
-
-      document.getElementById(
-        "announcementContent"
-      ).innerHTML =
-        '<div class="no-announcement">' +
-        'Unable to load announcements.' +
-        '</div>';
-
-    });
-
-}
-
-
-/* =========================
-   NOTIFICATIONS
-========================= */
-
-function startNotifications() {
-
-  db.collection("notifications")
-    .orderBy("createdAt", "desc")
-    .limit(50)
-    .onSnapshot(snapshot => {
-
-      notificationCache =
-        snapshot.docs;
-
-
-      let unread = 0;
-
-
-      snapshot.forEach(doc => {
-
-        const data =
-          doc.data();
-
-        const readBy =
-          Array.isArray(data.readBy)
-            ? data.readBy
-            : [];
-
-
-        if (
-          !readBy.includes(
-            currentUser.uid
-          )
-        ) {
-
-          unread++;
-
-        }
-
-      });
-
-
-      const badge =
-        document.getElementById(
-          "notificationBadge"
-        );
-
-
-      if (unread > 0) {
-
-        badge.textContent =
-          unread > 99
-            ? "99+"
-            : unread;
-
-        badge.style.display =
-          "flex";
-
-      } else {
-
-        badge.style.display =
-          "none";
-
-      }
-
-
-      if (
-        document.getElementById(
-          "notificationOverlay"
-        ).style.display === "block"
-      ) {
-
-        loadNotifications();
-
-      }
-
-
-    }, error => {
-
-      console.error(
-        "Notification error:",
-        error
-      );
-
-    });
-
-}
-
-
-/* =========================
-   OPEN NOTIFICATIONS
-========================= */
-
-function openNotifications() {
-
-  document.getElementById(
-    "notificationOverlay"
-  ).style.display =
-    "block";
-
-
-  loadNotifications();
-
-}
-
-
-/* =========================
-   CLOSE NOTIFICATIONS
-========================= */
-
-function closeNotifications() {
-
-  document.getElementById(
-    "notificationOverlay"
-  ).style.display =
-    "none";
-
-}
-
-
-/* =========================
-   LOAD NOTIFICATIONS
-========================= */
-
-function loadNotifications() {
-
-  const list =
-    document.getElementById(
-      "notificationList"
-    );
-
-
-  list.innerHTML = "";
-
-
-  if (
-    notificationCache.length === 0
-  ) {
-
-    list.innerHTML =
-      '<div class="empty">' +
-      'No notifications.' +
-      '</div>';
-
-    return;
-
-  }
-
-
-  notificationCache.forEach(doc => {
-
-    const data =
-      doc.data();
-
-
-    const item =
-      document.createElement("div");
-
-    item.className =
-      "notification-item";
-
-
-    const readBy =
-      Array.isArray(data.readBy)
-        ? data.readBy
-        : [];
-
-
-    if (
-      !readBy.includes(
-        currentUser.uid
-      )
-    ) {
-
-      item.classList.add(
-        "unread"
-      );
-
-    }
-
-
-    const title =
-      document.createElement("div");
-
-    title.className =
-      "notification-title";
-
-    title.textContent =
-      data.title || "NØV3X";
-
-
-    const text =
-      document.createElement("div");
-
-    text.className =
-      "notification-text";
-
-    text.textContent =
-      data.text || "";
-
-
-    item.appendChild(title);
-
-    item.appendChild(text);
-
-
-    if (data.createdAt) {
-
-      const time =
-        document.createElement("div");
-
-      time.className =
-        "notification-time";
-
-
-      try {
-
-        const date =
-          data.createdAt.toDate();
-
-        time.textContent =
-          date.toLocaleString([], {
-            month:"short",
-            day:"numeric",
-            hour:"numeric",
-            minute:"2-digit"
-          });
-
-        item.appendChild(time);
-
-      } catch(error) {
-
-        console.error(
-          "Notification date error:",
-          error
-        );
-
-      }
-
-    }
-
-
-    item.onclick = () =>
-      markNotificationRead(
-        doc.id
-      );
-
-
-    list.appendChild(item);
-
-  });
-
-}
-
-
-/* =========================
-   MARK ONE READ
-========================= */
-
-async function markNotificationRead(id) {
-
-  if (!currentUser) return;
-
-
-  try {
-
-    await db
-      .collection("notifications")
-      .doc(id)
-      .update({
-
-        readBy:
-          firebase.firestore
-            .FieldValue
-            .arrayUnion(
-              currentUser.uid
-            )
-
-      });
-
-
-  } catch(error) {
-
-    console.error(
-      "Mark read error:",
-      error
-    );
-
-  }
-
-}
-
-
-/* =========================
-   MARK ALL READ
-========================= */
-
-async function markAllRead() {
-
-  if (
-    !currentUser ||
-    notificationCache.length === 0
-  ) {
-
-    return;
-
-  }
-
-
-  const batch =
-    db.batch();
-
-
-  notificationCache.forEach(doc => {
-
-    const data =
-      doc.data();
-
-    const readBy =
-      Array.isArray(data.readBy)
-        ? data.readBy
-        : [];
-
-
-    if (
-      !readBy.includes(
-        currentUser.uid
-      )
-    ) {
-
-      batch.update(
-        doc.ref,
-        {
-
-          readBy:
-            firebase.firestore
-              .FieldValue
-              .arrayUnion(
-                currentUser.uid
-              )
-
-        }
-      );
-
-    }
-
-  });
-
-
-  try {
-
-    await batch.commit();
-
-    loadNotifications();
-
-
-  } catch(error) {
-
-    console.error(
-      "Mark all read error:",
-      error
-    );
-
-  }
-
-}
-
-
-/* =========================
-   CLOSE MODAL ON BACKGROUND
-========================= */
-
-document
-  .getElementById(
-    "notificationOverlay"
-  )
-  .addEventListener(
-    "click",
-    event => {
-
-      if (
-        event.target.id ===
-        "notificationOverlay"
-      ) {
-
-        closeNotifications();
-
-      }
-
-    }
-  );
 
 </script>
 
