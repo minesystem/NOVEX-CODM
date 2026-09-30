@@ -1,546 +1,377 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0,
-               maximum-scale=1.0, user-scalable=no">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NØV3X — Profile</title>
 
-<title>NØV3X — Profile</title>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
 
-<style>
-html {
-  background:#07000d !important;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-body {
-  margin:0 !important;
-  padding:0 0 90px 0 !important;
-  min-height:100vh;
-  background:#07000d !important;
-  color:#fff !important;
-  font-family:Arial,sans-serif;
-}
+    body {
+      background: #08060d;
+      color: white;
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      padding-bottom: 85px;
+    }
 
-* {
-  box-sizing:border-box;
-}
+    header {
+      text-align: center;
+      padding: 25px 15px;
+      background: #0d0915;
+      border-bottom: 1px solid #29183b;
+    }
 
-header {
-  height:70px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 18px;
-  background:#0d0018 !important;
-  border-bottom:1px solid #7520c0;
-  position:sticky;
-  top:0;
-  z-index:20;
-}
+    header h1 {
+      color: #b66cff;
+      letter-spacing: 4px;
+      font-size: 28px;
+    }
 
-.logo {
-  color:#c77dff;
-  font-size:24px;
-  font-weight:900;
-  letter-spacing:3px;
-}
+    header p {
+      color: #817589;
+      font-size: 12px;
+      margin-top: 5px;
+    }
 
-.container {
-  width:100%;
-  max-width:650px;
-  margin:auto;
-  padding:20px;
-}
+    .container {
+      width: 94%;
+      max-width: 600px;
+      margin: 25px auto;
+    }
 
-.title {
-  font-size:25px;
-  font-weight:900;
-}
+    .profile-card {
+      background: #100b18;
+      border: 1px solid #2b193e;
+      border-radius: 18px;
+      padding: 25px 20px;
+      text-align: center;
+      box-shadow: 0 0 25px rgba(145, 61, 255, 0.08);
+    }
 
-.subtitle {
-  color:#806b8d;
-  font-size:12px;
-  margin-top:5px;
-  margin-bottom:20px;
-}
+    .avatar {
+      width: 82px;
+      height: 82px;
+      margin: 0 auto 15px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #762cff, #bd70ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: bold;
+      color: white;
+    }
 
-.profile-card {
-  padding:22px;
-  background:#100019 !important;
-  border:1px solid #542677;
-  border-radius:18px;
-  text-align:center;
-}
+    #username {
+      font-size: 23px;
+      font-weight: bold;
+    }
 
-.avatar {
-  width:80px;
-  height:80px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:50%;
-  background:#21002f !important;
-  border:2px solid #9b42e8;
-  color:#c77dff;
-  font-size:34px;
-  font-weight:900;
-}
+    #email {
+      color: #817589;
+      font-size: 13px;
+      margin-top: 6px;
+      word-break: break-word;
+    }
 
-.username {
-  margin-top:15px;
-  font-size:22px;
-  font-weight:900;
-}
+    .role {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 6px 13px;
+      border-radius: 20px;
+      background: #21102f;
+      color: #bd79ff;
+      font-size: 12px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
 
-.role {
-  display:inline-block;
-  margin-top:7px;
-  padding:5px 12px;
-  border-radius:20px;
-  background:#250039 !important;
-  color:#c77dff;
-  font-size:10px;
-  font-weight:bold;
-  letter-spacing:1px;
-}
+    .section {
+      margin-top: 18px;
+      background: #100b18;
+      border: 1px solid #2b193e;
+      border-radius: 15px;
+      padding: 18px;
+    }
 
-.info-card {
-  margin-top:15px;
-  padding:18px;
-  background:#100019 !important;
-  border:1px solid #321650;
-  border-radius:14px;
-}
+    .section h3 {
+      color: #b66cff;
+      margin-bottom: 14px;
+      font-size: 16px;
+    }
 
-.info-row {
-  padding:12px 0;
-  border-bottom:1px solid #291034;
-}
+    .info {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 11px 0;
+      border-bottom: 1px solid #21162d;
+      font-size: 13px;
+    }
 
-.info-row:last-child {
-  border-bottom:0;
-}
+    .info:last-child {
+      border-bottom: none;
+    }
 
-.label {
-  color:#806b8d;
-  font-size:10px;
-  margin-bottom:5px;
-}
+    .info span:first-child {
+      color: #817589;
+    }
 
-.value {
-  color:#fff;
-  font-size:13px;
-  word-break:break-word;
-}
+    .info span:last-child {
+      text-align: right;
+      word-break: break-word;
+    }
 
-.edit-area {
-  margin-top:15px;
-  padding:18px;
-  background:#100019 !important;
-  border:1px solid #321650;
-  border-radius:14px;
-}
+    button {
+      width: 100%;
+      margin-top: 18px;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      background: #8b3dff;
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+    }
 
-.input {
-  width:100%;
-  padding:13px;
-  background:#08000f !important;
-  color:#fff !important;
-  border:1px solid #42155f;
-  border-radius:10px;
-  outline:none;
-  font-size:14px;
-}
+    button:hover {
+      background: #9d58ff;
+    }
 
-.input:focus {
-  border-color:#a448ff;
-}
+    .admin-btn {
+      background: #241034;
+      border: 1px solid #6f35a5;
+      color: #c98cff;
+    }
 
-.btn {
-  width:100%;
-  padding:13px;
-  margin-top:10px;
-  border:0;
-  border-radius:10px;
-  font-weight:bold;
-  color:#fff !important;
-}
+    .admin-btn:hover {
+      background: #321647;
+    }
 
-.save {
-  background:#7628c8 !important;
-}
+    .loading {
+      text-align: center;
+      color: #a85cff;
+      padding: 40px;
+    }
 
-.admin {
-  background:#250039 !important;
-  border:1px solid #842bd1;
-  color:#c77dff !important;
-}
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 68px;
+      background: #0d0915;
+      border-top: 1px solid #29183b;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 20;
+    }
 
-.logout {
-  background:#24000d !important;
-  border:1px solid #7a1635;
-  color:#ff6b88 !important;
-}
+    nav a {
+      text-decoration: none;
+      color: #817589;
+      font-size: 11px;
+      text-align: center;
+    }
 
-.message {
-  min-height:18px;
-  margin-top:10px;
-  text-align:center;
-  font-size:12px;
-  color:#c77dff;
-}
+    nav a.active {
+      color: #b66cff;
+    }
 
-.bottom-nav {
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  height:70px;
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-  background:#0d0018 !important;
-  border-top:1px solid #451067;
-  z-index:50;
-}
-
-.nav-item {
-  text-decoration:none;
-  color:#806b8d;
-  text-align:center;
-  font-size:20px;
-}
-
-.nav-item.active {
-  color:#c77dff;
-}
-
-.nav-item span {
-  display:block;
-  font-size:9px;
-  margin-top:3px;
-}
-</style>
+    nav div {
+      font-size: 21px;
+      margin-bottom: 3px;
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
-  <div class="logo">NØV3X</div>
-</header>
+  <header>
+    <h1>NØV3X</h1>
+    <p>ONE SQUAD, ONE FATE</p>
+  </header>
 
-<main class="container">
+  <main class="container">
 
-  <div class="title">PROFILE</div>
-
-  <div class="subtitle">
-    NØV3X MEMBER PROFILE
-  </div>
-
-  <section class="profile-card">
-
-    <div class="avatar" id="avatar">
-      N
+    <div id="loading" class="loading">
+      Loading profile...
     </div>
 
-    <div class="username" id="username">
-      Loading...
-    </div>
+    <div id="profile" style="display:none;">
 
-    <div class="role" id="role">
-      PLAYER
-    </div>
+      <div class="profile-card">
 
-  </section>
+        <div class="avatar" id="avatar">
+          N
+        </div>
 
-  <section class="info-card">
+        <div id="username">Loading...</div>
+        <div id="email">Loading...</div>
 
-    <div class="info-row">
-      <div class="label">EMAIL</div>
-      <div class="value" id="email">
-        Loading...
+        <div class="role" id="role">
+          PLAYER
+        </div>
+
       </div>
-    </div>
 
-    <div class="info-row">
-      <div class="label">USER ID</div>
-      <div class="value" id="uid">
-        Loading...
+      <div class="section">
+
+        <h3>ACCOUNT INFO</h3>
+
+        <div class="info">
+          <span>Username</span>
+          <span id="infoUsername">—</span>
+        </div>
+
+        <div class="info">
+          <span>Email</span>
+          <span id="infoEmail">—</span>
+        </div>
+
+        <div class="info">
+          <span>Role</span>
+          <span id="infoRole">—</span>
+        </div>
+
       </div>
+
+      <button
+        id="adminButton"
+        class="admin-btn"
+        style="display:none;"
+        onclick="location.href='admin.html'">
+        ⚙ ADMIN CONTROL CENTER
+      </button>
+
+      <button onclick="logout()">
+        LOG OUT
+      </button>
+
     </div>
 
-  </section>
+  </main>
 
-  <section class="edit-area">
+  <nav>
 
-    <div class="label">
-      CHANGE USERNAME
-    </div>
+    <a href="index.html">
+      <div>⌂</div>
+      Home
+    </a>
 
-    <input
-      id="usernameInput"
-      class="input"
-      type="text"
-      maxlength="20"
-      placeholder="Enter new username">
+    <a href="chat.html">
+      <div>💬</div>
+      Chat
+    </a>
 
-    <button
-      class="btn save"
-      onclick="saveUsername()">
-      SAVE USERNAME
-    </button>
+    <a href="scrimmage.html">
+      <div>⚔</div>
+      Scrim
+    </a>
 
-    <div id="message"
-         class="message"></div>
+    <a href="leaderboard.html">
+      <div>🏆</div>
+      Rank
+    </a>
 
-  </section>
+    <a href="profile.html" class="active">
+      <div>👤</div>
+      Profile
+    </a>
 
-  <div id="adminArea"></div>
+  </nav>
 
-  <button
-    class="btn logout"
-    onclick="logout()">
-    LOG OUT
-  </button>
+  <script>
 
-</main>
+    const loading = document.getElementById("loading");
+    const profile = document.getElementById("profile");
 
-<nav class="bottom-nav">
+    auth.onAuthStateChanged(async (user) => {
 
-  <a class="nav-item"
-     href="index.html">
-    🏠
-    <span>Home</span>
-  </a>
+      if (!user) {
+        window.location.href = "login.html";
+        return;
+      }
 
-  <a class="nav-item"
-     href="chat.html">
-    💬
-    <span>Chat</span>
-  </a>
+      try {
 
-  <a class="nav-item"
-     href="scrimmage.html">
-    🎮
-    <span>Scrim</span>
-  </a>
+        const doc = await db
+          .collection("users")
+          .doc(user.uid)
+          .get();
 
-  <a class="nav-item"
-     href="leaderboard.html">
-    🏆
-    <span>Ranks</span>
-  </a>
+        let username = "NØV3X Player";
+        let role = "player";
 
-  <a class="nav-item active"
-     href="profile.html">
-    👤
-    <span>Profile</span>
-  </a>
+        if (doc.exists) {
+          const data = doc.data();
 
-</nav>
+          username = data.username || username;
+          role = data.role || "player";
+        }
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script src="firebase-config.js"></script>
+        document.getElementById("username").textContent = username;
+        document.getElementById("email").textContent = user.email || "";
 
-<script>
+        document.getElementById("infoUsername").textContent = username;
+        document.getElementById("infoEmail").textContent = user.email || "—";
+        document.getElementById("infoRole").textContent = role.toUpperCase();
 
-let currentUser = null;
-let currentRole = "player";
+        document.getElementById("role").textContent = role.toUpperCase();
 
-auth.onAuthStateChanged(async user => {
+        const firstLetter =
+          username.trim().charAt(0).toUpperCase() || "N";
 
-  if (!user) {
-    window.location.href = "login.html";
-    return;
-  }
+        document.getElementById("avatar").textContent = firstLetter;
 
-  currentUser = user;
+        if (role === "admin") {
+          document.getElementById("adminButton").style.display = "block";
+        }
 
-  document.getElementById("email")
-    .textContent = user.email || "No email";
+        loading.style.display = "none";
+        profile.style.display = "block";
 
-  document.getElementById("uid")
-    .textContent = user.uid;
+      } catch (error) {
 
-  try {
+        console.error(error);
 
-    const doc = await db
-      .collection("users")
-      .doc(user.uid)
-      .get();
+        loading.innerHTML =
+          "Unable to load profile.<br><br>" +
+          error.message;
+      }
 
-    if (!doc.exists) {
-      showMessage("Profile not found.");
-      return;
-    }
+    });
 
-    const data = doc.data();
+    async function logout() {
 
-    const username =
-      data.username || "Player";
+      try {
 
-    currentRole =
-      data.role || "player";
+        await auth.signOut();
 
-    document.getElementById("username")
-      .textContent = username;
+        window.location.href = "login.html";
 
-    document.getElementById("usernameInput")
-      .value = username;
+      } catch (error) {
 
-    document.getElementById("avatar")
-      .textContent =
-        username.charAt(0).toUpperCase();
+        alert(error.message);
 
-    document.getElementById("role")
-      .textContent =
-        currentRole.toUpperCase();
-
-    if (currentRole === "admin") {
-
-      document.getElementById("adminArea")
-        .innerHTML = `
-
-          <button
-            class="btn admin"
-            onclick="openAdmin()">
-            ⚙️ ADMIN CONTROL CENTER
-          </button>
-
-        `;
+      }
 
     }
 
-  } catch(error) {
-
-    console.error(error);
-
-    showMessage(
-      "Unable to load profile."
-    );
-
-  }
-
-});
-
-
-async function saveUsername() {
-
-  if (!currentUser) return;
-
-  const input =
-    document.getElementById("usernameInput");
-
-  const newUsername =
-    input.value.trim();
-
-  if (!newUsername) {
-
-    showMessage(
-      "Username cannot be empty."
-    );
-
-    return;
-  }
-
-  if (newUsername.length < 2) {
-
-    showMessage(
-      "Username must be at least 2 characters."
-    );
-
-    return;
-  }
-
-  try {
-
-    await db
-      .collection("users")
-      .doc(currentUser.uid)
-      .update({
-
-        username:newUsername,
-
-        updatedAt:
-          firebase.firestore.FieldValue
-            .serverTimestamp()
-
-      });
-
-    document.getElementById("username")
-      .textContent = newUsername;
-
-    document.getElementById("avatar")
-      .textContent =
-        newUsername.charAt(0).toUpperCase();
-
-    localStorage.setItem(
-      "novexName",
-      newUsername
-    );
-
-    showMessage(
-      "Username updated!"
-    );
-
-  } catch(error) {
-
-    console.error(error);
-
-    showMessage(
-      "Failed to update username."
-    );
-
-  }
-
-}
-
-
-function openAdmin() {
-
-  window.location.href =
-    "admin.html";
-
-}
-
-
-async function logout() {
-
-  try {
-
-    await auth.signOut();
-
-    localStorage.removeItem("novexName");
-    localStorage.removeItem("novexGuest");
-
-    window.location.href =
-      "login.html";
-
-  } catch(error) {
-
-    console.error(error);
-
-    showMessage(
-      "Logout failed."
-    );
-
-  }
-
-}
-
-
-function showMessage(text) {
-
-  document.getElementById("message")
-    .textContent = text;
-
-}
-
-</script>
+  </script>
 
 </body>
 </html>
