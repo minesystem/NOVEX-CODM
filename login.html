@@ -1,154 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>NØV3X — Login</title>
 
 <style>
-* {
+
+*{
   box-sizing:border-box;
 }
 
-html,body {
+body{
   margin:0;
-  padding:0;
-  width:100%;
-  min-height:100%;
-  background:#07000d;
-  color:#fff;
-  font-family:Arial,sans-serif;
-}
-
-body {
   min-height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:20px;
+  background:#07000d;
+  color:white;
+  font-family:Arial,sans-serif;
 }
 
-.box {
-  width:100%;
-  max-width:400px;
-  padding:28px;
+.box{
+  width:90%;
+  max-width:380px;
+  padding:28px 22px;
   background:#100019;
-  border:1px solid #542677;
-  border-radius:20px;
-  box-shadow:0 0 30px rgba(130,40,220,.15);
+  border:1px solid #321650;
+  border-radius:18px;
+  box-shadow:0 0 30px rgba(150,50,255,.15);
 }
 
-.logo {
+.logo{
   text-align:center;
-  color:#c77dff;
   font-size:32px;
   font-weight:900;
-  letter-spacing:4px;
+  letter-spacing:5px;
+  color:#c56cff;
 }
 
-.subtitle {
+.subtitle{
   text-align:center;
-  color:#81768c;
+  margin-top:6px;
+  margin-bottom:25px;
+  color:#806b8d;
   font-size:12px;
-  margin:7px 0 25px;
+  letter-spacing:2px;
 }
 
-.tabs {
+.tabs{
   display:flex;
-  gap:4px;
-  margin-bottom:20px;
-  padding:4px;
-  background:#08000f;
-  border-radius:10px;
+  gap:6px;
+  margin-bottom:18px;
 }
 
-.tabs button {
+.tab{
   flex:1;
-  border:0;
   padding:11px;
-  border-radius:8px;
-  background:transparent;
-  color:#81768c;
-  font-weight:bold;
-}
-
-.tabs button.active {
-  background:#7c2cff;
-  color:#fff;
-}
-
-.input {
-  width:100%;
-  padding:14px;
-  margin-bottom:10px;
+  border:1px solid #321650;
+  border-radius:9px;
   background:#08000f;
-  color:#fff;
+  color:#806b8d;
+  font-weight:bold;
+}
+
+.tab.active{
+  background:#7628c8;
+  color:white;
+}
+
+input{
+  width:100%;
+  padding:13px;
+  margin:6px 0;
+  border-radius:9px;
   border:1px solid #321650;
-  border-radius:10px;
+  background:#08000f;
+  color:white;
   outline:none;
-  font-size:14px;
 }
 
-.input:focus {
-  border-color:#a448ff;
+input:focus{
+  border-color:#9d45e8;
 }
 
-.input::placeholder {
-  color:#75617e;
-}
-
-.main-btn {
+.mainBtn{
   width:100%;
-  padding:14px;
-  margin-top:7px;
+  padding:13px;
+  margin-top:12px;
   border:0;
-  border-radius:10px;
-  background:linear-gradient(135deg,#7628c8,#a448ff);
-  color:#fff;
-  font-weight:bold;
-  font-size:14px;
-}
-
-.guest {
-  width:100%;
-  margin-top:10px;
-  padding:12px;
-  background:transparent;
-  color:#b44cff;
-  border:1px solid #321650;
-  border-radius:10px;
+  border-radius:9px;
+  background:#7628c8;
+  color:white;
   font-weight:bold;
 }
 
-.message {
+.status{
   min-height:20px;
-  margin-top:15px;
+  margin-top:14px;
   text-align:center;
-  color:#ff7777;
   font-size:12px;
-  line-height:1.5;
+  color:#c56cff;
   word-break:break-word;
 }
 
-.loading {
-  display:none;
-  margin-top:12px;
+.loading{
   text-align:center;
   color:#806b8d;
   font-size:12px;
+  margin-top:12px;
 }
 
-.status {
-  margin-top:12px;
-  padding:10px;
-  border-radius:8px;
-  background:#08000f;
-  color:#81768c;
-  font-size:11px;
-  text-align:center;
-}
 </style>
+
 </head>
 
 <body>
@@ -157,372 +124,482 @@ body {
 
   <div class="logo">NØV3X</div>
 
-  <div class="subtitle">CODM COMMUNITY</div>
+  <div class="subtitle">
+    CODM COMMUNITY
+  </div>
 
   <div class="tabs">
-    <button id="loginTab" class="active" onclick="showLogin()">
-      LOGIN
-    </button>
-
-    <button id="registerTab" onclick="showRegister()">
-      REGISTER
-    </button>
-  </div>
-
-  <div id="formArea">
-
-    <input
-      id="email"
-      class="input"
-      type="email"
-      placeholder="Email"
-      autocomplete="email">
-
-    <input
-      id="password"
-      class="input"
-      type="password"
-      placeholder="Password"
-      autocomplete="current-password">
 
     <button
-      id="submitBtn"
-      class="main-btn"
-      onclick="login()">
+      id="loginTab"
+      class="tab active"
+      onclick="showLogin()">
       LOGIN
+    </button>
+
+    <button
+      id="registerTab"
+      class="tab"
+      onclick="showRegister()">
+      REGISTER
     </button>
 
   </div>
 
-  <div id="message" class="message"></div>
 
-  <button class="guest" onclick="guestMode()">
-    CONTINUE AS GUEST
-  </button>
+  <div id="usernameBox" style="display:none">
 
-  <div id="loadingText" class="loading">
-    Connecting to NØV3X...
+    <input
+      id="username"
+      type="text"
+      placeholder="Username"
+      maxlength="30">
+
   </div>
 
-  <div id="firebaseStatus" class="status">
-    Checking Firebase...
+
+  <input
+    id="email"
+    type="email"
+    placeholder="Email">
+
+
+  <input
+    id="password"
+    type="password"
+    placeholder="Password">
+
+
+  <button
+    id="actionButton"
+    class="mainBtn"
+    onclick="login()">
+
+    LOGIN
+
+  </button>
+
+
+  <div
+    id="status"
+    class="status">
+  </div>
+
+
+  <div
+    id="loading"
+    class="loading"
+    style="display:none">
+
+    Checking saved login...
+
   </div>
 
 </div>
 
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
 <script src="firebase-config.js"></script>
+
 
 <script>
 
-let registerMode = false;
+let mode = "login";
 
-const message =
-  document.getElementById("message");
+const statusBox =
+  document.getElementById("status");
 
-const loadingText =
-  document.getElementById("loadingText");
-
-const firebaseStatus =
-  document.getElementById("firebaseStatus");
+const loading =
+  document.getElementById("loading");
 
 
-function showLogin() {
+/*
+  WAIT FOR FIREBASE
+  BEFORE CHECKING LOGIN
+*/
 
-  registerMode = false;
+let authReady = false;
 
-  document.getElementById("loginTab")
-    .classList.add("active");
+auth.setPersistence(
+  firebase.auth.Auth.Persistence.LOCAL
+)
+.then(() => {
 
-  document.getElementById("registerTab")
-    .classList.remove("active");
+  authReady = true;
 
-  document.getElementById("formArea").innerHTML = `
+  console.log(
+    "NØV3X login persistence enabled"
+  );
 
-    <input
-      id="email"
-      class="input"
-      type="email"
-      placeholder="Email"
-      autocomplete="email">
+})
+.catch(error => {
 
-    <input
-      id="password"
-      class="input"
-      type="password"
-      placeholder="Password"
-      autocomplete="current-password">
+  console.error(
+    "Persistence error:",
+    error
+  );
 
-    <button
-      id="submitBtn"
-      class="main-btn"
-      onclick="login()">
-      LOGIN
-    </button>
-
-  `;
-
-  clearMessage();
-}
+});
 
 
-function showRegister() {
+/*
+  CHECK SAVED ACCOUNT
+*/
 
-  registerMode = true;
+auth.onAuthStateChanged(async user => {
 
-  document.getElementById("loginTab")
-    .classList.remove("active");
+  loading.style.display = "block";
 
-  document.getElementById("registerTab")
-    .classList.add("active");
+  if(!user){
 
-  document.getElementById("formArea").innerHTML = `
+    loading.style.display = "none";
 
-    <input
-      id="username"
-      class="input"
-      type="text"
-      placeholder="Username"
-      maxlength="20"
-      autocomplete="nickname">
+    console.log(
+      "No saved Firebase session"
+    );
 
-    <input
-      id="email"
-      class="input"
-      type="email"
-      placeholder="Email"
-      autocomplete="email">
-
-    <input
-      id="password"
-      class="input"
-      type="password"
-      placeholder="Password"
-      autocomplete="new-password">
-
-    <button
-      id="submitBtn"
-      class="main-btn"
-      onclick="register()">
-      CREATE ACCOUNT
-    </button>
-
-  `;
-
-  clearMessage();
-}
-
-
-async function register() {
-
-  const username =
-    document.getElementById("username").value.trim();
-
-  const email =
-    document.getElementById("email").value.trim();
-
-  const password =
-    document.getElementById("password").value;
-
-  if (!username || !email || !password) {
-    showError("Fill in all fields.");
     return;
   }
 
-  if (username.length < 2) {
-    showError("Username must be at least 2 characters.");
-    return;
-  }
 
-  if (password.length < 6) {
-    showError("Password must be at least 6 characters.");
-    return;
-  }
+  console.log(
+    "Saved session found:",
+    user.email
+  );
 
-  setLoading(true);
 
-  try {
+  /*
+    USER IS ALREADY LOGGED IN.
+    DON'T SHOW LOGIN AGAIN.
+  */
 
-    if (typeof auth === "undefined") {
-      throw new Error("Firebase Auth is not initialized.");
+  statusBox.textContent =
+    "Session restored. Opening NØV3X...";
+
+
+  try{
+
+    const profile =
+      await db
+      .collection("users")
+      .doc(user.uid)
+      .get();
+
+
+    if(!profile.exists){
+
+      console.log(
+        "Profile does not exist yet."
+      );
+
+      location.href =
+        "index.html";
+
+      return;
     }
 
+
+    location.href =
+      "index.html";
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    location.href =
+      "index.html";
+
+  }
+
+});
+
+
+/*
+  LOGIN MODE
+*/
+
+function showLogin(){
+
+  mode = "login";
+
+  document
+    .getElementById("usernameBox")
+    .style.display = "none";
+
+  document
+    .getElementById("loginTab")
+    .classList.add("active");
+
+  document
+    .getElementById("registerTab")
+    .classList.remove("active");
+
+  document
+    .getElementById("actionButton")
+    .textContent = "LOGIN";
+
+  document
+    .getElementById("actionButton")
+    .onclick = login;
+
+  statusBox.textContent = "";
+
+}
+
+
+/*
+  REGISTER MODE
+*/
+
+function showRegister(){
+
+  mode = "register";
+
+  document
+    .getElementById("usernameBox")
+    .style.display = "block";
+
+  document
+    .getElementById("loginTab")
+    .classList.remove("active");
+
+  document
+    .getElementById("registerTab")
+    .classList.add("active");
+
+  document
+    .getElementById("actionButton")
+    .textContent = "CREATE ACCOUNT";
+
+  document
+    .getElementById("actionButton")
+    .onclick = register;
+
+  statusBox.textContent = "";
+
+}
+
+
+/*
+  LOGIN
+*/
+
+async function login(){
+
+  if(!authReady){
+
+    statusBox.textContent =
+      "Firebase is still starting...";
+
+    return;
+  }
+
+
+  const email =
+    document
+    .getElementById("email")
+    .value
+    .trim();
+
+
+  const password =
+    document
+    .getElementById("password")
+    .value;
+
+
+  if(!email || !password){
+
+    statusBox.textContent =
+      "Enter your email and password.";
+
+    return;
+  }
+
+
+  try{
+
+    statusBox.textContent =
+      "Logging in...";
+
+
+    /*
+      FORCE LOCAL SESSION
+    */
+
+    await auth.setPersistence(
+      firebase.auth.Auth.Persistence.LOCAL
+    );
+
+
     const result =
-      await auth.createUserWithEmailAndPassword(
+      await auth
+      .signInWithEmailAndPassword(
         email,
         password
       );
+
+
+    console.log(
+      "Login successful:",
+      result.user.uid
+    );
+
+
+    statusBox.textContent =
+      "Login successful!";
+
+
+    /*
+      onAuthStateChanged will
+      handle the redirect.
+    */
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    statusBox.textContent =
+      error.code +
+      " — " +
+      error.message;
+
+  }
+
+}
+
+
+/*
+  REGISTER
+*/
+
+async function register(){
+
+  if(!authReady){
+
+    statusBox.textContent =
+      "Firebase is still starting...";
+
+    return;
+  }
+
+
+  const username =
+    document
+    .getElementById("username")
+    .value
+    .trim();
+
+
+  const email =
+    document
+    .getElementById("email")
+    .value
+    .trim();
+
+
+  const password =
+    document
+    .getElementById("password")
+    .value;
+
+
+  if(!username){
+
+    statusBox.textContent =
+      "Enter a username.";
+
+    return;
+  }
+
+
+  if(!email || !password){
+
+    statusBox.textContent =
+      "Enter email and password.";
+
+    return;
+  }
+
+
+  if(password.length < 6){
+
+    statusBox.textContent =
+      "Password must be at least 6 characters.";
+
+    return;
+  }
+
+
+  try{
+
+    statusBox.textContent =
+      "Creating account...";
+
+
+    await auth.setPersistence(
+      firebase.auth.Auth.Persistence.LOCAL
+    );
+
+
+    const result =
+      await auth
+      .createUserWithEmailAndPassword(
+        email,
+        password
+      );
+
+
+    /*
+      Create Firestore profile
+    */
 
     await db
       .collection("users")
       .doc(result.user.uid)
       .set({
-        username: username,
-        email: email,
-        role: "player",
+
+        username:username,
+
+        email:email,
+
+        role:"player",
+
         createdAt:
-          firebase.firestore.FieldValue.serverTimestamp(),
+          firebase.firestore
+          .FieldValue
+          .serverTimestamp(),
+
         updatedAt:
-          firebase.firestore.FieldValue.serverTimestamp()
+          firebase.firestore
+          .FieldValue
+          .serverTimestamp()
+
       });
 
-    localStorage.setItem(
-      "novexName",
-      username
-    );
 
-    localStorage.removeItem("novexGuest");
+    statusBox.textContent =
+      "Account created!";
 
-    window.location.href = "index.html";
 
-  } catch(error) {
+  }
+  catch(error){
 
     console.error(error);
 
-    setLoading(false);
+    statusBox.textContent =
+      error.code +
+      " — " +
+      error.message;
 
-    showError(
-      "REGISTER FAILED: " +
-      (error.code || error.message || "Unknown error")
-    );
   }
-}
-
-
-async function login() {
-
-  const email =
-    document.getElementById("email").value.trim();
-
-  const password =
-    document.getElementById("password").value;
-
-  if (!email || !password) {
-    showError("Enter your email and password.");
-    return;
-  }
-
-  setLoading(true);
-
-  try {
-
-    if (typeof auth === "undefined") {
-      throw new Error("Firebase Auth is not initialized.");
-    }
-
-    await auth.signInWithEmailAndPassword(
-      email,
-      password
-    );
-
-    localStorage.removeItem("novexGuest");
-
-    window.location.href = "index.html";
-
-  } catch(error) {
-
-    console.error(error);
-
-    setLoading(false);
-
-    showError(
-      "LOGIN FAILED: " +
-      (error.code || error.message || "Unknown error")
-    );
-  }
-}
-
-
-function guestMode() {
-
-  showError(
-    "Please login or create an account to continue."
-  );
-}
-
-
-function showError(text) {
-
-  message.style.color = "#ff7777";
-  message.textContent = text;
-}
-
-
-function clearMessage() {
-
-  message.textContent = "";
-}
-
-
-function setLoading(state) {
-
-  loadingText.style.display =
-    state ? "block" : "none";
-
-  const buttons =
-    document.querySelectorAll(
-      ".main-btn,.guest,.tabs button"
-    );
-
-  buttons.forEach(button => {
-    button.disabled = state;
-    button.style.opacity =
-      state ? ".6" : "1";
-  });
-}
-
-
-try {
-
-  if (
-    typeof firebase !== "undefined" &&
-    typeof auth !== "undefined" &&
-    typeof db !== "undefined"
-  ) {
-
-    firebaseStatus.textContent =
-      "Firebase connected ✓";
-
-    firebaseStatus.style.color =
-      "#b86cff";
-
-  } else {
-
-    firebaseStatus.textContent =
-      "Firebase failed to initialize";
-
-    firebaseStatus.style.color =
-      "#ff7777";
-  }
-
-} catch(error) {
-
-  firebaseStatus.textContent =
-    "Firebase error: " +
-    (error.message || "Unknown error");
-
-}
-
-
-if (
-  typeof auth !== "undefined" &&
-  auth.onAuthStateChanged
-) {
-
-  auth.onAuthStateChanged(user => {
-
-    if (user) {
-
-      console.log(
-        "NØV3X logged in:",
-        user.email
-      );
-
-    }
-
-  });
 
 }
 
