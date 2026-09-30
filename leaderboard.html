@@ -1,653 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width,
-               initial-scale=1.0,
-               maximum-scale=1.0,
-               user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>NØV3X — Leaderboard</title>
 
 <style>
-
-* {
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  font-family:Arial,sans-serif;
+*{
+ box-sizing:border-box;
 }
 
-html {
-  background:#07000d !important;
+body{
+ margin:0;
+ background:#07000d;
+ color:white;
+ font-family:Arial,sans-serif;
+ padding-bottom:80px;
 }
 
-body {
-  background:#07000d !important;
-  color:white;
-  min-height:100vh;
-  padding-bottom:90px;
+header{
+ padding:24px 18px;
+ text-align:center;
+ background:#0d0015;
+ border-bottom:1px solid #321650;
 }
 
-/* HEADER */
-
-header {
-  height:65px;
-  display:flex;
-  align-items:center;
-  gap:15px;
-  padding:0 18px;
-
-  background:#0d0018 !important;
-  border-bottom:1px solid #542677;
-
-  position:sticky;
-  top:0;
-  z-index:20;
+.logo{
+ font-size:28px;
+ font-weight:900;
+ letter-spacing:4px;
+ color:#c56cff;
 }
 
-.back {
-  color:white;
-  text-decoration:none;
-  font-size:26px;
+.title{
+ margin-top:6px;
+ font-size:13px;
+ color:#9b7aa8;
+ letter-spacing:2px;
 }
 
-header h1 {
-  font-size:17px;
-  letter-spacing:2px;
+.container{
+ max-width:700px;
+ margin:auto;
+ padding:18px;
 }
 
-
-/* MAIN */
-
-main {
-  width:100%;
-  max-width:700px;
-  margin:auto;
-  padding:20px;
+.status{
+ text-align:center;
+ color:#806b8d;
+ font-size:12px;
+ margin-bottom:15px;
 }
 
-
-/* TITLE */
-
-.title {
-  margin-bottom:20px;
+.card{
+ display:flex;
+ align-items:center;
+ gap:13px;
+ background:#100019;
+ border:1px solid #321650;
+ border-radius:14px;
+ padding:14px;
+ margin-bottom:10px;
 }
 
-.title p {
-  color:#a650df;
-  font-size:10px;
-  font-weight:bold;
-  letter-spacing:2px;
+.rank{
+ width:42px;
+ height:42px;
+ border-radius:10px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ background:#1b0828;
+ color:#c56cff;
+ font-size:17px;
+ font-weight:900;
 }
 
-.title h2 {
-  font-size:25px;
-  margin-top:5px;
+.team{
+ flex:1;
 }
 
-
-/* TOP THREE */
-
-.top-three {
-  display:grid;
-  grid-template-columns:1fr 1.15fr 1fr;
-  gap:8px;
-  align-items:end;
-  margin-bottom:25px;
+.teamName{
+ font-size:15px;
+ font-weight:800;
 }
 
-.top-card {
-  text-align:center;
-  padding:15px 8px;
-
-  background:#100b17;
-  border:1px solid #291637;
-  border-radius:14px;
-
-  min-width:0;
+.points{
+ margin-top:4px;
+ color:#c56cff;
+ font-size:12px;
+ font-weight:bold;
 }
 
-.top-card.first {
-  padding-top:25px;
-
-  border-color:#75409b;
-
-  background:
-    linear-gradient(
-      145deg,
-      #21102d,
-      #100b17
-    );
+.badge{
+ font-size:18px;
 }
 
-.medal {
-  font-size:27px;
-  margin-bottom:8px;
+.empty{
+ text-align:center;
+ padding:30px;
+ color:#806b8d;
 }
 
-.rank {
-  color:#9d50df;
-  font-size:10px;
-  font-weight:bold;
-  margin-bottom:7px;
+nav{
+ position:fixed;
+ bottom:0;
+ left:0;
+ right:0;
+ height:65px;
+ background:#0d0015;
+ border-top:1px solid #321650;
+ display:flex;
+ justify-content:space-around;
+ align-items:center;
 }
 
-.team-name {
-  font-size:11px;
-  font-weight:bold;
-  word-break:break-word;
+nav a{
+ color:#806b8d;
+ text-decoration:none;
+ font-size:11px;
+ text-align:center;
 }
 
-.points {
-  color:#b45cff;
-  font-size:16px;
-  font-weight:bold;
-  margin-top:8px;
+nav a.active{
+ color:#c56cff;
 }
-
-.pts-label {
-  color:#666;
-  font-size:8px;
-}
-
-
-/* FULL RANKING */
-
-.section-title {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:12px;
-}
-
-.section-title h2 {
-  font-size:15px;
-  letter-spacing:1px;
-}
-
-.section-title span {
-  color:#b45cff;
-  font-size:9px;
-  font-weight:bold;
-}
-
-.team-row {
-  display:flex;
-  align-items:center;
-
-  padding:16px;
-  margin-bottom:8px;
-
-  border-radius:11px;
-
-  background:#100b17;
-  border:1px solid #291637;
-}
-
-.team-row.top-one {
-  border-color:#75409b;
-}
-
-.position {
-  width:40px;
-  color:#9d50df;
-  font-weight:bold;
-  font-size:12px;
-}
-
-.team-info {
-  flex:1;
-  min-width:0;
-}
-
-.team-info h3 {
-  font-size:13px;
-  word-break:break-word;
-}
-
-.team-info p {
-  color:#666;
-  font-size:9px;
-  margin-top:4px;
-}
-
-.score {
-  text-align:right;
-  margin-left:10px;
-}
-
-.score strong {
-  display:block;
-  font-size:14px;
-  color:#ddd;
-}
-
-.score span {
-  color:#666;
-  font-size:8px;
-}
-
-
-/* EMPTY / LOADING */
-
-.loading {
-  padding:35px 10px;
-  text-align:center;
-  color:#806b8d;
-  font-size:12px;
-}
-
-.error {
-  padding:30px 10px;
-  text-align:center;
-  color:#ff6b88;
-  font-size:12px;
-}
-
-
-/* POINT SYSTEM */
-
-.point-system {
-  margin-top:25px;
-
-  padding:18px;
-
-  background:#100b17;
-
-  border:1px solid #291637;
-
-  border-radius:13px;
-}
-
-.point-system h2 {
-  color:#b45cff;
-  font-size:13px;
-  margin-bottom:12px;
-}
-
-.point {
-  display:flex;
-  justify-content:space-between;
-
-  padding:9px 0;
-
-  border-bottom:1px solid #201329;
-
-  font-size:11px;
-}
-
-.point:last-child {
-  border-bottom:none;
-}
-
-.point span {
-  color:#888;
-}
-
-.point strong {
-  color:#ddd;
-}
-
-
-/* BOTTOM NAV */
-
-.bottom-nav {
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-
-  height:68px;
-
-  background:#0d0018 !important;
-  border-top:1px solid #451067;
-
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-
-  z-index:50;
-}
-
-.nav-item {
-  text-decoration:none;
-  color:#806b8d;
-  text-align:center;
-  font-size:11px;
-}
-
-.nav-item.active {
-  color:#c77dff;
-}
-
-.nav-icon {
-  display:block;
-  font-size:21px;
-  margin-bottom:2px;
-}
-
-
-/* MOBILE */
-
-@media (max-width:350px) {
-
-  .top-three {
-    grid-template-columns:1fr;
-  }
-
-  .top-card.first {
-    order:-1;
-  }
-
-}
-
 </style>
-
 </head>
-
 
 <body>
 
-
 <header>
 
-  <a href="index.html"
-     class="back">
-    ←
-  </a>
+<div class="logo">NØV3X</div>
 
-  <h1>
-    NØV3X LEADERBOARD
-  </h1>
+<div class="title">
+LEADERBOARD
+</div>
 
 </header>
 
+<div class="container">
 
-<main>
+<div id="status" class="status">
+Loading leaderboard...
+</div>
 
+<div id="leaderboard"></div>
 
-  <!-- TITLE -->
+</div>
 
-  <section class="title">
+<nav>
 
-    <p>
-      CODM SCRIMMAGE
-    </p>
+<a href="index.html">
+🏠<br>Home
+</a>
 
-    <h2>
-      TEAM RANKINGS
-    </h2>
+<a href="chat.html">
+💬<br>Chat
+</a>
 
-  </section>
+<a href="scrimmage.html">
+🎮<br>Scrim
+</a>
 
+<a href="leaderboard.html" class="active">
+🏆<br>Rank
+</a>
 
-  <!-- TOP 3 -->
-
-  <section
-    id="topThree"
-    class="top-three">
-
-    <div class="top-card">
-
-      <div class="medal">
-        🥈
-      </div>
-
-      <div class="rank">
-        #2
-      </div>
-
-      <div class="team-name">
-        —
-      </div>
-
-      <div class="points">
-        0
-      </div>
-
-      <div class="pts-label">
-        POINTS
-      </div>
-
-    </div>
-
-
-    <div class="top-card first">
-
-      <div class="medal">
-        🥇
-      </div>
-
-      <div class="rank">
-        #1
-      </div>
-
-      <div class="team-name">
-        —
-      </div>
-
-      <div class="points">
-        0
-      </div>
-
-      <div class="pts-label">
-        POINTS
-      </div>
-
-    </div>
-
-
-    <div class="top-card">
-
-      <div class="medal">
-        🥉
-      </div>
-
-      <div class="rank">
-        #3
-      </div>
-
-      <div class="team-name">
-        —
-      </div>
-
-      <div class="points">
-        0
-      </div>
-
-      <div class="pts-label">
-        POINTS
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- FULL RANKING -->
-
-  <section>
-
-    <div class="section-title">
-
-      <h2>
-        FULL RANKING
-      </h2>
-
-      <span>
-        ● LIVE
-      </span>
-
-    </div>
-
-
-    <div id="leaderboard">
-
-      <div class="loading">
-        Loading leaderboard...
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- POINT SYSTEM -->
-
-  <section class="point-system">
-
-    <h2>
-      🔥 POINT SYSTEM
-    </h2>
-
-
-    <div class="point">
-
-      <span>
-        1 Kill
-      </span>
-
-      <strong>
-        5 PTS
-      </strong>
-
-    </div>
-
-
-    <div class="point">
-
-      <span>
-        Top 1
-      </span>
-
-      <strong>
-        +20 PTS
-      </strong>
-
-    </div>
-
-
-    <div class="point">
-
-      <span>
-        Top 2
-      </span>
-
-      <strong>
-        +15 PTS
-      </strong>
-
-    </div>
-
-
-    <div class="point">
-
-      <span>
-        Top 3
-      </span>
-
-      <strong>
-        +5 PTS
-      </strong>
-
-    </div>
-
-
-    <div class="point">
-
-      <span>
-        MVP / Winner
-      </span>
-
-      <strong>
-        BANNER
-      </strong>
-
-    </div>
-
-  </section>
-
-
-</main>
-
-
-<!-- FINAL 5-TAB NAVIGATION -->
-
-<nav class="bottom-nav">
-
-  <a class="nav-item"
-     href="index.html">
-
-    <span class="nav-icon">
-      🏠
-    </span>
-
-    Home
-
-  </a>
-
-
-  <a class="nav-item"
-     href="chat.html">
-
-    <span class="nav-icon">
-      💬
-    </span>
-
-    Chat
-
-  </a>
-
-
-  <a class="nav-item"
-     href="scrimmage.html">
-
-    <span class="nav-icon">
-      🎮
-    </span>
-
-    Scrim
-
-  </a>
-
-
-  <a class="nav-item active"
-     href="leaderboard.html">
-
-    <span class="nav-icon">
-      🏆
-    </span>
-
-    Rank
-
-  </a>
-
-
-  <a class="nav-item"
-     href="profile.html">
-
-    <span class="nav-icon">
-      👤
-    </span>
-
-    Profile
-
-  </a>
+<a href="profile.html">
+👤<br>Profile
+</a>
 
 </nav>
 
 
-<!-- FIREBASE -->
-
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 <script src="firebase-config.js"></script>
@@ -655,287 +185,154 @@ main {
 
 <script>
 
-let currentUser = null;
+const leaderboard=
+document.getElementById("leaderboard");
+
+const status=
+document.getElementById("status");
 
 
-/* =========================
-   AUTH
-========================= */
+auth.onAuthStateChanged(user=>{
 
-auth.onAuthStateChanged(user => {
+ if(!user){
 
-  if (!user) {
+  location.href="login.html";
 
-    location.href =
-      "login.html";
+  return;
 
-    return;
+ }
 
-  }
-
-  currentUser = user;
-
-  loadLeaderboard();
+ loadLeaderboard();
 
 });
 
 
-/* =========================
-   LIVE LEADERBOARD
-========================= */
+function loadLeaderboard(){
 
-function loadLeaderboard() {
+ db.collection("leaderboard")
+ .onSnapshot(snapshot=>{
 
-  db.collection("leaderboard")
-    .orderBy("points", "desc")
-    .onSnapshot(snapshot => {
+  let teams=[];
 
-      const container =
-        document.getElementById(
-          "leaderboard"
-        );
+  snapshot.forEach(doc=>{
 
+   const data=doc.data();
 
-      container.innerHTML = "";
+   teams.push({
 
+    id:doc.id,
 
-      if (snapshot.empty) {
+    name:data.name || doc.id,
 
-        container.innerHTML =
-          '<div class="loading">No teams on the leaderboard yet.</div>';
+    points:Number(data.points)||0
 
-        updateTopThree([]);
+   });
 
-        return;
+  });
 
-      }
 
+  teams.sort(
+   (a,b)=>b.points-a.points
+  );
 
-      const teams = [];
 
+  if(teams.length===0){
 
-      snapshot.forEach(doc => {
+   leaderboard.innerHTML=`
+    <div class="empty">
+     No leaderboard teams yet.
+    </div>
+   `;
 
-        const data =
-          doc.data();
+   status.textContent=
+    "0 TEAMS";
 
+   return;
 
-        teams.push({
+  }
 
-          id:doc.id,
 
-          name:
-            data.name ||
-            doc.id,
+  let html="";
 
-          points:
-            Number(data.points) || 0
 
-        });
+  teams.forEach((team,index)=>{
 
-      });
+   let badge="";
 
+   if(index===0)
+    badge="🥇";
 
-      teams.sort((a,b) =>
-        b.points - a.points
-      );
+   else if(index===1)
+    badge="🥈";
 
+   else if(index===2)
+    badge="🥉";
 
-      updateTopThree(teams);
 
+   html+=`
 
-      teams.forEach(
-        (team,index) => {
+   <div class="card">
 
-          const row =
-            document.createElement(
-              "div"
-            );
+    <div class="rank">
+     #${index+1}
+    </div>
 
-          row.className =
-            "team-row";
+    <div class="team">
 
+     <div class="teamName">
+      ${escapeHTML(team.name)}
+     </div>
 
-          if (index === 0) {
+     <div class="points">
+      ${team.points} POINTS
+     </div>
 
-            row.classList.add(
-              "top-one"
-            );
+    </div>
 
-          }
+    <div class="badge">
+     ${badge}
+    </div>
 
+   </div>
 
-          const position =
-            document.createElement(
-              "div"
-            );
+   `;
 
-          position.className =
-            "position";
+  });
 
-          position.textContent =
-            "#" + (index + 1);
 
+  leaderboard.innerHTML=html;
 
-          const info =
-            document.createElement(
-              "div"
-            );
+  status.textContent=
+   teams.length +
+   (teams.length===1
+    ? " TEAM"
+    : " TEAMS"
+   );
 
-          info.className =
-            "team-info";
+ },error=>{
 
+  console.error(error);
 
-          const name =
-            document.createElement(
-              "h3"
-            );
+  status.textContent=
+   "Unable to load leaderboard.";
 
-          name.textContent =
-            team.name;
-
-
-          const description =
-            document.createElement(
-              "p"
-            );
-
-          description.textContent =
-            "REGISTERED TEAM";
-
-
-          info.appendChild(name);
-
-          info.appendChild(
-            description
-          );
-
-
-          const score =
-            document.createElement(
-              "div"
-            );
-
-          score.className =
-            "score";
-
-
-          const points =
-            document.createElement(
-              "strong"
-            );
-
-          points.textContent =
-            team.points;
-
-
-          const label =
-            document.createElement(
-              "span"
-            );
-
-          label.textContent =
-            "PTS";
-
-
-          score.appendChild(points);
-
-          score.appendChild(label);
-
-
-          row.appendChild(position);
-
-          row.appendChild(info);
-
-          row.appendChild(score);
-
-
-          container.appendChild(row);
-
-        }
-
-      );
-
-    }, error => {
-
-      console.error(error);
-
-      document.getElementById(
-        "leaderboard"
-      ).innerHTML =
-        '<div class="error">Unable to load leaderboard.</div>';
-
-    });
+ });
 
 }
 
 
-/* =========================
-   TOP THREE
-========================= */
+function escapeHTML(text){
 
-function updateTopThree(teams) {
+ const div=
+ document.createElement("div");
 
-  const cards =
-    document.querySelectorAll(
-      ".top-card"
-    );
+ div.textContent=text;
 
-
-  const positions = [
-    1,
-    0,
-    2
-  ];
-
-
-  cards.forEach(
-    (card,index) => {
-
-      const team =
-        teams[
-          positions[index]
-        ];
-
-
-      const name =
-        card.querySelector(
-          ".team-name"
-        );
-
-      const points =
-        card.querySelector(
-          ".points"
-        );
-
-
-      if (team) {
-
-        name.textContent =
-          team.name;
-
-        points.textContent =
-          team.points;
-
-      } else {
-
-        name.textContent =
-          "—";
-
-        points.textContent =
-          "0";
-
-      }
-
-    }
-
-  );
+ return div.innerHTML;
 
 }
 
 </script>
 
-
 </body>
-
 </html>
