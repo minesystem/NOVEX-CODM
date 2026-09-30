@@ -1,338 +1,324 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NØV3X — Leaderboard</title>
 
-<title>NØV3X — Leaderboard</title>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
 
-<style>
-*{
- box-sizing:border-box;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-body{
- margin:0;
- background:#07000d;
- color:white;
- font-family:Arial,sans-serif;
- padding-bottom:80px;
-}
+    body {
+      background: #08060d;
+      color: white;
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
 
-header{
- padding:24px 18px;
- text-align:center;
- background:#0d0015;
- border-bottom:1px solid #321650;
-}
+    header {
+      padding: 22px 18px;
+      text-align: center;
+      border-bottom: 1px solid #241637;
+      background: #0d0915;
+    }
 
-.logo{
- font-size:28px;
- font-weight:900;
- letter-spacing:4px;
- color:#c56cff;
-}
+    header h1 {
+      color: #b66cff;
+      font-size: 28px;
+      letter-spacing: 3px;
+    }
 
-.title{
- margin-top:6px;
- font-size:13px;
- color:#9b7aa8;
- letter-spacing:2px;
-}
+    header p {
+      color: #8f849c;
+      margin-top: 6px;
+      font-size: 13px;
+    }
 
-.container{
- max-width:700px;
- margin:auto;
- padding:18px;
-}
+    .container {
+      width: 94%;
+      max-width: 700px;
+      margin: 20px auto;
+    }
 
-.status{
- text-align:center;
- color:#806b8d;
- font-size:12px;
- margin-bottom:15px;
-}
+    .title {
+      margin-bottom: 15px;
+    }
 
-.card{
- display:flex;
- align-items:center;
- gap:13px;
- background:#100019;
- border:1px solid #321650;
- border-radius:14px;
- padding:14px;
- margin-bottom:10px;
-}
+    .title h2 {
+      font-size: 22px;
+    }
 
-.rank{
- width:42px;
- height:42px;
- border-radius:10px;
- display:flex;
- align-items:center;
- justify-content:center;
- background:#1b0828;
- color:#c56cff;
- font-size:17px;
- font-weight:900;
-}
+    .title span {
+      color: #a85cff;
+    }
 
-.team{
- flex:1;
-}
+    .board {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-.teamName{
- font-size:15px;
- font-weight:800;
-}
+    .team {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 15px;
+      background: #100b18;
+      border: 1px solid #28183a;
+      border-radius: 14px;
+      box-shadow: 0 0 15px rgba(145, 61, 255, 0.08);
+    }
 
-.points{
- margin-top:4px;
- color:#c56cff;
- font-size:12px;
- font-weight:bold;
-}
+    .rank {
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      background: #1c1129;
+      color: #b66cff;
+      font-weight: bold;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
 
-.badge{
- font-size:18px;
-}
+    .team-info {
+      flex: 1;
+      min-width: 0;
+    }
 
-.empty{
- text-align:center;
- padding:30px;
- color:#806b8d;
-}
+    .team-name {
+      font-weight: bold;
+      font-size: 16px;
+      word-break: break-word;
+    }
 
-nav{
- position:fixed;
- bottom:0;
- left:0;
- right:0;
- height:65px;
- background:#0d0015;
- border-top:1px solid #321650;
- display:flex;
- justify-content:space-around;
- align-items:center;
-}
+    .team-label {
+      color: #766b80;
+      font-size: 11px;
+      margin-top: 4px;
+    }
 
-nav a{
- color:#806b8d;
- text-decoration:none;
- font-size:11px;
- text-align:center;
-}
+    .points {
+      color: #c58cff;
+      font-size: 18px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
 
-nav a.active{
- color:#c56cff;
-}
-</style>
+    .empty {
+      text-align: center;
+      padding: 35px 15px;
+      color: #766b80;
+      background: #100b18;
+      border-radius: 14px;
+      border: 1px solid #28183a;
+    }
+
+    .loading {
+      text-align: center;
+      color: #a85cff;
+      padding: 30px;
+    }
+
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 68px;
+      background: #0d0915;
+      border-top: 1px solid #28183a;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 10;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #817589;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    nav a.active {
+      color: #b66cff;
+    }
+
+    nav div {
+      font-size: 21px;
+      margin-bottom: 3px;
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
+  <header>
+    <h1>NØV3X</h1>
+    <p>ONE SQUAD, ONE FATE</p>
+  </header>
 
-<div class="logo">NØV3X</div>
+  <main class="container">
 
-<div class="title">
-LEADERBOARD
-</div>
-
-</header>
-
-<div class="container">
-
-<div id="status" class="status">
-Loading leaderboard...
-</div>
-
-<div id="leaderboard"></div>
-
-</div>
-
-<nav>
-
-<a href="index.html">
-🏠<br>Home
-</a>
-
-<a href="chat.html">
-💬<br>Chat
-</a>
-
-<a href="scrimmage.html">
-🎮<br>Scrim
-</a>
-
-<a href="leaderboard.html" class="active">
-🏆<br>Rank
-</a>
-
-<a href="profile.html">
-👤<br>Profile
-</a>
-
-</nav>
-
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-
-<script src="firebase-config.js"></script>
-
-
-<script>
-
-const leaderboard=
-document.getElementById("leaderboard");
-
-const status=
-document.getElementById("status");
-
-
-auth.onAuthStateChanged(user=>{
-
- if(!user){
-
-  location.href="login.html";
-
-  return;
-
- }
-
- loadLeaderboard();
-
-});
-
-
-function loadLeaderboard(){
-
- db.collection("leaderboard")
- .onSnapshot(snapshot=>{
-
-  let teams=[];
-
-  snapshot.forEach(doc=>{
-
-   const data=doc.data();
-
-   teams.push({
-
-    id:doc.id,
-
-    name:data.name || doc.id,
-
-    points:Number(data.points)||0
-
-   });
-
-  });
-
-
-  teams.sort(
-   (a,b)=>b.points-a.points
-  );
-
-
-  if(teams.length===0){
-
-   leaderboard.innerHTML=`
-    <div class="empty">
-     No leaderboard teams yet.
-    </div>
-   `;
-
-   status.textContent=
-    "0 TEAMS";
-
-   return;
-
-  }
-
-
-  let html="";
-
-
-  teams.forEach((team,index)=>{
-
-   let badge="";
-
-   if(index===0)
-    badge="🥇";
-
-   else if(index===1)
-    badge="🥈";
-
-   else if(index===2)
-    badge="🥉";
-
-
-   html+=`
-
-   <div class="card">
-
-    <div class="rank">
-     #${index+1}
+    <div class="title">
+      <h2>🏆 <span>LEADERBOARD</span></h2>
     </div>
 
-    <div class="team">
-
-     <div class="teamName">
-      ${escapeHTML(team.name)}
-     </div>
-
-     <div class="points">
-      ${team.points} POINTS
-     </div>
-
+    <div id="board" class="board">
+      <div class="loading">Loading leaderboard...</div>
     </div>
 
-    <div class="badge">
-     ${badge}
-    </div>
+  </main>
 
-   </div>
+  <nav>
+    <a href="index.html">
+      <div>⌂</div>
+      Home
+    </a>
 
-   `;
+    <a href="chat.html">
+      <div>💬</div>
+      Chat
+    </a>
 
-  });
+    <a href="scrimmage.html">
+      <div>⚔</div>
+      Scrim
+    </a>
 
+    <a href="leaderboard.html" class="active">
+      <div>🏆</div>
+      Rank
+    </a>
 
-  leaderboard.innerHTML=html;
+    <a href="profile.html">
+      <div>👤</div>
+      Profile
+    </a>
+  </nav>
 
-  status.textContent=
-   teams.length +
-   (teams.length===1
-    ? " TEAM"
-    : " TEAMS"
-   );
+  <script>
+    const board = document.getElementById("board");
 
- },error=>{
+    let unsubscribeLeaderboard = null;
 
-  console.error(error);
+    auth.onAuthStateChanged(async (user) => {
 
-  status.textContent=
-   "Unable to load leaderboard.";
+      if (!user) {
+        window.location.href = "login.html";
+        return;
+      }
 
- });
+      loadLeaderboard();
+    });
 
-}
+    function loadLeaderboard() {
 
+      if (unsubscribeLeaderboard) {
+        unsubscribeLeaderboard();
+      }
 
-function escapeHTML(text){
+      unsubscribeLeaderboard = db
+        .collection("leaderboard")
+        .onSnapshot(
+          (snapshot) => {
 
- const div=
- document.createElement("div");
+            board.innerHTML = "";
 
- div.textContent=text;
+            if (snapshot.empty) {
+              board.innerHTML = `
+                <div class="empty">
+                  No leaderboard data yet.
+                </div>
+              `;
+              return;
+            }
 
- return div.innerHTML;
+            const teams = [];
 
-}
+            snapshot.forEach((doc) => {
 
-</script>
+              const data = doc.data();
+
+              teams.push({
+                id: doc.id,
+                name: data.name || doc.id,
+                points: Number(data.points) || 0
+              });
+
+            });
+
+            teams.sort((a, b) => b.points - a.points);
+
+            teams.forEach((team, index) => {
+
+              const rank = index + 1;
+
+              const item = document.createElement("div");
+              item.className = "team";
+
+              item.innerHTML = `
+                <div class="rank">
+                  ${rank}
+                </div>
+
+                <div class="team-info">
+                  <div class="team-name">
+                    ${escapeHTML(team.name)}
+                  </div>
+
+                  <div class="team-label">
+                    NØV3X SCRIMMAGE
+                  </div>
+                </div>
+
+                <div class="points">
+                  ${team.points} pts
+                </div>
+              `;
+
+              board.appendChild(item);
+            });
+          },
+
+          (error) => {
+
+            console.error(error);
+
+            board.innerHTML = `
+              <div class="empty">
+                Failed to load leaderboard.
+                <br><br>
+                ${escapeHTML(error.message)}
+              </div>
+            `;
+          }
+        );
+    }
+
+    function escapeHTML(text) {
+
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+  </script>
 
 </body>
 </html>
